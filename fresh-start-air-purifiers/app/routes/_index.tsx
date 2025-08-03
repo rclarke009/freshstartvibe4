@@ -9,7 +9,7 @@ import type {
 import {ProductItem} from '~/components/ProductItem';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Fresh Start Air Purifiers | Home'}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -60,11 +60,23 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
+      <Welcome />
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
+function Welcome() 
+{
+  return (
+    <div className="welcome">
+      <h1>Welcome to Fresh Start Air Purifiers</h1>
+      <p>Discover our range of air purifiers designed to improve your indoor air quality and create a healthier living environment.</p>
+      <p>Explore our featured collection and recommended products to find the perfect air purifier for your needs.</p>
+    </div>
+  )
+}
+
 
 function FeaturedCollection({
   collection,
