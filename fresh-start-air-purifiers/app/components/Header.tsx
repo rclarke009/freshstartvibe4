@@ -1,3 +1,5 @@
+// ///Users/rebeccaclarke/Documents/WebFiles/CurrentWorkingDirectory/freshstartvibe4/fresh-start-air-purifiers/app/components/Header.tsx
+
 import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {
@@ -179,12 +181,39 @@ const FALLBACK_HEADER_MENU = {
   id: 'gid://shopify/Menu/199655587896',
   items: [
     {
-      id: 'gid://shopify/MenuItem/461609500728',
+      id: 'gid://shopify/MenuItem/461609500727',
       resourceId: null,
       tags: [],
-      title: 'Collections',
+      title: 'Home',
       type: 'HTTP',
-      url: '/collections',
+      url: '/',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609500729',
+      resourceId: null,
+      tags: [],
+      title: 'Why Air Purifiers?',
+      type: 'PAGE',
+      url: '/pages/why-air-purifiers',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609500730',
+      resourceId: null,
+      tags: [],
+      title: 'Choose Your Purifier',
+      type: 'PAGE',
+      url: '/pages/choose-your-purifier',
+      items: [],
+    },
+    {
+      id: 'gid://shopify/MenuItem/461609500731',
+      resourceId: null,
+      tags: [],
+      title: 'Shop',
+      type: 'COLLECTION',
+      url: '/collections/premium-purifiers',
       items: [],
     },
     {
@@ -197,25 +226,58 @@ const FALLBACK_HEADER_MENU = {
       items: [],
     },
     {
-      id: 'gid://shopify/MenuItem/461609566264',
+      id: 'gid://shopify/MenuItem/461609566265',
       resourceId: null,
       tags: [],
-      title: 'Policies',
+      title: 'Contact Us',
       type: 'HTTP',
-      url: '/policies',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461609599032',
-      resourceId: 'gid://shopify/Page/92591030328',
-      tags: [],
-      title: 'About',
-      type: 'PAGE',
-      url: '/pages/about',
+      url: '/pages/contact',
       items: [],
     },
   ],
 };
+
+// const FALLBACK_HEADER_MENU = {
+//   id: 'gid://shopify/Menu/199655587896',
+//   items: [
+//     {
+//       id: 'gid://shopify/MenuItem/461609500728',
+//       resourceId: null,
+//       tags: [],
+//       title: 'Collections',
+//       type: 'HTTP',
+//       url: '/collections',
+//       items: [],
+//     },
+//     {
+//       id: 'gid://shopify/MenuItem/461609533496',
+//       resourceId: null,
+//       tags: [],
+//       title: 'Blog',
+//       type: 'HTTP',
+//       url: '/blogs/journal',
+//       items: [],
+//     },
+//     {
+//       id: 'gid://shopify/MenuItem/461609566264',
+//       resourceId: null,
+//       tags: [],
+//       title: 'Policies',
+//       type: 'HTTP',
+//       url: '/policies',
+//       items: [],
+//     },
+//     {
+//       id: 'gid://shopify/MenuItem/461609599032',
+//       resourceId: 'gid://shopify/Page/92591030328',
+//       tags: [],
+//       title: 'About',
+//       type: 'PAGE',
+//       url: '/pages/about',
+//       items: [],
+//     },
+//   ],
+// };
 
 function activeLinkStyle({
   isActive,
