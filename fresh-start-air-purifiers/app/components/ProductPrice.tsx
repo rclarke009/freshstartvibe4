@@ -1,15 +1,17 @@
-import {Money} from '@shopify/hydrogen';
-import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+import { Money } from '@shopify/hydrogen';
+import type { MoneyV2 } from '@shopify/hydrogen/storefront-api-types';
 
 export function ProductPrice({
   price,
   compareAtPrice,
+  className, // Add optional className prop
 }: {
   price?: MoneyV2;
   compareAtPrice?: MoneyV2 | null;
+  className?: string; // Make it optional
 }) {
   return (
-    <div className="product-price">
+    <div className={`product-price ${className || ''}`}> {/* Combine with optional className */}
       {compareAtPrice ? (
         <div className="product-price-on-sale">
           {price ? <Money data={price} /> : null}
@@ -25,3 +27,33 @@ export function ProductPrice({
     </div>
   );
 }
+
+export default ProductPrice;
+
+// import {Money} from '@shopify/hydrogen';
+// import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+
+// export function ProductPrice({
+//   price,
+//   compareAtPrice,
+// }: {
+//   price?: MoneyV2;
+//   compareAtPrice?: MoneyV2 | null;
+// }) {
+//   return (
+//     <div className="product-price">
+//       {compareAtPrice ? (
+//         <div className="product-price-on-sale">
+//           {price ? <Money data={price} /> : null}
+//           <s>
+//             <Money data={compareAtPrice} />
+//           </s>
+//         </div>
+//       ) : price ? (
+//         <Money data={price} />
+//       ) : (
+//         <span>&nbsp;</span>
+//       )}
+//     </div>
+//   );
+// }
