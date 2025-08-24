@@ -15,14 +15,11 @@ export function ProductImage({
   }
   return (
     <div className={`product-image ${className || ''}`}> {/* Combine with optional className */}
-      <Image
+      <img
+        src={image.url}
         alt={image.altText || 'Product Image'}
-        aspectRatio="1/1"
-        data={image}
-        key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
-        className={className} // Pass className to Image
-        loading={loading || 'lazy'} // Use provided loading or default to 'lazy'
+        className={className}
+        loading={loading || 'lazy'}
       />
     </div>
   );
