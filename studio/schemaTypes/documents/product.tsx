@@ -50,6 +50,131 @@ export const productType = defineType({
       group: 'editorial',
     }),
     defineField({
+      name: 'detailedDescription',
+      title: 'Detailed Description',
+      type: 'text',
+      description: 'Extended product description for the main product page',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'allergyBenefits',
+      title: 'Allergy & Sensitivity Benefits',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'title', type: 'string', title: 'Benefit Title'},
+            {name: 'description', type: 'text', title: 'Benefit Description'},
+          ],
+        },
+      ],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'maintenanceTips',
+      title: 'Maintenance Tips',
+      type: 'text',
+      description: 'Care and maintenance instructions',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'relatedArticles',
+      title: 'Related Articles',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'page'}]}],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'cutawayImages',
+      title: 'Cutaway & Technical Images',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {name: 'alt', type: 'string', title: 'Alt Text'},
+            {name: 'caption', type: 'string', title: 'Caption'},
+            {name: 'category', type: 'string', title: 'Image Category', options: {
+              list: [
+                'cutaway',
+                'technical',
+                'comparison',
+                'installation',
+                'maintenance'
+              ]
+            }},
+          ],
+        },
+      ],
+      group: 'media',
+    }),
+    defineField({
+      name: 'comparisonSheets',
+      title: 'Comparison Sheets',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {name: 'alt', type: 'string', title: 'Alt Text'},
+            {name: 'caption', type: 'string', title: 'Caption'},
+            {name: 'competitor', type: 'string', title: 'Competitor Name'},
+          ],
+        },
+      ],
+      group: 'media',
+    }),
+    defineField({
+      name: 'technicalSpecs',
+      title: 'Technical Specifications',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'category', type: 'string', title: 'Category'},
+            {name: 'specs', type: 'array', of: [
+              {
+                type: 'object',
+                fields: [
+                  {name: 'name', type: 'string', title: 'Spec Name'},
+                  {name: 'value', type: 'string', title: 'Spec Value'},
+                  {name: 'unit', type: 'string', title: 'Unit (optional)'},
+                ],
+              },
+            ]},
+          ],
+        },
+      ],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'features',
+      title: 'Key Features',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {name: 'title', type: 'string', title: 'Feature Title'},
+            {name: 'description', type: 'text', title: 'Feature Description'},
+            {name: 'icon', type: 'string', title: 'Icon Name (optional)'},
+          ],
+        },
+      ],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'installationGuide',
+      title: 'Installation Guide',
+      type: 'portableText',
+      description: 'Step-by-step installation instructions',
+      group: 'editorial',
+    }),
+    defineField({
       name: 'store',
       type: 'shopifyProduct',
       description: 'Product data from Shopify (read-only)',

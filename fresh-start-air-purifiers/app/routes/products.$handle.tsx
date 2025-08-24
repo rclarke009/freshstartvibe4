@@ -11,6 +11,7 @@ import {
 import { ProductPrice } from '~/components/ProductPrice';
 import { ProductImage } from '~/components/ProductImage';
 import { ProductForm } from '~/components/ProductForm';
+import { SanityImage } from '~/components/SanityImage';
 import { redirectIfHandleIsLocalized } from '~/lib/redirect';
 
 // Use the new or existing client
@@ -65,7 +66,33 @@ async function loadCriticalData({
       detailedDescription,
       allergyBenefits[] { title, description },
       maintenanceTips,
-      relatedArticles[]-> { title, slug { current } }
+      relatedArticles[]-> { title, slug { current } },
+      cutawayImages[] {
+        asset->,
+        alt,
+        caption,
+        category
+      },
+      comparisonSheets[] {
+        asset->,
+        alt,
+        caption,
+        competitor
+      },
+      technicalSpecs[] {
+        category,
+        specs[] {
+          name,
+          value,
+          unit
+        }
+      },
+      features[] {
+        title,
+        description,
+        icon
+      },
+      installationGuide
     }`,
     { handle }
   );
@@ -194,6 +221,118 @@ export default function Product() {
         )}
       </div>
     </div>
+  </div>
+
+  {/* Enhanced Product Content Sections */}
+  <div className="container mx-auto px-4 py-8">
+    {/* Technical Specifications */}
+    {sanityData.technicalSpecs?.length > 0 && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center">Technical Specifications</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sanityData.technicalSpecs.map((category: any, index: number) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-lg border">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">{category.category}</h3>
+              <div className="space-y-3">
+                {category.specs.map((spec: any, specIndex: number) => (
+                  <div key={specIndex} className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="font-medium text-gray-700">{spec.name}</span>
+                    <span className="text-gray-600">
+                      {spec.value}{spec.unit && ` ${spec.unit}`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Key Features */}
+    {sanityData.features?.length > 0 && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center">Key Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sanityData.features.map((feature: any, index: number) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-lg border text-center">
+              {feature.icon && (
+                <div className="text-4xl mb-3">🔧</div>
+              )}
+              <h3 className="text-xl font-semibold mb-3 text-gray-800">{feature.title}</h3>
+              <p className="text-gray-600">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Cutaway & Technical Images */}
+    {sanityData.cutawayImages?.length > 0 && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center">Technical Details & Cutaways</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sanityData.cutawayImages.map((image: any, index: number) => (
+            <div key={index} className="bg-white p-4 rounded-lg shadow-lg border">
+              <SanityImage 
+                asset={image.asset} 
+                alt={image.alt || 'Technical detail'} 
+                className="w-full h-64 object-cover rounded-lg mb-3"
+              />
+              {image.caption && (
+                <p className="text-sm text-gray-600 text-center">{image.caption}</p>
+              )}
+              {image.category && (
+                <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mt-2">
+                  {image.category}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Comparison Sheets */}
+    {sanityData.comparisonSheets?.length > 0 && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center">Product Comparisons</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {sanityData.comparisonSheets.map((sheet: any, index: number) => (
+            <div key={index} className="bg-white p-4 rounded-lg shadow-lg border">
+              <SanityImage 
+                asset={sheet.asset} 
+                alt={sheet.alt || 'Comparison sheet'} 
+                className="w-full h-auto object-contain rounded-lg mb-3"
+              />
+              {sheet.caption && (
+                <p className="text-sm text-gray-600 text-center mb-2">{sheet.caption}</p>
+              )}
+              {sheet.competitor && (
+                <div className="text-center">
+                  <span className="inline-block bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">
+                    vs {sheet.competitor}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Installation Guide */}
+    {sanityData.installationGuide && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center">Installation Guide</h2>
+        <div className="bg-white p-8 rounded-lg shadow-lg border max-w-4xl mx-auto">
+          <div className="prose prose-lg max-w-none">
+            {/* You'll need to render the portable text here */}
+            <p className="text-gray-700">{sanityData.installationGuide}</p>
+          </div>
+        </div>
+      </section>
+    )}
   </div>
   <Analytics.ProductView
     data={{
