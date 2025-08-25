@@ -45,6 +45,8 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
+      {/* Hero section - Full width, immediately after header */}
+      <Hero />
       <main>{children}</main>
       <Footer
         footer={footer}
@@ -170,5 +172,41 @@ function MobileMenuAside({
         />
       </Aside>
     )
+  );
+}
+
+// Hero component - Full page width, right below header
+function Hero() {
+  return (
+    <section className="hero-bleed w-full">
+      {/* Hero image - full width, much shorter height, right below header */}
+      <div className="hero-image">
+        <img
+          src="/hero-livingroom.jpg"
+          alt="Calm, clean living room with fresh air"
+          className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+        {/* Optional subtle overlay for text readability */}
+        <div className="absolute inset-0 bg-black/10"></div>
+      </div>
+      
+      {/* Hero content - centered below the image */}
+      <div className="hero-content">
+        <h1 className="text-3xl md:text-5xl font-bold text-[#1e40af] mb-4 md:mb-6">
+          Breathe without the "what's in the air?" worry
+        </h1>
+        <p className="text-lg md:text-xl text-gray-700/80 mb-6 md:mb-8 max-w-3xl mx-auto">
+          Real protection from fragrance, VOCs, dust, and mold—trusted in hospitals and sensitive homes.
+        </p>
+        <a
+          href="#guide"
+          className="inline-block bg-[#1e40af] text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:bg-[#1e3a8a] transition-colors text-lg"
+        >
+          Find your filter
+        </a>
+      </div>
+    </section>
   );
 }
