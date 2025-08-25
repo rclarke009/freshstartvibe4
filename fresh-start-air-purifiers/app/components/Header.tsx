@@ -19,25 +19,27 @@ interface HeaderProps {
 
 type Viewport = 'desktop' | 'mobile';
 
-export function Header({
-  header,
-  isLoggedIn,
-  cart,
-  publicStoreDomain,
-}: HeaderProps) {
+export function Header({header, isLoggedIn, cart, publicStoreDomain}: HeaderProps) {
   const {shop, menu} = header;
+  const primaryDomainUrl = shop.primaryDomain.url;
+
   return (
     <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <div className="header-left">
+        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end className="brand-logo">
+          <img
+            src="/fresh-start-air-purifiers-logo-no-bkgd.png"
+            alt="Fresh Start Air Purifiers"
+            className="header-logo"
+          />
+        </NavLink>
+        <span className="company-name">Fresh Start Air Purifiers</span>
+      </div>
+      
+      <div className="header-right">
+        <HeaderMenu menu={menu} publicStoreDomain={publicStoreDomain} primaryDomainUrl={primaryDomainUrl} />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
     </header>
   );
 }
@@ -45,30 +47,17 @@ export function Header({
 export function HeaderMenu({
   menu,
   primaryDomainUrl,
-  viewport,
   publicStoreDomain,
 }: {
   menu: HeaderProps['header']['menu'];
-  primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
-  viewport: Viewport;
-  publicStoreDomain: HeaderProps['publicStoreDomain'];
+  primaryDomainUrl: string;
+  publicStoreDomain: string;
 }) {
-  const className = `header-menu-${viewport}`;
+  const className = 'header-menu-desktop';
   const {close} = useAside();
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={close}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -104,14 +93,8 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
-          </Await>
-        </Suspense>
-      </NavLink>
       <SearchToggle />
+      <AccountToggle isLoggedIn={isLoggedIn} />
       <CartToggle cart={cart} />
     </nav>
   );
@@ -123,8 +106,22 @@ function HeaderMenuMobileToggle() {
     <button
       className="header-menu-mobile-toggle reset"
       onClick={() => open('mobile')}
+      aria-label="Open menu"
     >
-      <h3>☰</h3>
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
     </button>
   );
 }
@@ -132,9 +129,27 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
-      Search
+    <button 
+      className="icon-button reset" 
+      onClick={() => open('search')}
+      aria-label="Search"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
     </button>
+  );
+}
+
+function AccountToggle({isLoggedIn}: {isLoggedIn: Promise<boolean>}) {
+  return (
+    <NavLink prefetch="intent" to="/account" style={activeLinkStyle} className="icon-button reset">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </NavLink>
   );
 }
 
@@ -143,8 +158,9 @@ function CartBadge({count}: {count: number | null}) {
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
-    <a
-      href="/cart"
+    <button
+      type="button"
+      className="icon-button reset"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -155,9 +171,17 @@ function CartBadge({count}: {count: number | null}) {
           url: window.location.href || '',
         } as CartViewPayload);
       }}
+      aria-label={`Cart ${count || 0} items`}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
-    </a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      {count !== null && count > 0 && (
+        <span className="cart-badge">{count}</span>
+      )}
+    </button>
   );
 }
 
@@ -237,48 +261,6 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
-// const FALLBACK_HEADER_MENU = {
-//   id: 'gid://shopify/Menu/199655587896',
-//   items: [
-//     {
-//       id: 'gid://shopify/MenuItem/461609500728',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Collections',
-//       type: 'HTTP',
-//       url: '/collections',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609533496',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Blog',
-//       type: 'HTTP',
-//       url: '/blogs/journal',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609566264',
-//       resourceId: null,
-//       tags: [],
-//       title: 'Policies',
-//       type: 'HTTP',
-//       url: '/policies',
-//       items: [],
-//     },
-//     {
-//       id: 'gid://shopify/MenuItem/461609599032',
-//       resourceId: 'gid://shopify/Page/92591030328',
-//       tags: [],
-//       title: 'About',
-//       type: 'PAGE',
-//       url: '/pages/about',
-//       items: [],
-//     },
-//   ],
-// };
-
 function activeLinkStyle({
   isActive,
   isPending,
@@ -288,6 +270,6 @@ function activeLinkStyle({
 }) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    color: isPending ? 'grey' : '#1e40af', // Use our brand blue
   };
 }
