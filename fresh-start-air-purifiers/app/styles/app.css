@@ -17,10 +17,13 @@ img {
   width: 100%;
   max-width: var(--grid-item-width); /* 355px */
   height: auto;
-  padding: 2rem; /* Add padding around the image */
-  background: #f8fafc; /* Light gray background */
-  border-radius: 12px; /* Rounded container */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem; /* Keep container padding for spacing */
+  background: transparent; /* Remove the light gray background */
+  border-radius: 12px; /* Keep rounded container */
+  box-shadow: none; /* Remove shadow */
   overflow: hidden;
 }
 
@@ -38,13 +41,14 @@ img {
 }
 
 .product-image-container img {
-  width: 100%;
+  width: auto; /* Let image size naturally */
   height: auto;
+  max-width: 100%;
   max-height: 400px;
   object-fit: contain;
   border-radius: 8px; /* Rounded image corners */
   display: block;
-  background: white; /* White background for the image */
+  background: transparent; /* Remove white background */
 }
 
 /* Remove overly specific Shopify CDN override */
@@ -70,6 +74,7 @@ img {
   .product-image-container {
     max-width: 400px; /* Matches --aside-width for consistency */
     aspect-ratio: auto; /* Remove forced aspect ratio */
+    min-height: 500px; /* Give enough height to center vertically */
   }
   
   .product-image-container img {
