@@ -17,7 +17,10 @@ img {
   width: 100%;
   max-width: var(--grid-item-width); /* 355px */
   height: auto;
-  aspect-ratio: 4 / 3; /* More natural for product images */
+  padding: 2rem; /* Add padding around the image */
+  background: #f8fafc; /* Light gray background */
+  border-radius: 12px; /* Rounded container */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   overflow: hidden;
 }
 
@@ -39,8 +42,9 @@ img {
   height: auto;
   max-height: 400px;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: 8px; /* Rounded image corners */
   display: block;
+  background: white; /* White background for the image */
 }
 
 /* Remove overly specific Shopify CDN override */
@@ -65,13 +69,72 @@ img {
 @media (min-width: 45em) {
   .product-image-container {
     max-width: 400px; /* Matches --aside-width for consistency */
-    aspect-ratio: 4 / 3;
+    aspect-ratio: auto; /* Remove forced aspect ratio */
   }
   
   .product-image-container img {
-    max-width: 400px;
+    max-width: 100%;
     max-height: 450px; /* Slightly taller for desktop */
+    aspect-ratio: auto; /* Let image maintain natural proportions */
   }
+}
+
+/* Product image gallery styles */
+.product-gallery {
+  margin-top: 1.5rem;
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.gallery-thumbnail {
+  width: 80px;
+  height: 80px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  background: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-thumbnail:hover {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.gallery-thumbnail:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.gallery-thumbnail.active {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Enhanced content section with different background */
+.enhanced-content-section {
+  background: #f1f5f9; /* Light blue-gray background */
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 3rem;
+  border: 1px solid #e2e8f0;
 }
 
 /*

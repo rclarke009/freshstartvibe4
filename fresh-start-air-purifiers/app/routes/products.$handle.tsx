@@ -120,10 +120,17 @@ export default function Product() {
 
   const { title, descriptionHtml } = product;
 
+  // Create array of product images for gallery
+  const productImages = [
+    selectedVariant?.image,
+    // Add more images here when available
+    // You can also fetch additional images from Sanity or Shopify
+  ].filter(Boolean);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="product-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                {/* Product Image - Left Column */}
+        {/* Product Image - Left Column */}
         <div className="order-2 lg:order-1">
           <div className="sticky top-8">
             <div className="product-image-container mx-auto lg:mx-0">
@@ -137,6 +144,40 @@ export default function Product() {
                 />
               )}
             </div>
+            
+            {/* Product Image Gallery */}
+            {productImages.length > 1 && (
+              <div className="product-gallery">
+                <h3 className="text-lg font-semibold mb-3 text-gray-900">Product Views</h3>
+                <div className="gallery-thumbnails">
+                  {productImages.map((image, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className={`gallery-thumbnail ${index === 0 ? 'active' : ''}`}
+                      onClick={() => {
+                        // TODO: Implement image switching functionality
+                        console.log('Switch to image:', index);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          // TODO: Implement image switching functionality
+                          console.log('Switch to image:', index);
+                        }
+                      }}
+                      aria-label={`View ${title} image ${index + 1}`}
+                    >
+                      <img
+                        src={image.url}
+                        alt={image.altText || `${title} view ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         
@@ -218,12 +259,12 @@ export default function Product() {
         </div>
       </div>
 
-      {/* Enhanced Product Content Sections */}
-      <div className="container mx-auto px-4 py-8">
+      {/* Enhanced Product Content Sections with Different Background */}
+      <div className="enhanced-content-section">
         {/* Technical Specifications */}
         {sanityData.technicalSpecs?.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-center">Technical Specifications</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Technical Specifications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sanityData.technicalSpecs.map((category: any, index: number) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-lg border">
@@ -247,7 +288,7 @@ export default function Product() {
         {/* Key Features */}
         {sanityData.features?.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-center">Key Features</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Key Features</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sanityData.features.map((feature: any, index: number) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-lg border text-center">
@@ -265,7 +306,7 @@ export default function Product() {
         {/* Cutaway & Technical Images */}
         {sanityData.cutawayImages?.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-center">Technical Details & Cutaways</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Technical Details & Cutaways</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sanityData.cutawayImages.map((image: any, index: number) => (
                 <div key={index} className="bg-white p-4 rounded-lg shadow-lg border">
@@ -291,7 +332,7 @@ export default function Product() {
         {/* Comparison Sheets */}
         {sanityData.comparisonSheets?.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-center">Product Comparisons</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Product Comparisons</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {sanityData.comparisonSheets.map((sheet: any, index: number) => (
                 <div key={index} className="bg-white p-4 rounded-lg shadow-lg border">
@@ -319,7 +360,7 @@ export default function Product() {
         {/* Installation Guide */}
         {sanityData.installationGuide && (
           <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-6 text-center">Installation Guide</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Installation Guide</h2>
             <div className="bg-white p-8 rounded-lg shadow-lg border max-w-4xl mx-auto">
               <div className="prose prose-lg max-w-none">
                 <p className="text-gray-700">{sanityData.installationGuide}</p>
