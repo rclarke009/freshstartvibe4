@@ -179,12 +179,11 @@ function MobileMenuAside({
 function Hero() {
   return (
     <section className="hero-bleed w-full">
-      {/* Hero image - full width, much shorter height, right below header */}
-      <div className="hero-image">
+      {/* Hero image - fixed aspect ratio container for predictable cropping */}
+      <div className="hero-image-container">
         <img
           src="/hero-livingroom.jpg"
           alt="Calm, clean living room with fresh air"
-          className="w-full h-full object-cover"
           loading="eager"
           decoding="async"
         />
