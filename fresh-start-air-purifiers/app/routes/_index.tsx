@@ -9,7 +9,7 @@ import type {
 import {ProductItem} from '~/components/ProductItem';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Fresh Start Air Purifiers | Bring the fresh air indoors'}];
+  return [{title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -59,8 +59,9 @@ export default function Homepage() {
 // 2) Problem → "you're not crazy" validation
 function ProblemValidation() {
   return (
-    <section id="why-bother" className="mt-10 md:mt-14 bg-slate-50/60">
-      <div className="max-w-7xl mx-auto p-6 md:p-8 lg:p-12">
+    <div className="section-bleed bg-slate-50/60">
+      <section id="why-bother" className="mt-10 md:mt-14">
+        <div className="p-6 md:p-8 lg:p-12">
 
        
         <div className="mt-8 two-column-layout">
@@ -113,6 +114,7 @@ function ProblemValidation() {
         </div>
       </div>
     </section>
+    </div>
   );
 }
 
