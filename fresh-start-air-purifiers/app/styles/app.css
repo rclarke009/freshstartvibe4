@@ -1278,7 +1278,7 @@ section#why-bother .two-column-layout {
   width: 100% !important;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 900px) {
   section#why-bother .two-column-layout {
     flex-direction: row !important;
     gap: 3rem !important;
@@ -1297,27 +1297,40 @@ section#why-bother .right-column {
   flex-shrink: 0 !important;
   display: flex !important;
   justify-content: center !important;
+  min-width: 280px !important; /* Ensure minimum width for image on mobile */
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 900px) {
   section#why-bother .right-column {
     width: auto !important;
-    max-width: 25vw !important; /* About 1/3 of viewport width */
-    min-width: 200px !important;
-    justify-content: flex-end !important;
+    max-width: 380px !important;
+    min-width: 300px !important;
   }
 }
 
 /* Force image sizing */
 section#why-bother .right-column img {
-  max-width: 200px !important;
+  max-width: 380px !important;
   width: auto !important;
   height: auto !important;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 900px) {
   section#why-bother .right-column img {
     max-width: 300px !important;
+  }
+}
+
+/* Responsive image sizing for problem validation section */
+.responsive-image {
+  max-width: 280px !important; /* Larger on mobile */
+  width: auto !important;
+  height: auto !important;
+}
+
+@media (min-width: 900px) {
+  .responsive-image {
+    max-width: 320px !important; /* Slightly larger on desktop */
   }
 }
 

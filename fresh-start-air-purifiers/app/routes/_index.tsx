@@ -89,7 +89,7 @@ function ProblemValidation() {
               <li className="flex gap-3">
                 <span className="bullet" />
                 <p>
-                  <span className="font-medium">Mold & allergens</span> — microscopic spores and particles sneak past basic systems.
+                  <span className="font-medium">Mold & allergens</span> — microscopic spores and particles sneak past basic air purifiersystems.
                 </p>
               </li>
             </ul>
@@ -107,8 +107,7 @@ function ProblemValidation() {
             <img
               src="/fresh-start-air-purifiers-cutaway-why.jpg"
               alt="Air purifier cutaway illustrating fragrance and VOC filtration challenges"
-              className="w-full h-auto rounded-2xl shadow-lg"
-              style={{maxWidth: '200px', width: 'auto', height: 'auto'}}
+              className="w-full h-auto rounded-2xl shadow-lg responsive-image"
             />
           </div>
         </div>
