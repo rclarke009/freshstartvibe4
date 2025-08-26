@@ -59,13 +59,60 @@ export default function Homepage() {
 // 2) Problem → "you're not crazy" validation
 function ProblemValidation() {
   return (
-    <section className="bg-slate-50/60 rounded-2xl p-6 md:p-8">
-      <h2 className="text-2xl font-semibold text-[#1e40af]">Why the air still bothers you</h2>
-      <ul className="mt-4 grid md:grid-cols-3 gap-4 text-gray-700/80">
-        <li>Fragrance can drift in from other units and hallways.</li>
-        <li>New finishes and foam release VOCs for months.</li>
-        <li>Most purifiers trap dust, not chemicals and odors.</li>
-      </ul>
+    <section id="why-bother" className="mt-10 md:mt-14 bg-slate-50/60">
+      <div className="max-w-7xl mx-auto p-6 md:p-8 lg:p-12">
+
+       
+        <div className="mt-8 two-column-layout">
+          <div className="left-column space-y-6" style={{flex: '1', minWidth: '0', maxWidth: '100%'}}>
+          <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af]">
+            &ldquo;I already have a basic purifier… why am I still not feeling better?&rdquo;
+          </h2>
+
+            <p className="text-2xl md:text-3xl font-bold" style={{color: '#1e40af !important'}}>
+              Because there&apos;s more to clean air than just dust.
+            </p>
+            <br></br>
+            <ul className="problem-list space-y-4 text-gray-700/85">
+              <li className="flex gap-3">
+                <span className="bullet" />
+                <p>
+                  <span className="font-medium">Fragrance & VOCs</span> — from cleaning products, paint, and new flooring — slip through most filters designed only for dust.
+                </p>
+              </li>
+              <li className="flex gap-3">
+                <span className="bullet" />
+                <p>
+                  <span className="font-medium">PM2.5 particles</span> — released by gas stoves, candles, smog, and wildfire smoke — are too small for cheap filters to trap.
+                </p>
+              </li>
+              <li className="flex gap-3">
+                <span className="bullet" />
+                <p>
+                  <span className="font-medium">Mold & allergens</span> — microscopic spores and particles sneak past basic systems.
+                </p>
+              </li>
+            </ul>
+            <p className="text-gray-700/90">
+              That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
+            </p>
+            <a
+              href="#guide"
+              className="inline-block rounded-xl bg-[#1e40af] px-5 py-3 font-semibold text-white shadow hover:bg-[#1e3a8a] transition-colors"
+            >
+              Compare models
+            </a>
+          </div>
+          <div className="right-column" style={{width: '100%', flexShrink: '0', display: 'flex', justifyContent: 'center'}}>
+            <img
+              src="/fresh-start-air-purifiers-cutaway-why.jpg"
+              alt="Air purifier cutaway illustrating fragrance and VOC filtration challenges"
+              className="w-full h-auto rounded-2xl shadow-lg"
+              style={{maxWidth: '200px', width: 'auto', height: 'auto'}}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

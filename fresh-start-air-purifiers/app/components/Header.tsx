@@ -48,12 +48,14 @@ export function HeaderMenu({
   menu,
   primaryDomainUrl,
   publicStoreDomain,
+  viewport = 'desktop',
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: string;
   publicStoreDomain: string;
+  viewport?: Viewport;
 }) {
-  const className = 'header-menu-desktop';
+  const className = viewport === 'mobile' ? 'header-menu-mobile' : 'header-menu-desktop';
   const {close} = useAside();
 
   return (

@@ -193,18 +193,25 @@ function Hero() {
       
       {/* Hero content - centered below the image */}
       <div className="hero-content">
-        <h1 className="text-3xl md:text-5xl font-bold text-[#1e40af] mb-4 md:mb-6">
-          Breathe without the "what's in the air?" worry
-        </h1>
-        <p className="text-lg md:text-xl text-gray-700/80 mb-6 md:mb-8 max-w-3xl mx-auto">
-          Real protection from fragrance, VOCs, dust, and mold—trusted in hospitals and sensitive homes.
-        </p>
-        <a
-          href="#guide"
-          className="inline-block bg-[#1e40af] text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:bg-[#1e3a8a] transition-colors text-lg"
-        >
-          Find your filter
-        </a>
+        <div className="hero-text">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#1e40af] mb-4 md:mb-6">
+            Bring the fresh air indoors
+          </h1>
+          <h2 className="text-xl md:text-2xl font-semibold text-[#1e40af] mb-4 md:mb-6 max-w-4xl mx-auto">
+            Air Purifiers provide fresh, natural air — without the pollen, mold, or chemicals.
+          </h2>
+          <p className="text-base md:text-lg text-gray-600/70 mb-6 md:mb-8 max-w-2xl mx-auto">
+            Real protection from fragrance, VOCs, dust, and mold—trusted in hospitals and sensitive homes.
+          </p>
+        </div>
+        <div className="hero-cta">
+          <a
+            href="#guide"
+            className="add-to-cart-button"
+          >
+            Find your filter
+          </a>
+        </div>
       </div>
     </section>
   );
