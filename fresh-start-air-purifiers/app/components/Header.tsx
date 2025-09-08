@@ -33,7 +33,9 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}: HeaderProp
             className="header-logo"
           />
         </NavLink>
-        <span className="company-name">Fresh Start Air Purifiers</span>
+        <NavLink to="/" className="company-name">
+          Fresh Start Air Purifiers
+        </NavLink>
       </div>
       
       <div className="header-right">
@@ -248,7 +250,7 @@ const FALLBACK_HEADER_MENU = {
       tags: [],
       title: 'Blog',
       type: 'HTTP',
-      url: '/blogs/journal',
+      url: '/blogs',
       items: [],
     },
     {
@@ -257,7 +259,7 @@ const FALLBACK_HEADER_MENU = {
       tags: [],
       title: 'Contact Us',
       type: 'HTTP',
-      url: '/pages/contact',
+      url: '/contact',
       items: [],
     },
   ],

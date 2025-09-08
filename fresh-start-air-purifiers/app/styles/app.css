@@ -557,7 +557,7 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .footer {
-  background: var(--color-dark);
+  background: #1e40af;
   margin-top: auto;
 }
 
@@ -1020,6 +1020,26 @@ body { background-color: #F0F8FF; color: #2E2E2E; }
   margin-bottom: 0; /* No bottom margin */
 }
 
+/* Ensure hero section on homepage is not constrained by parent containers */
+.home .hero-bleed {
+  width: 100vw !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  position: relative !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Force hero to break out of any container constraints */
+.home .hero-bleed,
+.home .hero-bleed * {
+  box-sizing: border-box !important;
+}
+
 .hero-image-container {
   width: 100%;
   /* Mobile: 16:9 ratio (taller, more content visible) */
@@ -1357,6 +1377,12 @@ section#why-bother .left-column {
   max-width: 100% !important;
 }
 
+section#why-bother .left-column-narrow {
+  flex: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
 section#why-bother .right-column {
   width: 100% !important;
   flex-shrink: 0 !important;
@@ -1385,3 +1411,118 @@ section#why-bother .right-column img {
   }
 }
 
+
+
+
+
+/* Full-width section for serious-filtration */
+.serious-filtration-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-color: rgba(248, 250, 252, 0.6); /* Matches bg-slate-50/60 */
+  border: 0; /* Ensure no border */
+  margin-top: 2.5rem; /* Matches mt-10 for consistency */
+  margin-bottom: 0; /* No bottom margin */
+  padding: 1.5rem 0; /* Vertical padding only */
+}
+
+/* Constrain content within serious-filtration */
+.serious-filtration-content {
+  max-width: 1200px; /* Matches max-w-7xl */
+  margin: 0 auto;
+  padding-left: 1rem; /* Matches p-6 mobile */
+  padding-right: 1rem;
+}
+
+/* Responsive padding adjustments */
+@media (min-width: 768px) {
+  .serious-filtration-content {
+    padding-left: 2rem; /* Matches p-8 tablet */
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .serious-filtration-content {
+    padding-left: 3rem; /* Matches p-12 desktop */
+    padding-right: 3rem;
+  }
+}
+
+/* Ensure two-column layout remains intact */
+section#serious-filtration .two-column-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+@media (min-width: 900px) {
+  section#serious-filtration .two-column-layout {
+    flex-direction: row !important;
+    gap: 3rem !important;
+    align-items: flex-start !important;
+  }
+}
+
+/* Existing styles for left and right columns remain unchanged */
+section#serious-filtration .left-column {
+  flex: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+section#serious-filtration .right-column {
+  width: 100% !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  min-width: 280px !important;
+}
+
+@media (min-width: 900px) {
+  section#serious-filtration .right-column {
+    width: auto !important;
+    max-width: 380px !important;
+    min-width: 300px !important;
+  }
+}
+
+section#serious-filtration .right-column img {
+  max-width: 380px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+@media (min-width: 900px) {
+  section#serious-filtration .right-column img {
+    max-width: 300px !important;
+  }
+}
+
+/* making the left column narrower */
+section#serious-filtration .left-column-narrow {
+  width: 100% !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  min-width: 280px !important;
+  max-width: 300px !important;
+}
+
+/* making the right column wider */
+section#serious-filtration .right-column-wide {
+  width: 100% !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  min-width: 280px !important;
+  max-width: 400px !important;
+}
