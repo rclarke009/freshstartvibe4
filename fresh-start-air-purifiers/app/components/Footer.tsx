@@ -18,13 +18,13 @@ export function Footer({
       <Await resolve={footerPromise}>
         {(footer) => (
           <footer className="w-full border-t border-slate-200 bg-slate-50/60">
-            <div className="mx-auto max-w-6xl px-4 py-6">
+            <div className="mx-auto max-w-6xl px-4 py-4">
               {/* Main footer content - horizontal layout on desktop, dropdowns on mobile */}
-              <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 {/* Search */}
                 <div className="col-span-2 lg:col-span-1">
-                  <h3 className="text-sm font-semibold text-[#1e40af] mb-2">Search</h3>
-                  <Form action="/search" method="GET" className="mt-2">
+                  <h3 className="text-xs font-semibold text-[#1e40af] mb-1">Search</h3>
+                  <Form action="/search" method="GET">
                     <label htmlFor="site-search" className="sr-only">Search site</label>
                     <div className="flex items-center gap-1">
                       <input
@@ -32,11 +32,11 @@ export function Footer({
                         name="q"
                         type="search"
                         placeholder="Search air purifiers…"
-                        className="w-full rounded-lg border border-slate-300 bg-white/90 px-2 py-1 text-xs text-gray-700 placeholder-slate-400 outline-none focus:ring-1 focus:ring-[#1e40af]/40"
+                        className="w-full rounded border border-slate-300 bg-white/90 px-2 py-1 text-xs text-gray-700 placeholder-slate-400 outline-none focus:ring-1 focus:ring-[#1e40af]/40"
                       />
                       <button
                         type="submit"
-                        className="rounded-lg bg-[#1e40af] px-2 py-1 text-xs font-semibold text-white hover:opacity-95 focus:ring-1 focus:ring-[#1e40af]/40"
+                        className="rounded bg-[#1e40af] px-2 py-1 text-xs font-semibold text-white hover:opacity-95 focus:ring-1 focus:ring-[#1e40af]/40"
                         aria-label="Submit search"
                         title="Search"
                       >
@@ -49,15 +49,15 @@ export function Footer({
                 {/* Explore / Navigation Shortcuts */}
                 <div className="col-span-1">
                   <details className="group">
-                    <summary className="text-sm font-semibold text-[#1e40af] mb-2 cursor-pointer list-none lg:pointer-events-none">
+                    <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
                       <span className="flex items-center justify-between">
                         Explore
-                        <svg className="h-4 w-4 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </span>
                     </summary>
-                    <ul className="mt-2 space-y-1 text-xs text-gray-600">
+                    <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/" className="hover:underline">Home</NavLink></li>
                       <li><NavLink to="/products" className="hover:underline">Products</NavLink></li>
                       <li><NavLink to="/collections" className="hover:underline">Collections</NavLink></li>
@@ -71,15 +71,15 @@ export function Footer({
                 {/* Help */}
                 <div className="col-span-1">
                   <details className="group">
-                    <summary className="text-sm font-semibold text-[#1e40af] mb-2 cursor-pointer list-none lg:pointer-events-none">
+                    <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
                       <span className="flex items-center justify-between">
                         Help
-                        <svg className="h-4 w-4 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </span>
                     </summary>
-                    <ul className="mt-2 space-y-1 text-xs text-gray-600">
+                    <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/pages/faq" className="hover:underline">FAQ</NavLink></li>
                       <li><NavLink to="/policies/shipping-policy" className="hover:underline">Shipping</NavLink></li>
                       <li><NavLink to="/pages/warranty" className="hover:underline">Warranty</NavLink></li>
@@ -91,15 +91,15 @@ export function Footer({
                 {/* Trust & Legal */}
                 <div className="col-span-2 lg:col-span-1">
                   <details className="group">
-                    <summary className="text-sm font-semibold text-[#1e40af] mb-2 cursor-pointer list-none lg:pointer-events-none">
+                    <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
                       <span className="flex items-center justify-between">
                         Legal
-                        <svg className="h-4 w-4 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </span>
                     </summary>
-                    <ul className="mt-2 space-y-1 text-xs text-gray-600">
+                    <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/policies/privacy-policy" className="hover:underline">Privacy</NavLink></li>
                       <li><NavLink to="/policies/terms-of-service" className="hover:underline">Terms</NavLink></li>
                       <li><NavLink to="/pages/disclaimer" className="hover:underline">Disclaimer</NavLink></li>
@@ -109,10 +109,10 @@ export function Footer({
               </div>
 
               {/* Divider */}
-              <div className="my-4 h-px w-full bg-slate-200" />
+              <div className="my-3 h-px w-full bg-slate-200" />
 
               {/* Bottom row: Social + Copyright */}
-              <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+              <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
                 {/* Social */}
                 <div className="flex items-center gap-2">
                   <a
