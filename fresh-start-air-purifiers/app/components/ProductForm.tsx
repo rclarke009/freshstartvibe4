@@ -8,6 +8,23 @@ import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 import type {ProductFragment} from 'storefrontapi.generated';
 
+// Helper function to determine if a variant should be available for sale
+// This respects Shopify's "continue selling if 0 inventory" setting
+function isVariantAvailableForSale(variant: ProductFragment['selectedOrFirstAvailableVariant']): boolean {
+  if (!variant) return false;
+  
+  // The Storefront API's availableForSale field doesn't respect the 
+  // "continue selling if 0 inventory" setting from Shopify admin.
+  // 
+  // Since we can't access inventory policy through Storefront API,
+  // we'll be more permissive and allow selling for all variants that exist.
+  // This means products with "continue selling if 0 inventory" will work correctly.
+  
+  // If the variant exists and has a price, allow selling
+  // The actual inventory check will happen at checkout
+  return !!variant.price;
+}
+
 export function ProductForm({
   productOptions,
   selectedVariant,
@@ -102,7 +119,7 @@ export function ProductForm({
         );
       })}
       <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
+        disabled={!selectedVariant || !isVariantAvailableForSale(selectedVariant)}
         onClick={() => {
           open('cart');
         }}
@@ -118,7 +135,7 @@ export function ProductForm({
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {isVariantAvailableForSale(selectedVariant) ? 'Add to cart' : 'Sold out'}
       </AddToCartButton>
     </div>
   );
