@@ -102,6 +102,7 @@ function Hero() {
 // 2) Problem → "you're not crazy" validation
 function ProblemValidation() {
   return (
+  
     <div className="section-bleed bg-slate-50/60">
       <section id="why-bother" className="mt-10 md:mt-14">
         <div className="p-6 md:p-8 lg:p-12">

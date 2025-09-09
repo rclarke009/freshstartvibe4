@@ -71,7 +71,7 @@ export function HeaderMenu({
 
   return (
     <nav className={className} role="navigation">
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+      {FALLBACK_HEADER_MENU.items.map((item) => {
         if (!item.url) return null;
 
         // if the url is internal, we strip the domain
