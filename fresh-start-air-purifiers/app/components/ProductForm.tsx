@@ -99,6 +99,8 @@ export function ProductForm({
                         opacity: available ? 1 : 0.3,
                       }}
                       disabled={!exists}
+                      aria-label={`Select ${name} ${option.name}`}
+                      aria-pressed={selected}
                       onClick={() => {
                         if (!selected) {
                           navigate(`?${variantUriQuery}`, {

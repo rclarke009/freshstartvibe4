@@ -42,6 +42,7 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
+      <main id="main-content">
       {/* Hero section - Only on homepage */}
       <Hero />
       {/* Content sections */}
@@ -51,6 +52,7 @@ export default function Homepage() {
         <SocialProof />
         <RecommendedProducts products={data.recommendedProducts} />
       </div>
+      </main>
     </div>
   );
 }
@@ -77,9 +79,9 @@ function Hero() {
           <h1 className="text-3xl md:text-5xl font-bold text-[#1e40af] mb-4 md:mb-6">
             Bring the fresh air indoors
           </h1>
-          <h2 className="text-xl md:text-2xl font-semibold text-[#1e40af] mb-4 md:mb-6 max-w-4xl mx-auto">
+          <p className="text-xl md:text-2xl font-semibold text-[#1e40af] mb-4 md:mb-6 max-w-4xl mx-auto">
             Air Purifiers provide fresh, natural air — without the pollen, mold, or chemicals.
-          </h2>
+          </p>
           <p className="text-base md:text-lg text-gray-600/70 mb-6 md:mb-8 max-w-2xl mx-auto">
             Real protection from fragrance, VOCs, dust, and mold—trusted in hospitals and sensitive homes.
           </p>

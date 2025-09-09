@@ -24,8 +24,16 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}: HeaderProp
   const primaryDomainUrl = shop.primaryDomain.url;
 
   return (
-    <header className="header">
-      <div className="header-left">
+    <>
+      {/* Skip to main content link for screen readers */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded z-50"
+      >
+        Skip to main content
+      </a>
+      <header className="header">
+        <div className="header-left">
         <NavLink prefetch="intent" to="/" style={activeLinkStyle} end className="brand-logo">
           <img
             src="/fresh-start-air-purifiers-logo-no-bkgd.png"
@@ -43,6 +51,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}: HeaderProp
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </div>
     </header>
+    </>
   );
 }
 

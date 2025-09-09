@@ -83,7 +83,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div>
             <h2 className="text-2xl font-bold text-[#1e40af] mb-6">Send us a Message</h2>
-            <form className="space-y-6">
+            <form className="space-y-6" aria-label="Contact form">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -95,6 +95,7 @@ export default function Contact() {
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
                   placeholder="Your full name"
+                  aria-describedby="name-error"
                 />
               </div>
               

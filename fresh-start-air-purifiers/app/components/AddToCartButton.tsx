@@ -28,6 +28,7 @@ export function AddToCartButton({
             className="add-to-cart-button"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
+            aria-describedby={disabled ? 'sold-out-message' : undefined}
           >
             {children}
           </button>
