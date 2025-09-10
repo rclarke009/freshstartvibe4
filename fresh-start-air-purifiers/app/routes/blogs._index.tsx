@@ -91,6 +91,7 @@ export default function Blogs() {
         <p className="mt-2 text-navytext/70 max-w-2xl">
           Fresh, practical posts on VOCs, filters, and making your home’s air feel… actually fresh.
         </p>
+        <br></br>
       </header>
 
       {/* Grid */}
