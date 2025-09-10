@@ -2,7 +2,10 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {sanityClient} from '~/lib/sanityClient';
 import {PortableText} from '@portabletext/react';
-import {urlForImage} from '@sanity/image-url';
+import {createImageUrlBuilder} from '@sanity/image-url';
+
+// Create image URL builder
+const urlFor = (source: any) => createImageUrlBuilder(sanityClient).image(source);
 
 // Shared fetch function
 const getPost = async (slug: string) => {
@@ -163,11 +166,10 @@ export default function BlogPost() {
   const portableTextComponents = {
     types: {
       image: ({value}: {value: any}) => {
-        const baseUrl = urlForImage(value);
-        if (!baseUrl) {
+        if (!value?.asset) {
           return null;
         }
-        const imageUrl = `${baseUrl}?w=800&fit=max&auto=format`;
+        const imageUrl = urlFor(value).width(800).fit('max').auto('format').url();
         return (
           <img
             src={imageUrl}
