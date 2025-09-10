@@ -165,9 +165,9 @@ export default function BlogPost() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <article className="grid lg:grid-cols-12 gap-y-12">
+      <article className="space-y-8">
         {/* Header */}
-        <header className="lg:col-span-12 flex flex-col gap-6 items-start">
+        <header className="flex flex-col gap-6 items-start">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Categories categories={blog.categories} />
             <PublishedAt publishedAt={blog.publishedAt} />
@@ -186,55 +186,77 @@ export default function BlogPost() {
           <Author author={blog.author} />
         </header>
 
-        {/* Featured Image */}
-        {blog.featuredImage?.asset?.url && (
-          <figure className="lg:col-span-4 flex flex-col gap-2 items-start">
-            <img
-              src={`${blog.featuredImage.asset.url}?w=1200&h=800&fit=crop&auto=format&q=90`}
-              alt={blog.featuredImage.alt || blog.title || "Post image"}
-              className="w-full h-64 lg:h-80 object-cover rounded-lg shadow-lg"
-            />
-            {blog.featuredImage.alt && (
-              <figcaption className="text-sm text-gray-500 italic">
-                {blog.featuredImage.alt}
-              </figcaption>
-            )}
-          </figure>
-        )}
-
-        {/* Content */}
-        {blog.content && (
-          <div className="lg:col-span-7 lg:col-start-6 prose prose-lg max-w-none">
-            <Suspense fallback={<div>Loading content...</div>}>
-              <PortableText 
-                value={blog.content}
-                components={{
-                  block: {
-                    normal: ({children}) => <p className="mb-4">{children}</p>,
-                    h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-[#1e40af]">{children}</h1>,
-                    h2: ({children}) => <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">{children}</h2>,
-                    h3: ({children}) => <h3 className="text-xl font-bold mb-3 text-[#1e40af]">{children}</h3>,
-                    h4: ({children}) => <h4 className="text-lg font-bold mb-2 text-[#1e40af]">{children}</h4>,
-                    blockquote: ({children}) => <blockquote className="border-l-4 border-[#1e40af] pl-4 italic my-4">{children}</blockquote>,
-                  },
-                  list: {
-                    bullet: ({children}) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
-                    number: ({children}) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
-                  },
-                  listItem: {
-                    bullet: ({children}) => <li>{children}</li>,
-                    number: ({children}) => <li>{children}</li>,
-                  },
-                  marks: {
-                    strong: ({children}) => <strong className="font-bold">{children}</strong>,
-                    em: ({children}) => <em className="italic">{children}</em>,
-                    code: ({children}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>,
-                  },
-                }}
+        {/* Main Content - Image and Text Side by Side */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Featured Image - Left Side */}
+          {blog.featuredImage?.asset?.url && (
+            <figure className="flex flex-col gap-2 items-start">
+              <img
+                src={`${blog.featuredImage.asset.url}?w=600&h=400&fit=crop&auto=format&q=90`}
+                alt={blog.featuredImage.alt || blog.title || "Post image"}
+                className="w-full h-48 lg:h-64 object-cover rounded-lg shadow-lg"
               />
-            </Suspense>
-          </div>
-        )}
+              {blog.featuredImage.alt && (
+                <figcaption className="text-sm text-gray-500 italic">
+                  {blog.featuredImage.alt}
+                </figcaption>
+              )}
+            </figure>
+          )}
+
+          {/* Content - Right Side */}
+          {blog.content && (
+            <div className="prose prose-lg max-w-none">
+              <Suspense fallback={<div>Loading content...</div>}>
+                <PortableText 
+                  value={blog.content}
+                  components={{
+                    types: {
+                      image: ({value}) => {
+                        if (!value?.asset?.url) return null;
+                        return (
+                          <figure className="my-6">
+                            <img
+                              src={`${value.asset.url}?w=800&h=400&fit=crop&auto=format&q=90`}
+                              alt={value.alt || 'Blog content image'}
+                              className="w-full h-48 object-cover rounded-lg shadow-md"
+                            />
+                            {value.alt && (
+                              <figcaption className="text-sm text-gray-500 italic mt-2 text-center">
+                                {value.alt}
+                              </figcaption>
+                            )}
+                          </figure>
+                        );
+                      },
+                    },
+                    block: {
+                      normal: ({children}) => <p className="mb-4">{children}</p>,
+                      h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-[#1e40af]">{children}</h1>,
+                      h2: ({children}) => <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">{children}</h2>,
+                      h3: ({children}) => <h3 className="text-xl font-bold mb-3 text-[#1e40af]">{children}</h3>,
+                      h4: ({children}) => <h4 className="text-lg font-bold mb-2 text-[#1e40af]">{children}</h4>,
+                      blockquote: ({children}) => <blockquote className="border-l-4 border-[#1e40af] pl-4 italic my-4">{children}</blockquote>,
+                    },
+                    list: {
+                      bullet: ({children}) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
+                      number: ({children}) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
+                    },
+                    listItem: {
+                      bullet: ({children}) => <li>{children}</li>,
+                      number: ({children}) => <li>{children}</li>,
+                    },
+                    marks: {
+                      strong: ({children}) => <strong className="font-bold">{children}</strong>,
+                      em: ({children}) => <em className="italic">{children}</em>,
+                      code: ({children}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>,
+                    },
+                  }}
+                />
+              </Suspense>
+            </div>
+          )}
+        </div>
       </article>
     </main>
   );

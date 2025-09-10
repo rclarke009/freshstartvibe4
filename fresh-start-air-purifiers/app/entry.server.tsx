@@ -55,10 +55,10 @@ export default async function handleRequest(
   if (modifiedCSP.includes('connect-src')) {
     modifiedCSP = modifiedCSP.replace(
       /connect-src[^;]*/g,
-      "connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*"
+      "connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io https://cdn.shopify.com http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*"
     );
   } else {
-    modifiedCSP += "; connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*";
+    modifiedCSP += "; connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io https://cdn.shopify.com http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*";
   }
   
   responseHeaders.set('Content-Security-Policy', modifiedCSP);
