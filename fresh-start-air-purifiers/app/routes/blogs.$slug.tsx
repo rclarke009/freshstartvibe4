@@ -203,7 +203,7 @@ export default function BlogPost() {
 
         {/* Content - Centered Narrow Column */}
         {blog.content && (
-          <div className="max-w-xl mx-auto">
+          <div className="max-w-lg mx-auto">
             <div className="prose prose-lg max-w-none">
               <Suspense fallback={<div>Loading content...</div>}>
                 <PortableText 

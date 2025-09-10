@@ -116,6 +116,14 @@ export async function loader(args: LoaderFunctionArgs) {
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
+    analytics: {
+      shopify: {
+        shopifyAnalytics: {
+          shopId: env.PUBLIC_STOREFRONT_ID,
+          storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+        },
+      },
+    },
   };
 }
 
