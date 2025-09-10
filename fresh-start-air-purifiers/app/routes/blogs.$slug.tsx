@@ -162,27 +162,6 @@ function Author({ author }: { author?: { name?: string; image?: { asset?: { url?
 export default function BlogPost() {
   const {blog} = useLoaderData<typeof loader>();
 
-  // Custom components for PortableText to handle inline images
-  const portableTextComponents = {
-    types: {
-      image: ({value}: {value: any}) => {
-        if (!value?.asset) {
-          return null;
-        }
-        const imageUrl = urlFor(value).width(800).fit('max').auto('format').url();
-        return (
-          <img
-            src={imageUrl}
-            alt={value.alt || 'Blog image'}
-            loading="lazy"
-            className="w-full my-4 rounded-lg shadow-md"
-          />
-        );
-      },
-      // Add other custom types as needed (e.g., for code blocks or embeds)
-    },
-  };
-
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <article className="grid lg:grid-cols-12 gap-y-12">
@@ -225,7 +204,7 @@ export default function BlogPost() {
         {/* Content */}
         {blog.content && (
           <div className="lg:col-span-7 lg:col-start-6 prose prose-lg max-w-none">
-            <PortableText value={blog.content} components={portableTextComponents} />
+            <PortableText value={blog.content} />
           </div>
         )}
       </article>
