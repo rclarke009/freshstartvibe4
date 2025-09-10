@@ -2,7 +2,8 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {sanityClient} from '~/lib/sanityClient';
 import {PortableText} from '@portabletext/react';
-import {createImageUrlBuilder} from '@sanity/image-url';
+import createImageUrlBuilder from '@sanity/image-url';
+import {Suspense} from 'react';
 
 // Create image URL builder
 const urlFor = (source: any) => createImageUrlBuilder(sanityClient).image(source);
@@ -54,7 +55,7 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
     ];
   }
 
-  const metadata = [
+  const metadata: Array<{title?: string; name?: string; property?: string; content?: string}> = [
     {title: post.seo?.title || post.title || 'Fresh Start Air Purifiers Blog'},
     {name: 'description', content: post.seo?.description || post.excerpt || 'Read the latest insights on air purification and clean living.'}
   ];
@@ -108,7 +109,7 @@ function Categories({ categories }: { categories?: Array<{ title?: string }> }) 
     <div className="flex flex-wrap gap-2">
       {categories.slice(0, 3).map((category, index) => (
         <span
-          key={index}
+          key={category.title || index}
           className="inline-flex items-center rounded-full bg-[#1e40af]/10 px-3 py-1 text-xs font-medium text-[#1e40af]"
         >
           {category.title}
@@ -204,7 +205,34 @@ export default function BlogPost() {
         {/* Content */}
         {blog.content && (
           <div className="lg:col-span-7 lg:col-start-6 prose prose-lg max-w-none">
-            <PortableText value={blog.content} />
+            <Suspense fallback={<div>Loading content...</div>}>
+              <PortableText 
+                value={blog.content}
+                components={{
+                  block: {
+                    normal: ({children}) => <p className="mb-4">{children}</p>,
+                    h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-[#1e40af]">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-bold mb-3 text-[#1e40af]">{children}</h3>,
+                    h4: ({children}) => <h4 className="text-lg font-bold mb-2 text-[#1e40af]">{children}</h4>,
+                    blockquote: ({children}) => <blockquote className="border-l-4 border-[#1e40af] pl-4 italic my-4">{children}</blockquote>,
+                  },
+                  list: {
+                    bullet: ({children}) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
+                    number: ({children}) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
+                  },
+                  listItem: {
+                    bullet: ({children}) => <li>{children}</li>,
+                    number: ({children}) => <li>{children}</li>,
+                  },
+                  marks: {
+                    strong: ({children}) => <strong className="font-bold">{children}</strong>,
+                    em: ({children}) => <em className="italic">{children}</em>,
+                    code: ({children}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>,
+                  },
+                }}
+              />
+            </Suspense>
           </div>
         )}
       </article>
