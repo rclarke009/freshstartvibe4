@@ -176,10 +176,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta 
-          httpEquiv="Content-Security-Policy" 
-          content={`default-src 'self' https://cdn.shopify.com https://shopify.com https://cdn.sanity.io http://localhost:* 'nonce-${nonce}'; img-src 'self' https://cdn.shopify.com https://cdn.sanity.io data:; connect-src 'self' https://monorail-edge.shopifysvc.com https://rfbur0-m1.myshopify.com https://cdn.sanity.io http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*`}
-        />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />

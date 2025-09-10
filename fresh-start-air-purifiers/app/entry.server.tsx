@@ -37,7 +37,31 @@ export default async function handleRequest(
   }
 
   responseHeaders.set('Content-Type', 'text/html');
-  responseHeaders.set('Content-Security-Policy', header);
+  
+  // Modify the CSP header to include Sanity CDN permissions
+  let modifiedCSP = header;
+  
+  // Add or update img-src directive
+  if (modifiedCSP.includes('img-src')) {
+    modifiedCSP = modifiedCSP.replace(
+      /img-src[^;]*/g,
+      "img-src 'self' https://cdn.shopify.com https://cdn.sanity.io data:"
+    );
+  } else {
+    modifiedCSP += "; img-src 'self' https://cdn.shopify.com https://cdn.sanity.io data:";
+  }
+  
+  // Update connect-src directive
+  if (modifiedCSP.includes('connect-src')) {
+    modifiedCSP = modifiedCSP.replace(
+      /connect-src[^;]*/g,
+      "connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*"
+    );
+  } else {
+    modifiedCSP += "; connect-src 'self' https://monorail-edge.shopifysvc.com https://cdn.sanity.io http://localhost:* ws://localhost:* ws://127.0.0.1:* ws://*.tryhydrogen.dev:*";
+  }
+  
+  responseHeaders.set('Content-Security-Policy', modifiedCSP);
 
   return new Response(body, {
     headers: responseHeaders,
