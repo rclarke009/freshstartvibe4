@@ -170,7 +170,6 @@ export default function BlogPost() {
         <header className="flex flex-col gap-6 items-start">
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Categories categories={blog.categories} />
-            <PublishedAt publishedAt={blog.publishedAt} />
           </div>
           
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e40af] leading-tight">
@@ -192,9 +191,9 @@ export default function BlogPost() {
           {blog.featuredImage?.asset?.url && (
             <figure className="flex flex-col gap-2 items-start">
               <img
-                src={`${blog.featuredImage.asset.url}?w=600&h=400&fit=crop&auto=format&q=90`}
+                src={`${blog.featuredImage.asset.url}?w=400&h=300&fit=crop&auto=format&q=90`}
                 alt={blog.featuredImage.alt || blog.title || "Post image"}
-                className="w-full h-48 lg:h-64 object-cover rounded-lg shadow-lg"
+                className="w-full h-32 lg:h-40 object-cover rounded-lg shadow-lg"
               />
               {blog.featuredImage.alt && (
                 <figcaption className="text-sm text-gray-500 italic">
@@ -257,6 +256,16 @@ export default function BlogPost() {
             </div>
           )}
         </div>
+
+        {/* Footer with date */}
+        <footer className="border-t border-gray-200 pt-6 mt-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <PublishedAt publishedAt={blog.publishedAt} />
+            <div className="text-sm text-gray-500">
+              Published by Fresh Start Air Purifiers
+            </div>
+          </div>
+        </footer>
       </article>
     </main>
   );
