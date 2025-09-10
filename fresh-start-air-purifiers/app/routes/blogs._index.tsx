@@ -98,10 +98,9 @@ export default function Blogs() {
       {blogs && blogs.length > 0 ? (
         <ul
           className="
-            grid gap-6 sm:gap-7
+            grid gap-8 sm:gap-10
             sm:grid-cols-2 lg:grid-cols-3
           "
-          role="list"
         >
           {blogs.map((b) => (
             <li key={b._id}>
@@ -109,9 +108,10 @@ export default function Blogs() {
                 to={`/blogs/${b.slug?.current}`}
                 prefetch="intent"
                 className="
-                  group block overflow-hidden rounded-2xl border border-slate-200 bg-white
-                  hover:shadow-xl hover:border-slate-300 transition-all duration-300
-                  focus:outline-none focus:ring-2 focus:ring-[#1e40af]/60
+                  group block overflow-hidden rounded-3xl border border-slate-200 bg-white
+                  hover:shadow-2xl hover:border-slate-300 hover:-translate-y-1 transition-all duration-300
+                  focus:outline-none focus:ring-2 focus:ring-[#1e40af]/60 focus:ring-offset-2
+                  shadow-lg
                 "
               >
                 {/* Image */}
@@ -132,11 +132,11 @@ export default function Blogs() {
 
                   {/* Category pills */}
                   {b.categories && b.categories.length > 0 && (
-                    <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+                    <div className="absolute left-4 top-4 flex flex-wrap gap-2">
                       {b.categories.slice(0, 2).map((c, idx) => (
                         <span
-                          key={idx}
-                          className="rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-[#1e40af] shadow-md backdrop-blur border border-white/20"
+                          key={c?.title || idx}
+                          className="rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-[#1e40af] shadow-lg backdrop-blur border border-white/30"
                         >
                           {c?.title}
                         </span>
@@ -146,37 +146,37 @@ export default function Blogs() {
                 </div>
 
                 {/* Body */}
-                <div className="p-6">
-                  <h2 className="text-lg md:text-xl font-semibold text-[#1e40af] group-hover:text-[#1e40af]/80 transition-colors duration-200">
+                <div className="p-8">
+                  <h2 className="text-xl md:text-2xl font-bold text-[#1e40af] group-hover:text-[#1e40af]/80 transition-colors duration-200 leading-tight">
                     {b.title}
                   </h2>
 
                   {b.excerpt && (
-                    <p className="mt-3 line-clamp-3 text-sm text-gray-600 leading-relaxed">{b.excerpt}</p>
+                    <p className="mt-4 line-clamp-3 text-base text-gray-600 leading-relaxed">{b.excerpt}</p>
                   )}
 
                   {/* Meta */}
-                  <div className="mt-5 flex items-center gap-3">
+                  <div className="mt-6 flex items-center gap-4">
                     {/* Author avatar */}
                     {'author' in b && typeof b.author !== 'string' && b.author?.image?.asset?.url ? (
                       <img
                         src={b.author.image.asset.url}
                         alt={b.author.image.alt ?? getAuthorName(b.author) ?? 'Author'}
-                        className="h-8 w-8 rounded-full object-cover border border-slate-200"
+                        className="h-10 w-10 rounded-full object-cover border-2 border-slate-200 shadow-sm"
                         loading="lazy"
                         decoding="async"
                       />
                     ) : (
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#1e40af]/20 to-[#1e40af]/10 border border-slate-200 flex items-center justify-center">
-                        <span className="text-[#1e40af] text-xs font-semibold">FS</span>
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#1e40af]/20 to-[#1e40af]/10 border-2 border-slate-200 flex items-center justify-center shadow-sm">
+                        <span className="text-[#1e40af] text-sm font-bold">FS</span>
                       </div>
                     )}
 
-                    <div className="text-xs text-gray-500">
-                      <div className="font-medium text-gray-700">
+                    <div className="text-sm text-gray-500">
+                      <div className="font-semibold text-gray-800">
                         {getAuthorName(b.author) ?? 'Fresh Start Team'}
                       </div>
-                      <div>{formatDate(b.publishedAt)}</div>
+                      <div className="text-xs">{formatDate(b.publishedAt)}</div>
                     </div>
                   </div>
                 </div>
@@ -205,71 +205,3 @@ function EmptyState() {
     </section>
   );
 }
-
-
-
-// import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-// import {Link, useLoaderData, type MetaFunction} from '@remix-run/react';
-// import {sanityClient} from '~/lib/sanityClient';
-
-// export const meta: MetaFunction = () => {
-//   return [{title: `Hydrogen | Blogs`}];
-// };
-
-// export async function loader(args: LoaderFunctionArgs) {
-//   console.log('Blog loader called');
-  
-//   try {
-//     const blogs = await sanityClient.fetch(`
-//       *[_type == "blog"] | order(publishedAt desc) {
-//         _id,
-//         title,
-//         slug,
-//         excerpt,
-//         featuredImage,
-//         author,
-//         publishedAt
-//       }
-//     `);
-
-//     console.log('Blogs fetched:', blogs);
-//     return {blogs};
-//   } catch (error) {
-//     console.error('Error fetching blogs:', error);
-//     return {blogs: []};
-//   }
-// }
-
-// export default function Blogs() {
-//   const {blogs} = useLoaderData<typeof loader>();
-  
-//   console.log('Blogs component rendered with:', blogs);
-
-//   return (
-//     <div className="blogs">
-//       <h1>Blog</h1>
-//       <p>Blog route is working!</p>
-//       <div className="blogs-grid">
-//         {blogs && blogs.length > 0 ? (
-//           blogs.map((blog: any) => (
-//             <Link
-//               className="blog"
-//               key={blog._id}
-//               prefetch="intent"
-//               to={`/blogs/${blog.slug.current}`}
-//             >
-//               <h2>{blog.title}</h2>
-//               {blog.excerpt && <p>{blog.excerpt}</p>}
-//               {blog.author && <p>By {blog.author}</p>}
-//               {blog.publishedAt && (
-//                 <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
-//               )}
-//             </Link>
-//           ))
-//         ) : (
-//           <p>No blog posts found. Create some blog posts in the Sanity studio!</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
