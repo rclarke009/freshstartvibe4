@@ -185,26 +185,25 @@ export default function BlogPost() {
           <Author author={blog.author} />
         </header>
 
-        {/* Main Content - Image and Text Side by Side */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Featured Image - Left Side */}
-          {blog.featuredImage?.asset?.url && (
-            <figure className="flex flex-col gap-2 items-start">
-              <img
-                src={`${blog.featuredImage.asset.url}?w=400&h=300&fit=crop&auto=format&q=90`}
-                alt={blog.featuredImage.alt || blog.title || "Post image"}
-                className="w-full h-32 lg:h-40 object-cover rounded-lg shadow-lg"
-              />
-              {blog.featuredImage.alt && (
-                <figcaption className="text-sm text-gray-500 italic">
-                  {blog.featuredImage.alt}
-                </figcaption>
-              )}
-            </figure>
-          )}
+        {/* Featured Image - Centered */}
+        {blog.featuredImage?.asset?.url && (
+          <figure className="flex flex-col gap-2 items-center max-w-2xl mx-auto">
+            <img
+              src={`${blog.featuredImage.asset.url}?w=600&h=400&fit=crop&auto=format&q=90`}
+              alt={blog.featuredImage.alt || blog.title || "Post image"}
+              className="w-full h-48 lg:h-56 object-cover rounded-lg shadow-lg"
+            />
+            {blog.featuredImage.alt && (
+              <figcaption className="text-sm text-gray-500 italic text-center">
+                {blog.featuredImage.alt}
+              </figcaption>
+            )}
+          </figure>
+        )}
 
-          {/* Content - Right Side */}
-          {blog.content && (
+        {/* Content - Centered Narrow Column */}
+        {blog.content && (
+          <div className="max-w-3xl mx-auto">
             <div className="prose prose-lg max-w-none">
               <Suspense fallback={<div>Loading content...</div>}>
                 <PortableText 
@@ -230,7 +229,7 @@ export default function BlogPost() {
                       },
                     },
                     block: {
-                      normal: ({children}) => <p className="mb-4">{children}</p>,
+                      normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
                       h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-[#1e40af]">{children}</h1>,
                       h2: ({children}) => <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">{children}</h2>,
                       h3: ({children}) => <h3 className="text-xl font-bold mb-3 text-[#1e40af]">{children}</h3>,
@@ -254,8 +253,8 @@ export default function BlogPost() {
                 />
               </Suspense>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Footer with date */}
         <footer className="border-t border-gray-200 pt-6 mt-8">
