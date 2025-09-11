@@ -218,15 +218,6 @@ const FALLBACK_HEADER_MENU = {
   id: 'gid://shopify/Menu/199655587896',
   items: [
     {
-      id: 'gid://shopify/MenuItem/461609500727',
-      resourceId: null,
-      tags: [],
-      title: 'Home',
-      type: 'HTTP',
-      url: '/',
-      items: [],
-    },
-    {
       id: 'gid://shopify/MenuItem/461609500729',
       resourceId: null,
       tags: [],
@@ -249,8 +240,8 @@ const FALLBACK_HEADER_MENU = {
       resourceId: null,
       tags: [],
       title: 'Shop',
-      type: 'COLLECTION',
-      url: '/collections/premium-purifiers',
+      type: 'HTTP',
+      url: '/collections',
       items: [],
     },
     {

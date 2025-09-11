@@ -4,7 +4,7 @@ import {sanityClient} from '~/lib/sanityClient';
 
 export const meta: MetaFunction = () => {
   return [
-    {title: 'Fresh Start Air Purifiers | Blog'},
+    {title: 'Fresh Start Air Purifiers | Air Purifier Blog'},
     {name: 'description', content: 'Practical guides on fragrance/VOCs, filtration, and clean-air living.'},
   ];
 };
@@ -87,103 +87,80 @@ export default function Blogs() {
     <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-semibold text-navytext">Blog</h1>
+        <h1 className="text-3xl md:text-4xl font-semibold text-navytext">Air Purifier Blog</h1>
         <p className="mt-2 text-navytext/70 max-w-2xl">
-          Fresh, practical posts on VOCs, filters, and making your home’s air feel… actually fresh.
+          Fresh, practical posts on VOCs, filters, and bringing the fresh air indoors.
         </p>
         <br></br>
+
       </header>
 
-      {/* Grid */}
+      {/* Blog Cards */}
       {blogs && blogs.length > 0 ? (
-        <ul
-          className="
-            grid gap-8 sm:gap-10
-            sm:grid-cols-2 lg:grid-cols-3
-          "
-        >
-          {blogs.map((b) => (
-            <li key={b._id}>
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16" style={{ 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '4rem'
+          }}>
+            {blogs.map((b) => (
               <Link
+                key={b._id}
                 to={`/blogs/${b.slug?.current}`}
                 prefetch="intent"
                 className="
-                  group block overflow-hidden rounded-3xl border border-slate-200 bg-white
-                  hover:shadow-2xl hover:border-slate-300 hover:-translate-y-1 transition-all duration-300
-                  focus:outline-none focus:ring-2 focus:ring-[#1e40af]/60 focus:ring-offset-2
-                  shadow-lg
+                  group block rounded-lg shadow-sm
+                  hover:shadow-md hover:border-gray-300 transition-all duration-200
+                  focus:outline-none focus:ring-2 focus:ring-[#1e40af]/20 focus:ring-offset-2
                 "
+                style={{ 
+                  backgroundColor: '#f5e9d7', 
+                  borderRadius: '8px'
+                }}
               >
-                {/* Image */}
-                <div className="relative aspect-[16/9] bg-slate-100 overflow-hidden">
-                  {b.featuredImage?.asset?.url ? (
-                    <img
-                      src={`${b.featuredImage.asset.url}?w=400&h=225&fit=crop&auto=format`}
-                      alt={b.featuredImage.alt ?? b.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                      <div className="text-slate-400 text-sm font-medium">No Image</div>
+                {/* Card Content */}
+                <div style={{ 
+                  padding: '1rem',
+                  paddingTop: '1rem',
+                  paddingRight: '1rem', 
+                  paddingBottom: '1rem',
+                  paddingLeft: '1rem'
+                }}>
+                  <div className="flex gap-6">
+                    {/* Text Content */}
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-xl font-semibold text-gray-900 group-hover:text-[#1e40af] transition-colors duration-200 mb-3">
+                        {b.title}
+                      </h2>
+                      
+                      {b.excerpt && (
+                        <p className="text-gray-600 text-sm leading-relaxed">
+                          {b.excerpt}
+                        </p>
+                      )}
                     </div>
-                  )}
 
-                  {/* Category pills */}
-                  {b.categories && b.categories.length > 0 && (
-                    <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                      {b.categories.slice(0, 2).map((c, idx) => (
-                        <span
-                          key={c?.title || idx}
-                          className="rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-[#1e40af] shadow-lg backdrop-blur border border-white/30"
-                        >
-                          {c?.title}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Body */}
-                <div className="p-8">
-                  <h2 className="text-xl md:text-2xl font-bold text-[#1e40af] group-hover:text-[#1e40af]/80 transition-colors duration-200 leading-tight">
-                    {b.title}
-                  </h2>
-
-                  {b.excerpt && (
-                    <p className="mt-4 line-clamp-3 text-base text-gray-600 leading-relaxed">{b.excerpt}</p>
-                  )}
-
-                  {/* Meta */}
-                  <div className="mt-6 flex items-center gap-4">
-                    {/* Author avatar */}
-                    {'author' in b && typeof b.author !== 'string' && b.author?.image?.asset?.url ? (
-                      <img
-                        src={b.author.image.asset.url}
-                        alt={b.author.image.alt ?? getAuthorName(b.author) ?? 'Author'}
-                        className="h-10 w-10 rounded-full object-cover border-2 border-slate-200 shadow-sm"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#1e40af]/20 to-[#1e40af]/10 border-2 border-slate-200 flex items-center justify-center shadow-sm">
-                        <span className="text-[#1e40af] text-sm font-bold">FS</span>
-                      </div>
-                    )}
-
-                    <div className="text-sm text-gray-500">
-                      <div className="font-semibold text-gray-800">
-                        {getAuthorName(b.author) ?? 'Fresh Start Team'}
-                      </div>
-                      <div className="text-xs">{formatDate(b.publishedAt)}</div>
+                    {/* Small Square Image */}
+                    <div className="flex-shrink-0">
+                      {b.featuredImage?.asset?.url ? (
+                        <img
+                          src={`${b.featuredImage.asset.url}?w=120&h=120&fit=crop&auto=format`}
+                          alt={b.featuredImage.alt ?? b.title}
+                          className="w-20 h-20 object-cover rounded-lg"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
+                          <div className="text-gray-400 text-xs">No Image</div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </Link>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
       ) : (
         <EmptyState />
       )}

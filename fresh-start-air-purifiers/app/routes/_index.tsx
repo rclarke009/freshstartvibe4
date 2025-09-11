@@ -139,7 +139,7 @@ function ProblemValidation() {
             </p>
             <a
               href="#guide"
-              className="inline-block rounded-xl bg-[#1e40af] px-5 py-3 font-semibold text-white shadow hover:bg-[#1e3a8a] transition-colors"
+              className="inline-block rounded-xl bg-white border-2 border-[#1e40af] px-5 py-3 font-semibold text-[#1e40af] shadow hover:bg-[#1e40af] hover:text-white transition-colors"
             >
               Compare models
             </a>
@@ -203,7 +203,7 @@ function TrustAuthority() {
                 </p>
                 <a
                   href="#guide"
-                  className="inline-block rounded-xl bg-[#1e40af] px-5 py-3 font-semibold text-white shadow hover:bg-[#1e3a8a] transition-colors"
+                  className="inline-block rounded-xl bg-white border-2 border-[#1e40af] px-5 py-3 font-semibold text-[#1e40af] shadow hover:bg-[#1e40af] hover:text-white transition-colors"
                 >
                   Compare models
                 </a>

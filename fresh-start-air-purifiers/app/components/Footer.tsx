@@ -23,10 +23,9 @@ export function Footer({
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 {/* Search */}
                 <div className="col-span-2 lg:col-span-1">
-                  <h3 className="text-xs font-semibold text-[#1e40af] mb-1">Search</h3>
                   <Form action="/search" method="GET">
                     <label htmlFor="site-search" className="sr-only">Search site</label>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-3">
                       <input
                         id="site-search"
                         name="q"
@@ -34,14 +33,22 @@ export function Footer({
                         placeholder="Search air purifiers…"
                         className="w-full rounded border border-slate-300 bg-white/90 px-2 py-1 text-xs text-gray-700 placeholder-slate-400 outline-none focus:ring-1 focus:ring-[#1e40af]/40"
                       />
-                      <button
-                        type="submit"
-                        className="rounded bg-[#1e40af] px-2 py-1 text-xs font-semibold text-white hover:opacity-95 focus:ring-1 focus:ring-[#1e40af]/40"
-                        aria-label="Submit search"
-                        title="Search"
-                      >
-                        Search
-                      </button>
+                    <button 
+                      className="p-2 rounded-lg bg-transparent hover:bg-gray-100 border-0 outline-none" 
+                      onClick={() => open('search')}
+                      aria-label="Search"
+                      style={{ 
+                        color: '#1e40af',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent'
+                      }}
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                      </svg>
+                    </button>
                     </div>
                   </Form>
                 </div>
@@ -50,12 +57,7 @@ export function Footer({
                 <div className="col-span-1">
                   <details className="group">
                     <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
-                      <span className="flex items-center justify-between">
-                        Explore
-                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </span>
+                      Explore
                     </summary>
                     <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/" className="hover:underline">Home</NavLink></li>
@@ -72,12 +74,7 @@ export function Footer({
                 <div className="col-span-1">
                   <details className="group">
                     <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
-                      <span className="flex items-center justify-between">
-                        Help
-                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </span>
+                      Help
                     </summary>
                     <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/pages/faq" className="hover:underline">FAQ</NavLink></li>
@@ -92,12 +89,7 @@ export function Footer({
                 <div className="col-span-2 lg:col-span-1">
                   <details className="group">
                     <summary className="text-xs font-semibold text-[#1e40af] mb-1 cursor-pointer list-none lg:pointer-events-none">
-                      <span className="flex items-center justify-between">
-                        Legal
-                        <svg className="h-2 w-2 transition-transform group-open:rotate-180 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </span>
+                      Legal
                     </summary>
                     <ul className="mt-1 space-y-0.5 text-xs text-gray-600">
                       <li><NavLink to="/policies/privacy-policy" className="hover:underline">Privacy</NavLink></li>

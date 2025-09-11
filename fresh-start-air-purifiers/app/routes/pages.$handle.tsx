@@ -140,7 +140,7 @@ export default function Page() {
             </p>
             <a 
               href="/collections/premium-purifiers" 
-              className="inline-block bg-[#1e40af] text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+              className="inline-block bg-white border-2 border-[#1e40af] text-[#1e40af] px-8 py-3 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors"
             >
               Shop All Purifiers
             </a>

@@ -1,5 +1,5 @@
 import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, type MetaFunction} from '@remix-run/react';
+import {useLoaderData, type MetaFunction, Link} from '@remix-run/react';
 import {sanityClient} from '~/lib/sanityClient';
 import {PortableText} from '@portabletext/react';
 import createImageUrlBuilder from '@sanity/image-url';
@@ -164,107 +164,111 @@ export default function BlogPost() {
   const {blog} = useLoaderData<typeof loader>();
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <article className="space-y-8">
+    <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      {/* Back to Blog List Button */}
+      <div className="mb-8">
+        <Link
+          to="/blogs"
+          className="text-[#1e40af] hover:text-[#1e40af]/80 transition-colors duration-200 font-medium text-sm"
+        >
+          ← Back to Blog List
+        </Link>
+      </div>
+
+      <article className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {/* Header */}
-        <header className="flex flex-col gap-6 items-start">
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+        <header className="px-8 py-10 sm:px-12 sm:py-12">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
             <Categories categories={blog.categories} />
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e40af] leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
             {blog.title}
           </h1>
           
-          {blog.excerpt && (
-            <p className="text-xl text-gray-600 leading-relaxed max-w-4xl">
-              {blog.excerpt}
-            </p>
-          )}
           
-          <Author author={blog.author} />
         </header>
 
-        {/* Featured Image - Centered */}
-        {blog.featuredImage?.asset?.url && (
-          <figure className="flex flex-col gap-2 items-center max-w-2xl mx-auto">
-            <img
-              src={`${blog.featuredImage.asset.url}?w=600&h=400&fit=crop&auto=format&q=90`}
-              alt={blog.featuredImage.alt || blog.title || "Post image"}
-              className="w-full h-48 lg:h-56 object-cover rounded-lg shadow-lg"
-            />
-            {blog.featuredImage.alt && (
-              <figcaption className="text-sm text-gray-500 italic text-center">
-                {blog.featuredImage.alt}
-              </figcaption>
+        {/* Two Column Layout: Image + Content */}
+        <div className="px-8 sm:px-12 pb-12">
+          <div className="flex flex-row gap-6 items-start">
+            {/* Left Column - Image (Fixed size, stacks on mobile) */}
+            {blog.featuredImage?.asset?.url && (
+              <div className="flex-shrink-0">
+                <figure className="w-32 h-32">
+                  <img
+                    src={`${blog.featuredImage.asset.url}?w=300&h=300&fit=crop&auto=format&q=90`}
+                    alt={blog.featuredImage.alt || blog.title || "Post image"}
+                    className="w-32 h-32 object-cover rounded-lg shadow-md"
+                  />
+                  {blog.featuredImage.alt && (
+                    <figcaption className="text-xs text-gray-500 italic mt-2 text-left">
+                      {blog.featuredImage.alt}
+                    </figcaption>
+                  )}
+                </figure>
+              </div>
             )}
-          </figure>
-        )}
 
-        {/* Content - Centered Narrow Column */}
-        {blog.content && (
-          <div className="max-w-lg mx-auto">
-            <div className="prose prose-lg max-w-none">
-              <Suspense fallback={<div>Loading content...</div>}>
-                <PortableText 
-                  value={blog.content}
-                  components={{
-                    types: {
-                      image: ({value}) => {
-                        if (!value?.asset?.url) return null;
-                        return (
-                          <figure className="my-6">
-                            <img
-                              src={`${value.asset.url}?w=800&h=400&fit=crop&auto=format&q=90`}
-                              alt={value.alt || 'Blog content image'}
-                              className="w-full h-48 object-cover rounded-lg shadow-md"
-                            />
-                            {value.alt && (
-                              <figcaption className="text-sm text-gray-500 italic mt-2 text-center">
-                                {value.alt}
-                              </figcaption>
-                            )}
-                          </figure>
-                        );
+            {/* Right Column - Content (Responsive width) */}
+            <div className="flex-1">
+
+             
+
+
+
+              {blog.content && (
+                <Suspense fallback={<div>Loading content...</div>}>
+                  <PortableText
+                    value={blog.content}
+                    components={{
+                      types: {
+                        image: ({ value }) => {
+                          if (!value?.asset?.url) return null;
+                          return (
+                            <figure className="my-6">
+                              <img
+                                src={`${value.asset.url}?w=800&h=400&fit=crop&auto=format&q=90`}
+                                alt={value.alt || 'Blog content image'}
+                                className="w-full h-48 object-cover rounded-lg shadow-md"
+                              />
+                              {value.alt && (
+                                <figcaption className="text-sm text-gray-500 italic mt-2 text-center">
+                                  {value.alt}
+                                </figcaption>
+                              )}
+                            </figure>
+                          );
+                        },
                       },
-                    },
-                    block: {
-                      normal: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
-                      h1: ({children}) => <h1 className="text-3xl font-bold mb-6 text-[#1e40af]">{children}</h1>,
-                      h2: ({children}) => <h2 className="text-2xl font-bold mb-4 text-[#1e40af]">{children}</h2>,
-                      h3: ({children}) => <h3 className="text-xl font-bold mb-3 text-[#1e40af]">{children}</h3>,
-                      h4: ({children}) => <h4 className="text-lg font-bold mb-2 text-[#1e40af]">{children}</h4>,
-                      blockquote: ({children}) => <blockquote className="border-l-4 border-[#1e40af] pl-4 italic my-4">{children}</blockquote>,
-                    },
-                    list: {
-                      bullet: ({children}) => <ul className="list-disc list-inside mb-4 space-y-2">{children}</ul>,
-                      number: ({children}) => <ol className="list-decimal list-inside mb-4 space-y-2">{children}</ol>,
-                    },
-                    listItem: {
-                      bullet: ({children}) => <li>{children}</li>,
-                      number: ({children}) => <li>{children}</li>,
-                    },
-                    marks: {
-                      strong: ({children}) => <strong className="font-bold">{children}</strong>,
-                      em: ({children}) => <em className="italic">{children}</em>,
-                      code: ({children}) => <code className="bg-gray-100 px-1 py-0.5 rounded text-sm">{children}</code>,
-                    },
-                  }}
-                />
-              </Suspense>
+                      block: {
+                        normal: ({ children }) => <p className="mb-6 leading-relaxed text-gray-700 text-lg">{children}</p>,
+                        h1: ({ children }) => <h1 className="text-3xl font-bold mb-6 text-gray-900 mt-8 first:mt-0">{children}</h1>,
+                        h2: ({ children }) => <h2 className="text-2xl font-bold mb-4 text-gray-900 mt-8 first:mt-0">{children}</h2>,
+                        h3: ({ children }) => <h3 className="text-xl font-bold mb-3 text-gray-900 mt-6 first:mt-0">{children}</h3>,
+                        h4: ({ children }) => <h4 className="text-lg font-bold mb-2 text-gray-900 mt-4 first:mt-0">{children}</h4>,
+                        blockquote: ({ children }) => <blockquote className="border-l-4 border-gray-300 pl-6 italic my-8 text-gray-600 bg-gray-50 py-4 rounded-r-lg">{children}</blockquote>,
+                      },
+                      list: {
+                        bullet: ({ children }) => <ul className="list-disc list-inside mb-6 space-y-3 text-gray-700">{children}</ul>,
+                        number: ({ children }) => <ol className="list-decimal list-inside mb-6 space-y-3 text-gray-700">{children}</ol>,
+                      },
+                      listItem: {
+                        bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                        number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                      },
+                      marks: {
+                        strong: ({ children }) => <strong className="font-semibold text-gray-900">{children}</strong>,
+                        em: ({ children }) => <em className="italic text-gray-600">{children}</em>,
+                        code: ({ children }) => <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800">{children}</code>,
+                      },
+                    }}
+                  />
+                </Suspense>
+              )}
             </div>
           </div>
-        )}
-
-        {/* Footer with date */}
-        <footer className="border-t border-gray-200 pt-6 mt-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <PublishedAt publishedAt={blog.publishedAt} />
-            <div className="text-sm text-gray-500">
-              Published by Fresh Start Air Purifiers
-            </div>
-          </div>
-        </footer>
+        </div>
       </article>
     </main>
   );
