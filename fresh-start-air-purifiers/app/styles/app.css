@@ -1579,3 +1579,47 @@ section#serious-filtration .right-column-wide {
   min-width: 280px !important;
   max-width: 400px !important;
 }
+
+/* Anti-spam protection for contact information */
+.email-address {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+.at-symbol {
+  unicode-bidi: bidi-override;
+  direction: ltr;
+}
+
+.phone-number {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+/* Additional obfuscation techniques */
+[data-obfuscated="true"] {
+  font-feature-settings: "liga" 0;
+  font-variant-ligatures: none;
+}
+
+/* Hide from simple text scrapers */
+.email-address::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* CSS-only email obfuscation fallback */
+@media print {
+  .email-address {
+    unicode-bidi: normal;
+    direction: ltr;
+  }
+  
+  .phone-number {
+    unicode-bidi: normal;
+    direction: ltr;
+  }
+}

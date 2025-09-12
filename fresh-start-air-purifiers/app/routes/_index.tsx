@@ -124,7 +124,7 @@ function ProblemValidation() {
               <li className="flex gap-3">
                 <span className="bullet" />
                 <p>
-                  <span className="font-medium">PM2.5 particles</span> — released by gas stoves, candles, smog, and wildfire smoke — are too small for cheap filters to trap.
+                  <span className="font-medium">PM2.5 particles</span> — released by gas stoves, candles, smog, and wildfire smoke — are too small for basic filters to trap.
                 </p>
               </li>
               <li className="flex gap-3">

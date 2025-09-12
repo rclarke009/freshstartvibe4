@@ -36,7 +36,7 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-gray-900">Phone</p>
                     <a href="tel:+19044388325" className="text-[#1e40af] hover:underline">
-                      (904) 438-8325
+                      <span className="phone-number">(904) 438-8325</span>
                     </a>
                   </div>
                 </div>
@@ -49,8 +49,14 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
-                    <a href="mailto:info@freshstartairpurifiers.com" className="text-[#1e40af] hover:underline">
-                      info@freshstartairpurifiers.com
+                    <a 
+                      href="mailto:info@freshstartairpurifiers.com" 
+                      className="text-[#1e40af] hover:underline"
+                      data-obfuscated="true"
+                    >
+                      <span className="email-address" data-user="info" data-domain="freshstartairpurifiers.com">
+                        info<span className="at-symbol">@</span>freshstartairpurifiers.com
+                      </span>
                     </a>
                   </div>
                 </div>
@@ -64,7 +70,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">Serving the greater Jacksonville area</p>
+                    <p className="text-gray-600">Serving Florida and the continental US</p>
                   </div>
                 </div>
               </div>
@@ -73,9 +79,8 @@ export default function Contact() {
             <div>
               <h3 className="text-xl font-bold text-[#1e40af] mb-4">Business Hours</h3>
               <div className="space-y-2 text-gray-600">
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 4:00 PM</p>
-                <p>Sunday: Closed</p>
+                <p>Monday - Friday: 10:00 AM - 4:00 PM EST</p>
+              
               </div>
             </div>
           </div>
