@@ -1582,18 +1582,18 @@ section#serious-filtration .right-column-wide {
 
 /* Anti-spam protection for contact information */
 .email-address {
-  unicode-bidi: bidi-override;
-  direction: rtl;
+  unicode-bidi: normal;
+  direction: ltr;
 }
 
 .at-symbol {
-  unicode-bidi: bidi-override;
+  unicode-bidi: normal;
   direction: ltr;
 }
 
 .phone-number {
-  unicode-bidi: bidi-override;
-  direction: rtl;
+  unicode-bidi: normal;
+  direction: ltr;
 }
 
 /* Additional obfuscation techniques */

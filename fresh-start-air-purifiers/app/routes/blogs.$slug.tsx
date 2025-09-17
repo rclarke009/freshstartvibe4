@@ -191,10 +191,10 @@ export default function BlogPost() {
 
         {/* Two Column Layout: Image + Content */}
         <div className="px-8 sm:px-12 pb-12">
-          <div className="flex flex-row gap-6 items-start">
+          <div className="flex flex-row items-start">
             {/* Left Column - Image (Fixed size, stacks on mobile) */}
             {blog.featuredImage?.asset?.url && (
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0" style={{ marginRight: '2rem' }}>
                 <figure className="w-32 h-32">
                   <img
                     src={`${blog.featuredImage.asset.url}?w=300&h=300&fit=crop&auto=format&q=90`}
@@ -211,7 +211,7 @@ export default function BlogPost() {
             )}
 
             {/* Right Column - Content (Responsive width) */}
-            <div className="flex-1">
+            <div className="flex-1" style={{ marginLeft: '1rem' }}>
 
              
 

@@ -1,7 +1,7 @@
 ///Users/rebeccaclarke/Documents/WebFiles/CurrentWorkingDirectory/freshstartvibe4/fresh-start-air-purifiers/app/routes/_index.tsx
 
 import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Await, useLoaderData, type MetaFunction, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {
   RecommendedProductsQuery,
@@ -87,12 +87,12 @@ function Hero() {
           </p>
         </div>
         <div className="hero-cta">
-          <a
-            href="#guide"
+          <Link
+            to="/choose-your-purifier"
             className="add-to-cart-button"
           >
             Find your filter
-          </a>
+          </Link>
         </div>
       </div>
     </section>
@@ -201,12 +201,7 @@ function TrustAuthority() {
                 <p className="text-gray-700/90">
                   That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
                 </p>
-                <a
-                  href="#guide"
-                  className="inline-block rounded-xl bg-white border-2 border-[#1e40af] px-5 py-3 font-semibold text-[#1e40af] shadow hover:bg-[#1e40af] hover:text-white transition-colors"
-                >
-                  Compare models
-                </a>
+                
               </div>
             </div>
           </div>
