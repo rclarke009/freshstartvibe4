@@ -20,6 +20,8 @@ export default function ChooseYourPurifier() {
         </p>
       </div>
 
+      <br />
+
       <div className="bg-[#F0F8FF] rounded-2xl p-8 md:p-12 mb-8">
         <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af] mb-6 text-center">
           Coming Soon!
@@ -53,20 +55,27 @@ export default function ChooseYourPurifier() {
           </ul>
         </div>
 
+        <br />
+
         <div className="text-center">
           <p className="text-gray-600 mb-6">
             In the meantime, you can browse our full collection or contact us for personalized recommendations.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <br />
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center px-4">
             <a 
               href="/collections" 
-              className="inline-flex items-center justify-center px-6 py-3 border border-[#1e40af] text-[#1e40af] font-medium rounded-lg hover:bg-[#1e40af] hover:text-white transition-colors duration-200"
+              className="add-to-cart-button"
+              style={{ minWidth: '180px', maxWidth: '200px' }}
             >
               Browse All Purifiers
             </a>
+            
+            <br />
             <a 
               href="/contact" 
-              className="inline-flex items-center justify-center px-6 py-3 bg-[#1e40af] text-white font-medium rounded-lg hover:bg-[#0f2d6b] transition-colors duration-200"
+              className="add-to-cart-button"
+              style={{ minWidth: '180px', maxWidth: '200px' }}
             >
               Get Personal Help
             </a>

@@ -25,6 +25,7 @@ export default function Contact() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
+              <br />
               <h2 className="text-2xl font-bold text-[#1e40af] mb-6">Get in Touch</h2>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
@@ -40,6 +41,8 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
+
+                <br />
                 
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-[#1e40af] rounded-full flex items-center justify-center">
@@ -60,6 +63,8 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
+
+                <br />
                 
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-[#1e40af] rounded-full flex items-center justify-center">
@@ -70,11 +75,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">Serving Florida and the continental US</p>
+                    <p className="text-[#1e40af] font-medium">Serving Florida and the continental US</p>
                   </div>
                 </div>
               </div>
             </div>
+
+            <br />
 
             <div>
               <h3 className="text-xl font-bold text-[#1e40af] mb-4">Business Hours</h3>
@@ -84,6 +91,9 @@ export default function Contact() {
               </div>
             </div>
           </div>
+
+          <br />
+          <br />
 
           {/* Contact Form */}
           <div>
@@ -150,6 +160,8 @@ export default function Contact() {
                 </select>
               </div>
               
+              <br />
+              
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                   Message
@@ -159,20 +171,26 @@ export default function Contact() {
                   name="message"
                   rows={5}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 focus:ring-2 focus:ring-[#1e40af] focus:border-transparent text-base"
+                  style={{ borderRadius: '12px' }}
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
               
-              <button
-                type="submit"
-                className="w-full bg-white border-2 border-[#1e40af] text-[#1e40af] py-3 px-6 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors duration-200"
-              >
-                Send Message
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="add-to-cart-button"
+                  style={{ minWidth: '180px', maxWidth: '200px' }}
+                >
+                  Send Message
+                </button>
+              </div>
             </form>
           </div>
         </div>
+
+        <br />
 
         {/* FAQ Section */}
         <div className="mt-16">
