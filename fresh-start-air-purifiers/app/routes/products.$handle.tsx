@@ -131,7 +131,7 @@ export default function Product() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="product-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         {/* Product Image - Left Column */}
-        <div className="order-2 lg:order-1">
+        <div className="order-1">
           <div className="sticky top-8">
             <div className="product-image-container mx-auto lg:mx-0">
               {/* Direct image render - no ProductImage component */}
@@ -182,7 +182,7 @@ export default function Product() {
         </div>
         
         {/* Product Content - Right Column */}
-        <div className="order-1 lg:order-2 product-content flex flex-col space-y-6">
+        <div className="order-2 product-content flex flex-col space-y-6">
           <div>
             <h1 className="text-3xl font-bold mb-4 text-gray-900">{title}</h1>
             <ProductPrice
