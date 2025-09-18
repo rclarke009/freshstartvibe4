@@ -176,6 +176,8 @@ export default function Contact() {
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
+
+              <br />
               
               <div className="flex justify-center">
                 <button
@@ -193,57 +195,7 @@ export default function Contact() {
         <br />
 
         {/* FAQ Section */}
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold text-[#1e40af] text-center mb-12">
-            Frequently Asked Questions
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  What&apos;s the difference between your air purifiers?
-                </h3>
-                <p className="text-gray-600">
-                  Our air purifiers are designed for different needs: HealthMate for general use, 
-                  HealthMate Plus for chemical reduction, Allergy Machine for allergy relief, 
-                  and Bedroom Machine for sensitive sleepers.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  How often should I replace the filters?
-                </h3>
-                <p className="text-gray-600">
-                  Filter replacement depends on usage and air quality. Generally, pre-filters 
-                  should be replaced every 3-6 months, and HEPA filters every 12-18 months.
-                </p>
-              </div>
-            </div>
-            
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Do you offer installation services?
-                </h3>
-                <p className="text-gray-600">
-                  Yes! We provide professional installation and setup services to ensure 
-                  your air purifier is working optimally for your space.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  What&apos;s your return policy?
-                </h3>
-                <p className="text-gray-600">
-                  We offer a 30-day satisfaction guarantee. If you&apos;re not completely 
-                  satisfied with your air purifier, we&apos;ll work with you to make it right.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
