@@ -7,7 +7,14 @@ export interface QuizAnswers {
 }
 
 export interface ModelScores {
-  [key in Model]: number;
+  HM: number;
+  HMjr: number;
+  HMP: number;
+  HMPjr: number;
+  Allergy: number;
+  AllergyJr: number;
+  Bedroom: number;
+  Immunity: number;
 }
 
 // Product catalog data

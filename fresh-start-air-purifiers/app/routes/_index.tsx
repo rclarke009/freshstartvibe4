@@ -272,7 +272,7 @@ function SocialProof() {
         </div>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .testimonial-grid {
           display: flex;
           flex-direction: column;

@@ -13,7 +13,7 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   try {
-    const body: EmailResultsRequest = await request.json();
+    const body = await request.json() as EmailResultsRequest;
     const { email, recommendations, answers } = body;
 
     // Validate email
