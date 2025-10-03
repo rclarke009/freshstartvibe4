@@ -39,30 +39,7 @@ async function loadCriticalData({
   ]);
 
   if (!page) {
-    // Handle special case for choose-your-purifier
-    if (params.handle === 'choose-your-purifier') {
-      console.log('Returning coming soon page for choose-your-purifier');
-      return {
-        page: {
-          title: 'Choose Your Purifier',
-          handle: 'choose-your-purifier',
-          isComingSoon: true
-        }
-      };
-    }
     throw new Response('Not Found', {status: 404});
-  }
-
-  // Also handle the case where the page exists but we want to override it
-  if (params.handle === 'choose-your-purifier') {
-    console.log('Overriding existing page for choose-your-purifier');
-    return {
-      page: {
-        title: 'Choose Your Purifier',
-        handle: 'choose-your-purifier',
-        isComingSoon: true
-      }
-    };
   }
 
   redirectIfHandleIsLocalized(request, {handle: params.handle, data: page});
