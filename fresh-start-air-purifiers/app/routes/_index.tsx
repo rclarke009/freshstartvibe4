@@ -88,7 +88,7 @@ function Hero() {
         </div>
         <div className="hero-cta">
           <Link
-            to="/choose-your-purifier"
+            to="/quiz"
             className="add-to-cart-button"
           >
             Find your filter

@@ -232,7 +232,7 @@ const FALLBACK_HEADER_MENU = {
       tags: [],
       title: 'Choose Your Purifier',
       type: 'HTTP',
-      url: '/choose-your-purifier',
+      url: '/quiz',
       items: [],
     },
     {
