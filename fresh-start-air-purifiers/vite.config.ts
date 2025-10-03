@@ -5,7 +5,7 @@ import {vitePlugin as remix} from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 
-declare module "@remix-run/server-runtime" {
+declare module '@remix-run/server-runtime' {
   interface Future {
     v3_singleFetch: true;
   }
@@ -36,17 +36,13 @@ export default defineConfig({
   },
   ssr: {
     optimizeDeps: {
-      /**
-       * Include dependencies here if they throw CJS<>ESM errors.
-       * For example, for the following error:
-       *
-       * > ReferenceError: module is not defined
-       * >   at /Users/.../node_modules/example-dep/index.js:1:1
-       *
-       * Include 'example-dep' in the array below.
-       * @see https://vitejs.dev/config/dep-optimization-options
-       */
-      include: [],
+      include: ['@remix-run/node'],
     },
+    noExternal: [
+      '@remix-run/node',
+      'undici',
+      'cookie-signature',
+      'stream-slice'
+    ],
   },
 });

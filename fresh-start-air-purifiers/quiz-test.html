@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Purifier - Quiz Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #F0F8FF;
+            color: #2E2E2E;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #1e40af;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .question {
+            margin-bottom: 2rem;
+        }
+        
+        .question h2 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+        }
+        
+        .question p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        
+        .options {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: #1e40af;
+            background-color: #f8fafc;
+        }
+        
+        .option.selected {
+            border-color: #1e40af;
+            background-color: #eff6ff;
+        }
+        
+        .option input {
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+        }
+        
+        .option-content {
+            flex: 1;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .option-hint {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+        
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e3a8a;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            text-align: center;
+        }
+        
+        .result-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .result-card h3 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .badge-best {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-great {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-consider {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const QUIZ_STEPS = [
+            {
+                id: 'filtration-needs',
+                title: 'What are your main air quality concerns?',
+                question: 'Select all that apply to help us recommend the right purifier for your needs.',
+                type: 'multi-select',
+                options: [
+                    { id: 'fragrances-vocs', label: 'Fragrances/VOCs', hint: 'From cleaning products, paint, new flooring' },
+                    { id: 'smoke', label: 'Smoke', hint: 'Cigarettes, wildfire, cooking' },
+                    { id: 'formaldehyde', label: 'Formaldehyde/new materials', hint: 'New furniture, cabinets, flooring' },
+                    { id: 'dust-pollen', label: 'Dust/pollen', hint: 'Seasonal allergies, dust mites' },
+                    { id: 'mold-sensitivity', label: 'Mold/humidity sensitivity', hint: 'Damp areas, mold spores' },
+                    { id: 'viruses-bacteria', label: 'Viruses/bacteria', hint: 'Immune support, illness prevention' },
+                    { id: 'pet-dander', label: 'Pet dander/odors', hint: 'Pet allergies, pet odors' },
+                    { id: 'general-freshness', label: 'General air freshness', hint: 'Overall air quality improvement' }
+                ]
+            },
+            {
+                id: 'sensitivity-level',
+                title: 'How sensitive are you to air quality?',
+                question: 'This helps us recommend the right level of filtration for your needs.',
+                type: 'single-select',
+                options: [
+                    { id: 'typical', label: 'Typical', hint: 'Standard air quality needs' },
+                    { id: 'sensitive', label: 'Sensitive', hint: 'More reactive to pollutants' },
+                    { id: 'very-sensitive', label: 'Very sensitive (MCS/MCAS)', hint: 'Multiple chemical sensitivity or mast cell activation' }
+                ]
+            },
+            {
+                id: 'noise-tolerance',
+                title: 'What\'s your noise tolerance?',
+                question: 'Consider if you\'ll use it while sleeping or need quiet operation.',
+                type: 'single-select',
+                options: [
+                    { id: 'low', label: 'Low', hint: 'Bedroom while sleeping' },
+                    { id: 'medium', label: 'Medium', hint: 'General use with some noise' },
+                    { id: 'any', label: 'Any', hint: 'Noise is not a concern' }
+                ]
+            },
+            {
+                id: 'budget-comfort',
+                title: 'What\'s your budget comfort level?',
+                question: 'This helps us suggest models within your preferred price range.',
+                type: 'single-select',
+                options: [
+                    { id: 'entry', label: 'Entry', hint: '$400-500 range' },
+                    { id: 'mid', label: 'Mid', hint: '$500-700 range' },
+                    { id: 'premium', label: 'Premium', hint: '$700+ range' }
+                ]
+            },
+            {
+                id: 'space-placement',
+                title: 'Where will you use it most?',
+                question: 'This helps us recommend the right size and features for your space.',
+                type: 'single-select',
+                options: [
+                    { id: 'bedroom', label: 'Bedroom', hint: 'Typically ≤300-500 ft²' },
+                    { id: 'living-area', label: 'Living area / open space', hint: 'Typically 500-1200+ ft²' },
+                    { id: 'small-office', label: 'Small office / nursery', hint: '≤300 ft²' },
+                    { id: 'classroom-clinic', label: 'Classroom / clinic / high-traffic', hint: 'Shared space with high occupancy' },
+                    { id: 'whole-apartment', label: 'Whole small apartment / rotation', hint: 'Multiple rooms or whole home' }
+                ]
+            }
+        ];
+
+        const PURIFIER_MODELS = {
+            HM: {
+                id: 'HM',
+                name: 'HealthMate',
+                whyFit: 'Balanced particle + odor removal with a large carbon bed—great everyday choice.',
+                excelsAt: ['VOCs', 'Odors', 'General Air Quality'],
+                sizeGuidance: 'Standard (up to 700 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$89',
+                msrp: '$599'
+            },
+            HMjr: {
+                id: 'HMjr',
+                name: 'HealthMate Junior',
+                whyFit: 'Compact version of our HealthMate, perfect for smaller spaces.',
+                excelsAt: ['VOCs', 'Odors', 'Small Rooms'],
+                sizeGuidance: 'Junior (up to 300 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$79',
+                msrp: '$449'
+            },
+            HMP: {
+                id: 'HMP',
+                name: 'HealthMate Plus',
+                whyFit: 'Renovations or new cabinetry? HealthMate Plus targets formaldehyde & VOCs with a specialized carbon/zeolite blend.',
+                excelsAt: ['Formaldehyde', 'VOCs', 'New Construction'],
+                sizeGuidance: 'Standard (up to 700 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$99',
+                msrp: '$699'
+            },
+            Allergy: {
+                id: 'Allergy',
+                name: 'Allergy Machine',
+                whyFit: 'Extra focus on pollen, dust, and mold allergens for reactive airways.',
+                excelsAt: ['Pollen', 'Dust', 'Mold', 'Allergies'],
+                sizeGuidance: 'Standard (up to 700 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$89',
+                msrp: '$599'
+            },
+            Bedroom: {
+                id: 'Bedroom',
+                name: 'Bedroom Machine',
+                whyFit: 'For sleepers & sensitive airways: adds HEGA for gases and night-friendly operation.',
+                excelsAt: ['Viruses', 'Bacteria', 'Night Use', 'Sensitive Sleepers'],
+                sizeGuidance: 'Standard (up to 700 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$99',
+                msrp: '$699'
+            },
+            Immunity: {
+                id: 'Immunity',
+                name: 'Immunity Machine',
+                whyFit: 'Our most comprehensive 8-phase defense—prefilters, multi-carbon/zeolite, medical HEPA, and HEGA—for high-exposure environments.',
+                excelsAt: ['VOCs', 'Formaldehyde', 'Viruses', 'High Exposure'],
+                sizeGuidance: 'Standard (up to 700 sq ft)',
+                filterLife: '5 years',
+                replacementCost: '$119',
+                msrp: '$899'
+            }
+        };
+
+        function QuizApp() {
+            const [currentStep, setCurrentStep] = useState(0);
+            const [answers, setAnswers] = useState({});
+            const [showResults, setShowResults] = useState(false);
+            const [recommendations, setRecommendations] = useState([]);
+
+            const currentQuestion = QUIZ_STEPS[currentStep];
+            const progress = ((currentStep + 1) / QUIZ_STEPS.length) * 100;
+
+            const handleAnswerChange = (optionId, checked) => {
+                const newAnswers = { ...answers };
+                
+                if (currentQuestion.type === 'multi-select') {
+                    newAnswers[currentQuestion.id] = newAnswers[currentQuestion.id] || [];
+                    if (checked) {
+                        newAnswers[currentQuestion.id] = [...newAnswers[currentQuestion.id], optionId];
+                    } else {
+                        newAnswers[currentQuestion.id] = newAnswers[currentQuestion.id].filter(id => id !== optionId);
+                    }
+                } else {
+                    newAnswers[currentQuestion.id] = checked ? [optionId] : [];
+                }
+                
+                setAnswers(newAnswers);
+            };
+
+            const getRecommendations = (answers) => {
+                // Simple scoring logic
+                const scores = { HM: 0, HMjr: 0, HMP: 0, Allergy: 0, Bedroom: 0, Immunity: 0 };
+                
+                // Score based on concerns
+                const concerns = answers['filtration-needs'] || [];
+                concerns.forEach(concern => {
+                    switch(concern) {
+                        case 'fragrances-vocs':
+                            scores.HMP += 4;
+                            scores.Bedroom += 3;
+                            scores.Immunity += 5;
+                            scores.HM += 2;
+                            break;
+                        case 'formaldehyde':
+                            scores.HMP += 5;
+                            scores.Immunity += 4;
+                            scores.Bedroom += 3;
+                            break;
+                        case 'dust-pollen':
+                            scores.Allergy += 4;
+                            scores.HM += 3;
+                            scores.Bedroom += 2;
+                            break;
+                        case 'viruses-bacteria':
+                            scores.Bedroom += 4;
+                            scores.Immunity += 3;
+                            scores.HM += 2;
+                            break;
+                    }
+                });
+
+                // Score based on space
+                const placement = answers['space-placement']?.[0];
+                if (placement === 'small-office') {
+                    scores.HM = scores.HMjr;
+                    scores.HMP = 0; // Convert to Jr variant
+                    scores.Allergy = 0; // Convert to Jr variant
+                }
+
+                // Return top 3
+                return Object.entries(scores)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 3)
+                    .filter(([model, score]) => score > 0)
+                    .map(([model]) => PURIFIER_MODELS[model]);
+            };
+
+            const handleNext = () => {
+                if (currentStep === QUIZ_STEPS.length - 1) {
+                    const recs = getRecommendations(answers);
+                    setRecommendations(recs);
+                    setShowResults(true);
+                } else {
+                    setCurrentStep(currentStep + 1);
+                }
+            };
+
+            const handlePrevious = () => {
+                if (currentStep > 0) {
+                    setCurrentStep(currentStep - 1);
+                }
+            };
+
+            const canProceed = () => {
+                const currentAnswers = answers[currentQuestion.id] || [];
+                return currentAnswers.length > 0;
+            };
+
+            const getRankBadge = (rank) => {
+                switch (rank) {
+                    case 1: return <span className="badge badge-best">Best Match</span>;
+                    case 2: return <span className="badge badge-great">Great Option</span>;
+                    case 3: return <span className="badge badge-consider">Also Consider</span>;
+                    default: return null;
+                }
+            };
+
+            if (showResults) {
+                return (
+                    <div className="quiz-container">
+                        <div className="results">
+                            <h1 style={{ color: '#1e40af', marginBottom: '1rem' }}>Your Personalized Recommendations</h1>
+                            <p style={{ color: '#6b7280', marginBottom: '2rem' }}>
+                                Based on your answers, here are our top recommendations for your air purification needs.
+                            </p>
+                            
+                            {recommendations.map((model, index) => (
+                                <div key={model.id} className="result-card">
+                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                                        <h3 style={{ margin: 0, marginRight: '1rem' }}>{model.name}</h3>
+                                        {getRankBadge(index + 1)}
+                                    </div>
+                                    <p style={{ marginBottom: '1rem' }}>{model.whyFit}</p>
+                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                                        {model.excelsAt.map(skill => (
+                                            <span key={skill} style={{ 
+                                                background: '#f3f4f6', 
+                                                color: '#374151', 
+                                                padding: '0.25rem 0.75rem', 
+                                                borderRadius: '9999px', 
+                                                fontSize: '0.875rem' 
+                                            }}>
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem', fontSize: '0.875rem' }}>
+                                        <div><strong>Size:</strong> {model.sizeGuidance}</div>
+                                        <div><strong>Filter Life:</strong> {model.filterLife}</div>
+                                        <div><strong>Replacement:</strong> {model.replacementCost}</div>
+                                        <div><strong>Price:</strong> {model.msrp}</div>
+                                    </div>
+                                </div>
+                            ))}
+                            
+                            <button 
+                                className="btn btn-primary" 
+                                onClick={() => {
+                                    setShowResults(false);
+                                    setCurrentStep(0);
+                                    setAnswers({});
+                                    setRecommendations([]);
+                                }}
+                            >
+                                Take Quiz Again
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="quiz-container">
+                    <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+                    </div>
+                    
+                    <div className="question">
+                        <h2>{currentQuestion.title}</h2>
+                        <p>{currentQuestion.question}</p>
+                        
+                        <div className="options">
+                            {currentQuestion.options.map(option => {
+                                const isSelected = (answers[currentQuestion.id] || []).includes(option.id);
+                                
+                                return (
+                                    <label key={option.id} className={`option ${isSelected ? 'selected' : ''}`}>
+                                        <input
+                                            type={currentQuestion.type === 'multi-select' ? 'checkbox' : 'radio'}
+                                            name={currentQuestion.id}
+                                            checked={isSelected}
+                                            onChange={(e) => handleAnswerChange(option.id, e.target.checked)}
+                                        />
+                                        <div className="option-content">
+                                            <div className="option-title">{option.label}</div>
+                                            <div className="option-hint">{option.hint}</div>
+                                        </div>
+                                    </label>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    
+                    <div className="navigation">
+                        <button 
+                            className="btn btn-secondary" 
+                            onClick={handlePrevious}
+                            disabled={currentStep === 0}
+                        >
+                            Previous
+                        </button>
+                        
+                        <button 
+                            className="btn btn-primary" 
+                            onClick={handleNext}
+                            disabled={!canProceed()}
+                        >
+                            {currentStep === QUIZ_STEPS.length - 1 ? 'Get My Recommendations' : 'Next'}
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<QuizApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
