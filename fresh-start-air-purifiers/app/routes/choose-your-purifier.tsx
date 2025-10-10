@@ -1,13 +1,14 @@
 import { MetaFunction } from '@remix-run/react';
+import QuickPicker from '~/components/QuickPicker';
 
 export const meta: MetaFunction = () => {
   return [
     { title: 'Choose Your Purifier | Fresh Start Air Purifiers' },
-    { name: 'description', content: 'Find the perfect air purifier for your space with our interactive selection tool.' },
+    { name: 'description', content: 'Find the perfect air purifier for your space with our interactive selection tool. Get personalized recommendations based on your needs.' },
   ];
 };
 
-export default function Quiz() {
+export default function ChooseYourPurifier() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <div className="text-center mb-12">
@@ -19,16 +20,8 @@ export default function Quiz() {
           Get personalized recommendations based on your room size, concerns, and preferences.
         </p>
       </div>
-      
-      <div className="bg-[#F0F8FF] rounded-2xl p-8 text-center">
-        <h2 className="text-2xl font-semibold text-[#1e40af] mb-4">
-          Quiz Coming Soon
-        </h2>
-        <p className="text-gray-700">
-          We're working on an interactive quiz to help you find the perfect air purifier. 
-          Check back soon!
-        </p>
-      </div>
+
+      <QuickPicker />
     </div>
   );
 }

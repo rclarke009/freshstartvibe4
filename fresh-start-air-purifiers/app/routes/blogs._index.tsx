@@ -98,9 +98,9 @@ export default function Blogs() {
       {/* Blog Cards */}
       {blogs && blogs.length > 0 ? (
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 xl:gap-16" style={{ 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem'
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16" style={{ 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '4rem'
           }}>
             {blogs.map((b) => (
               <Link
@@ -125,10 +125,10 @@ export default function Blogs() {
                   paddingBottom: '1rem',
                   paddingLeft: '1rem'
                 }}>
-                  <div className="flex gap-3 sm:gap-6">
+                  <div className="flex gap-6">
                     {/* Text Content */}
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-lg sm:text-xl font-semibold text-gray-900 group-hover:text-[#1e40af] transition-colors duration-200 mb-3 leading-tight">
+                      <h2 className="text-xl font-semibold text-gray-900 group-hover:text-[#1e40af] transition-colors duration-200 mb-3">
                         {b.title}
                       </h2>
                       
@@ -145,12 +145,12 @@ export default function Blogs() {
                         <img
                           src={`${b.featuredImage.asset.url}?w=120&h=120&fit=crop&auto=format`}
                           alt={b.featuredImage.alt ?? b.title}
-                          className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg"
+                          className="w-20 h-20 object-cover rounded-lg"
                           loading="lazy"
                           decoding="async"
                         />
                       ) : (
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center">
                           <div className="text-gray-400 text-xs">No Image</div>
                         </div>
                       )}

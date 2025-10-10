@@ -10,7 +10,7 @@ import {
 import {CartMain} from '~/components/CartMain';
 
 export const meta: MetaFunction = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `Fresh Start Air Purifiers | Cart`}];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;

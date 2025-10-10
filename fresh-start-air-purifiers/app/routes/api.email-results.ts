@@ -1,50 +1,60 @@
-import { json, type ActionFunctionArgs } from '@remix-run/node';
-import { PurifierModel } from '~/components/ResultCard';
-
-interface EmailResultsRequest {
-  email: string;
-  recommendations: PurifierModel[];
-  answers: Record<string, string[]>;
-}
+import { data, type ActionFunctionArgs } from '@shopify/remix-oxygen';
 
 export async function action({ request }: ActionFunctionArgs) {
   if (request.method !== 'POST') {
-    return json({ error: 'Method not allowed' }, { status: 405 });
+    return data({ error: 'Method not allowed' }, { status: 405 });
   }
 
   try {
-    const body = await request.json() as EmailResultsRequest;
-    const { email, recommendations, answers } = body;
+    const body = await request.json();
+    const { email, needs, placement, picks } = body;
 
-    // Validate email
-    if (!email || !email.includes('@')) {
-      return json({ error: 'Valid email required' }, { status: 400 });
+    // Validate required fields
+    if (!email || !needs || !placement || !picks) {
+      return data({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // In a real implementation, you would:
-    // 1. Send email using your email service (SendGrid, Mailgun, etc.)
-    // 2. Store the results in your database
-    // 3. Send confirmation email to user
-    // 4. Possibly notify your team about the lead
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return data({ error: 'Invalid email format' }, { status: 400 });
+    }
 
-    console.log('Email results request:', {
+    // Here you would typically:
+    // 1. Send an email with the recommendations
+    // 2. Store the submission in a database
+    // 3. Add to your email marketing list (with consent)
+    
+    // For now, we'll just log the submission and return success
+    console.log('Email results submission:', {
       email,
-      recommendationCount: recommendations.length,
-      answers: Object.keys(answers).length
+      needs,
+      placement,
+      picks,
+      timestamp: new Date().toISOString(),
     });
 
-    // For now, just log the request and return success
     // TODO: Implement actual email sending
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate processing
+    // You could use services like:
+    // - SendGrid
+    // - Mailgun
+    // - AWS SES
+    // - Or your existing email service
 
-    return json({ 
+    return data({ 
       success: true, 
-      message: 'Results sent successfully',
-      email 
+      message: 'Recommendations sent successfully' 
     });
 
   } catch (error) {
     console.error('Error processing email results:', error);
-    return json({ error: 'Internal server error' }, { status: 500 });
+    return data({ 
+      error: 'Internal server error' 
+    }, { status: 500 });
   }
+}
+
+// Handle GET requests (not allowed)
+export async function loader() {
+  return data({ error: 'Method not allowed' }, { status: 405 });
 }

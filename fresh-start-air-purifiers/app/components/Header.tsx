@@ -231,8 +231,8 @@ const FALLBACK_HEADER_MENU = {
       resourceId: null,
       tags: [],
       title: 'Choose Your Purifier',
-      type: 'HTTP',
-      url: '/quiz',
+      type: 'PAGE',
+      url: '/choose-your-purifier',
       items: [],
     },
     {

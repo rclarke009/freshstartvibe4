@@ -88,7 +88,7 @@ function Hero() {
         </div>
         <div className="hero-cta">
           <Link
-            to="/quiz"
+            to="/choose-your-purifier"
             className="add-to-cart-button"
           >
             Find your filter
@@ -272,7 +272,7 @@ function SocialProof() {
         </div>
       </div>
       
-      <style>{`
+      <style jsx>{`
         .testimonial-grid {
           display: flex;
           flex-direction: column;

@@ -189,17 +189,17 @@ export default function BlogPost() {
           
         </header>
 
-        {/* Responsive Layout: Image + Content */}
-        <div className="px-4 sm:px-8 lg:px-12 pb-12">
-          <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-            {/* Image Column - Responsive sizing */}
+        {/* Two Column Layout: Image + Content */}
+        <div className="px-8 sm:px-12 pb-12">
+          <div className="flex flex-row items-start">
+            {/* Left Column - Image (Fixed size, stacks on mobile) */}
             {blog.featuredImage?.asset?.url && (
-              <div className="flex-shrink-0 w-full sm:w-auto">
-                <figure className="w-full max-w-xs mx-auto sm:max-w-none sm:mx-0 sm:w-32 sm:h-32">
+              <div className="flex-shrink-0" style={{ marginRight: '2rem' }}>
+                <figure className="w-32 h-32">
                   <img
                     src={`${blog.featuredImage.asset.url}?w=300&h=300&fit=crop&auto=format&q=90`}
                     alt={blog.featuredImage.alt || blog.title || "Post image"}
-                    className="w-full h-48 sm:w-32 sm:h-32 object-cover rounded-lg shadow-md"
+                    className="w-32 h-32 object-cover rounded-lg shadow-md"
                   />
                   {blog.featuredImage.alt && (
                     <figcaption className="text-xs text-gray-500 italic mt-2 text-left">
@@ -210,8 +210,8 @@ export default function BlogPost() {
               </div>
             )}
 
-            {/* Content Column - Full width on mobile */}
-            <div className="flex-1 w-full">
+            {/* Right Column - Content (Responsive width) */}
+            <div className="flex-1" style={{ marginLeft: '1rem' }}>
 
              
 
