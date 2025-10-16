@@ -88,10 +88,10 @@ function Hero() {
         </div>
         <div className="hero-cta">
           <Link
-            to="/choose-your-purifier"
+            to="/collections"
             className="add-to-cart-button"
           >
-            Find your filter
+            Shop All
           </Link>
         </div>
       </div>
@@ -138,10 +138,10 @@ function ProblemValidation() {
               That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
             </p>
             <a
-              href="#guide"
+              href="/collections"
               className="inline-block rounded-xl bg-white border-2 border-[#1e40af] px-5 py-3 font-semibold text-[#1e40af] shadow hover:bg-[#1e40af] hover:text-white transition-colors"
             >
-              Compare models
+              Shop All
             </a>
           </div>
           <div className="right-column" style={{width: '100%', flexShrink: '0', display: 'flex', justifyContent: 'center'}}>
