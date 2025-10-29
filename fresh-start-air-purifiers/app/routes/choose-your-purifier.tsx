@@ -3,7 +3,7 @@ import { MetaFunction } from '@remix-run/react';
 export const meta: MetaFunction = () => {
   return [
     { title: 'Choose Your Purifier | Fresh Start Air Purifiers' },
-    { name: 'description', content: 'Find the perfect air purifier for your space with our interactive selection tool. Get personalized recommendations based on your needs.' },
+    { name: 'description', content: 'Find your perfect Austin Air purifier with our interactive tool. Get personalized recommendations for medical-grade HEPA + carbon filtration systems.' },
   ];
 };
 

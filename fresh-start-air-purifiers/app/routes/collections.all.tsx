@@ -9,7 +9,7 @@ export const meta: MetaFunction<typeof loader> = () => {
     { title: `Fresh Start Air Purifiers | All Products` },
     {
       name: 'description',
-      content: 'Browse our complete collection of premium Austin Air purifiers. Medical-grade HEPA and carbon filtration systems to remove VOCs, fragrances, pollen, mold, and PM2.5 particles from your home.',
+      content: 'Browse premium Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, and mold for clean indoor air.',
     },
   ];
 };

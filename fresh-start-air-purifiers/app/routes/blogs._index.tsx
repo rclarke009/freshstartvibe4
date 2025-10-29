@@ -5,7 +5,7 @@ import {sanityClient} from '~/lib/sanityClient';
 export const meta: MetaFunction = () => {
   return [
     {title: 'Fresh Start Air Purifiers | Air Purifier Blog'},
-    {name: 'description', content: 'Practical guides on fragrance/VOCs, filtration, and clean-air living.'},
+    {name: 'description', content: 'Read practical guides on removing fragrances and VOCs with medical-grade HEPA and carbon filtration for truly clean indoor air.'},
   ];
 };
 

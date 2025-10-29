@@ -9,8 +9,8 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
     : 'Fresh Start Air Purifiers';
   
   const description = page?.seo?.description ||
-    (page?.body ? page.body.replace(/<[^>]*>/g, '').substring(0, 160) : null) ||
-    'Fresh Start Air Purifiers - Premium air purification solutions for your home or office.';
+    (page?.body ? page.body.replace(/<[^>]*>/g, '').substring(0, 150) : null) ||
+    'Learn about air purification at Fresh Start Air Purifiers. Premium Austin Air systems with medical-grade HEPA + carbon filtration.';
   
   return [
     { title },

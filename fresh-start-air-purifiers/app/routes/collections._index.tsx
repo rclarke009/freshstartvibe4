@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => {
     { title: 'Fresh Start Air Purifiers | Collections' },
     {
       name: 'description',
-      content: 'Explore our air purifier collections. Premium Austin Air systems with medical-grade HEPA and carbon filtration for every home and office.',
+      content: 'Explore Austin Air purifier collections with medical-grade HEPA + heavy carbon filtration for homes, offices, and sensitive environments.',
     },
   ];
 };

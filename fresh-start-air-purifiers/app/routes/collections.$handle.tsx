@@ -12,8 +12,8 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
     : 'Fresh Start Air Purifiers | Collection';
   
   const description = collection?.description 
-    ? collection.description.replace(/<[^>]*>/g, '').substring(0, 160)
-    : `Browse our ${collection?.title || 'premium air purifier'} collection. Medical-grade HEPA and carbon filtration systems for clean, healthy indoor air.`;
+    ? collection.description.replace(/<[^>]*>/g, '').substring(0, 150)
+    : `Browse ${collection?.title || 'premium air purifier'} - Austin Air purifiers with medical-grade HEPA + heavy carbon for clean, healthy indoor air.`;
   
   return [
     { title },

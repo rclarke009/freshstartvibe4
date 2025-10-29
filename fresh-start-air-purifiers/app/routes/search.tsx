@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => {
     { title: `Fresh Start Air Purifiers | Search` },
     {
       name: 'description',
-      content: 'Search for premium air purifiers, filters, and accessories. Find the perfect Austin Air system for your space.',
+      content: 'Search premium Austin Air purifiers, filters, and accessories to find the perfect medical-grade HEPA + carbon system for your space.',
     },
   ];
 };

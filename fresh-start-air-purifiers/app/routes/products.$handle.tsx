@@ -23,8 +23,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     : 'Fresh Start Air Purifiers | Product';
   
   const description = product?.seo?.description || 
-    (product?.description ? product.description.replace(/<[^>]*>/g, '').substring(0, 160) : null) ||
-    `Shop ${product?.title || 'premium air purifiers'} from Fresh Start Air Purifiers. Medical-grade HEPA and carbon filtration for clean, healthy indoor air.`;
+    (product?.description ? product.description.replace(/<[^>]*>/g, '').substring(0, 150) : null) ||
+    `Shop ${product?.title || 'premium air purifiers'} from Fresh Start Air Purifiers. Medical-grade HEPA + heavy carbon removes VOCs, fragrances, pollen, and mold.`;
   
   return [
     { title },

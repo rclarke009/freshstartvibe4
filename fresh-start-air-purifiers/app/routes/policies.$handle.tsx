@@ -14,8 +14,8 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
     : 'Fresh Start Air Purifiers | Policy';
   
   const description = policy?.body 
-    ? policy.body.replace(/<[^>]*>/g, '').substring(0, 160)
-    : `Read our ${policy?.title?.toLowerCase() || 'policy'} information.`;
+    ? policy.body.replace(/<[^>]*>/g, '').substring(0, 150)
+    : `Read our ${policy?.title?.toLowerCase() || 'policy'} policy information for Fresh Start Air Purifiers.`;
   
   return [
     { title },

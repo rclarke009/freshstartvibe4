@@ -10,7 +10,13 @@ import {
 import {CartMain} from '~/components/CartMain';
 
 export const meta: MetaFunction = () => {
-  return [{title: `Fresh Start Air Purifiers | Cart`}];
+  return [
+    {title: `Fresh Start Air Purifiers | Cart`},
+    {
+      name: 'description',
+      content: 'Review your cart at Fresh Start Air Purifiers. Complete your purchase of Austin Air purifiers with medical-grade HEPA + carbon filtration.',
+    },
+  ];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;

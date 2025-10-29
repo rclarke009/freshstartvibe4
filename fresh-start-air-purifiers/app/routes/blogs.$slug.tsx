@@ -57,7 +57,7 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
   const metadata: Array<{title?: string; name?: string; property?: string; content?: string}> = [
     {title: post.seo?.title || post.title || 'Fresh Start Air Purifiers Blog'},
-    {name: 'description', content: post.seo?.description || post.excerpt || 'Read the latest insights on air purification and clean living.'}
+    {name: 'description', content: post.seo?.description || post.excerpt || 'Read the latest insights on air purification, VOCs removal, and clean-air living with Austin Air systems.'}
   ];
 
   // Add Open Graph image if available

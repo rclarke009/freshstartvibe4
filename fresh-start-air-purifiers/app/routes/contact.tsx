@@ -3,7 +3,7 @@ import type {MetaFunction} from '@remix-run/react';
 export const meta: MetaFunction = () => {
   return [
     {title: 'Contact Us - Fresh Start Air Purifiers'},
-    {name: 'description', content: 'Get in touch with Fresh Start Air Purifiers. We&apos;re here to help you find the perfect air purifier for your needs.'},
+    {name: 'description', content: 'Contact Fresh Start Air Purifiers for help finding the perfect Austin Air purifier with medical-grade HEPA + carbon filtration for your needs.'},
   ];
 };
 
