@@ -209,7 +209,9 @@ export default function Product() {
             <div className="mt-8">
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Description</h2>
               <div
-                dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+                dangerouslySetInnerHTML={{ 
+                  __html: descriptionHtml?.replace(/<h1[^>]*>/gi, '<h2>').replace(/<\/h1>/gi, '</h2>') || '' 
+                }}
                 className="text-gray-700 leading-relaxed"
               />
             </div>
