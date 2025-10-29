@@ -1,8 +1,18 @@
-import {useLoaderData, Link} from '@remix-run/react';
+import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'Fresh Start Air Purifiers | Collections' },
+    {
+      name: 'description',
+      content: 'Explore our air purifier collections. Premium Austin Air systems with medical-grade HEPA and carbon filtration for every home and office.',
+    },
+  ];
+};
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte

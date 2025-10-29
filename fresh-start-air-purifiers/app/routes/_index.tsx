@@ -9,7 +9,13 @@ import type {
 import {ProductItem} from '~/components/ProductItem';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'}];
+  return [
+    {title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'},
+    {
+      name: 'description',
+      content: 'Premium Austin Air purifiers with medical-grade HEPA and carbon filtration. Remove VOCs, fragrances, pollen, mold, and PM2.5 particles from your home. Trusted by hospitals, schools, and families with sensitivities. Made in the USA.',
+    },
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

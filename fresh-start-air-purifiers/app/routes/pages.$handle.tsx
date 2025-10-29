@@ -3,7 +3,19 @@ import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Fresh Start Air Purifiers | ${data?.page.title ?? ''}`}];
+  const page = data?.page;
+  const title = page?.title 
+    ? `Fresh Start Air Purifiers | ${page.title}`
+    : 'Fresh Start Air Purifiers';
+  
+  const description = page?.seo?.description ||
+    (page?.body ? page.body.replace(/<[^>]*>/g, '').substring(0, 160) : null) ||
+    'Fresh Start Air Purifiers - Premium air purification solutions for your home or office.';
+  
+  return [
+    { title },
+    { name: 'description', content: description },
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

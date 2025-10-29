@@ -17,11 +17,21 @@ import { redirectIfHandleIsLocalized } from '~/lib/redirect';
 import { sanityClient } from '~/lib/sanityClient';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const product = data?.product;
+  const title = product?.title 
+    ? `Fresh Start Air Purifiers | ${product.title}`
+    : 'Fresh Start Air Purifiers | Product';
+  
+  const description = product?.seo?.description || 
+    (product?.description ? product.description.replace(/<[^>]*>/g, '').substring(0, 160) : null) ||
+    `Shop ${product?.title || 'premium air purifiers'} from Fresh Start Air Purifiers. Medical-grade HEPA and carbon filtration for clean, healthy indoor air.`;
+  
   return [
-    { title: `Fresh Start Air Purifiers | ${data?.product.title ?? ''}` },
+    { title },
+    { name: 'description', content: description },
     {
       rel: 'canonical',
-      href: `/products/${data?.product.handle}`,
+      href: `/products/${product?.handle}`,
     },
   ];
 };

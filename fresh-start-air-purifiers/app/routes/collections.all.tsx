@@ -5,7 +5,13 @@ import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
 
 export const meta: MetaFunction<typeof loader> = () => {
-  return [{title: `Fresh Start Air Purifiers | Products`}];
+  return [
+    { title: `Fresh Start Air Purifiers | All Products` },
+    {
+      name: 'description',
+      content: 'Browse our complete collection of premium Austin Air purifiers. Medical-grade HEPA and carbon filtration systems to remove VOCs, fragrances, pollen, mold, and PM2.5 particles from your home.',
+    },
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

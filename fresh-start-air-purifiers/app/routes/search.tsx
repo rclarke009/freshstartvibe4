@@ -13,7 +13,13 @@ import {
 } from '~/lib/search';
 
 export const meta: MetaFunction = () => {
-  return [{title: `Fresh Start Air Purifiers | Search`}];
+  return [
+    { title: `Fresh Start Air Purifiers | Search` },
+    {
+      name: 'description',
+      content: 'Search for premium air purifiers, filters, and accessories. Find the perfect Austin Air system for your space.',
+    },
+  ];
 };
 
 export async function loader({request, context}: LoaderFunctionArgs) {

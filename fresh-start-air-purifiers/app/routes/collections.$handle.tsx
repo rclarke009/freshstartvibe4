@@ -6,7 +6,19 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Fresh Start Air Purifiers | ${data?.collection.title ?? ''} Collection`}];
+  const collection = data?.collection;
+  const title = collection?.title 
+    ? `Fresh Start Air Purifiers | ${collection.title} Collection`
+    : 'Fresh Start Air Purifiers | Collection';
+  
+  const description = collection?.description 
+    ? collection.description.replace(/<[^>]*>/g, '').substring(0, 160)
+    : `Browse our ${collection?.title || 'premium air purifier'} collection. Medical-grade HEPA and carbon filtration systems for clean, healthy indoor air.`;
+  
+  return [
+    { title },
+    { name: 'description', content: description },
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

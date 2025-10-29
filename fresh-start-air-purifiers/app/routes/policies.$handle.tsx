@@ -8,7 +8,19 @@ type SelectedPolicies = keyof Pick<
 >;
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Fresh Start Air Purifiers | ${data?.policy.title ?? ''}`}];
+  const policy = data?.policy;
+  const title = policy?.title 
+    ? `Fresh Start Air Purifiers | ${policy.title}`
+    : 'Fresh Start Air Purifiers | Policy';
+  
+  const description = policy?.body 
+    ? policy.body.replace(/<[^>]*>/g, '').substring(0, 160)
+    : `Read our ${policy?.title?.toLowerCase() || 'policy'} information.`;
+  
+  return [
+    { title },
+    { name: 'description', content: description },
+  ];
 };
 
 export async function loader({params, context}: LoaderFunctionArgs) {
