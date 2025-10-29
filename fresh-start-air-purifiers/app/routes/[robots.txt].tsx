@@ -24,7 +24,8 @@ function robotsTxtData({url, shopId}: {shopId?: string; url?: string}) {
 
   return `
 User-agent: *
-${generalDisallowRules({sitemapUrl, shopId})}
+Allow: /$
+${generalDisallowRules({shopId})}
 
 # Google adsbot ignores robots.txt unless specifically named!
 User-agent: adsbot-google
@@ -38,22 +39,28 @@ Disallow: /*?*oseid=*
 Disallow: /*preview_theme_id*
 Disallow: /*preview_script_id*
 
+User-agent: Googlebot-Image
+Allow: /$
+${generalDisallowRules({shopId})}
+
 User-agent: Nutch
 Disallow: /
 
 User-agent: AhrefsBot
 Crawl-delay: 10
-${generalDisallowRules({sitemapUrl, shopId})}
+${generalDisallowRules({shopId})}
 
 User-agent: AhrefsSiteAudit
 Crawl-delay: 10
-${generalDisallowRules({sitemapUrl, shopId})}
+${generalDisallowRules({shopId})}
 
 User-agent: MJ12bot
 Crawl-Delay: 10
 
 User-agent: Pinterest
 Crawl-delay: 1
+
+${sitemapUrl ? `Sitemap: ${sitemapUrl}` : ''}
 `.trim();
 }
 
@@ -63,10 +70,8 @@ Crawl-delay: 1
  */
 function generalDisallowRules({
   shopId,
-  sitemapUrl,
 }: {
   shopId?: string;
-  sitemapUrl?: string;
 }) {
   return `Disallow: /admin
 Disallow: /cart
@@ -103,8 +108,7 @@ Disallow: /search
 Allow: /search/
 Disallow: /search/?*
 Disallow: /apple-app-site-association
-Disallow: /.well-known/shopify/monorail
-${sitemapUrl ? `Sitemap: ${sitemapUrl}` : ''}`;
+Disallow: /.well-known/shopify/monorail`;
 }
 
 const ROBOTS_QUERY = `#graphql
