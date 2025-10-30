@@ -1,4 +1,5 @@
 import { MetaFunction } from '@remix-run/react';
+import FindYourFilterQuiz from '~/components/FindYourFilterQuiz';
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,59 +10,33 @@ export const meta: MetaFunction = () => {
 
 export default function ChooseYourPurifier() {
   return (
-    <div className="coming-soon-page">
-      <div className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] mb-6">
-          Choose Your Purifier
-        </h1>
-        
-        <div className="bg-[#F0F8FF] rounded-2xl p-8 md:p-12 mb-8">
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af] mb-4">
-            Coming Soon!
-          </h2>
-          <p className="text-lg text-gray-700 mb-6">
-            We're working on an interactive tool to help you find the perfect air purifier for your needs. 
-            This will include questions about your space, concerns, and preferences to give you personalized recommendations.
+    <div className="min-h-screen bg-[#F0F8FF] py-8">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] mb-4">
+            Choose Your Purifier
+          </h1>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-4">
+            Answer 3 simple questions to find the perfect Austin Air purifier for your needs
           </p>
-          
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <h3 className="text-xl font-semibold text-[#1e40af] mb-4">
-              What to expect:
-            </h3>
-            <ul className="text-left text-gray-700 space-y-2">
-              <li className="flex items-start">
-                <span className="text-[#1e40af] mr-2">•</span>
-                <span>Personalized recommendations based on your specific needs</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#1e40af] mr-2">•</span>
-                <span>Room size and usage analysis</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#1e40af] mr-2">•</span>
-                <span>Allergy and sensitivity considerations</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#1e40af] mr-2">•</span>
-                <span>Noise level preferences</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-[#1e40af] mr-2">•</span>
-                <span>Budget-friendly options</span>
-              </li>
-            </ul>
-          </div>
+          <br></br>
         </div>
         
-        <div className="space-y-4">
-          <p className="text-gray-600">
-            In the meantime, you can browse our full collection of air purifiers:
+        <div className="quiz-frame mt-6" style={{border: '2px solid rgba(30, 64, 175, 0.4)', borderRadius: '1rem', background: '#fff'}}>
+          <FindYourFilterQuiz />
+        </div>
+        <div className="h-8" />
+        
+        <div className="text-center mt-8">
+          <br></br>
+          <p className="text-gray-600 mb-4">
+            Or browse our full collection:
           </p>
           <a 
             href="/collections" 
-            className="inline-block bg-white border-2 border-[#1e40af] text-[#1e40af] px-8 py-3 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors"
+            className="quiz-button"
           >
-            Shop All
+            Shop All Air Purifiers
           </a>
         </div>
       </div>

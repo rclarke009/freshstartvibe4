@@ -1,5 +1,6 @@
 import { redirect, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import { useLoaderData, type MetaFunction } from '@remix-run/react';
+import { useState, useEffect } from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -115,6 +116,17 @@ function loadDeferredData({ context, params }: LoaderFunctionArgs) {
 
 export default function Product() {
   const { product, sanityData } = useLoaderData<typeof loader>();
+  const [showQuizBanner, setShowQuizBanner] = useState(false);
+
+  // Check for quiz query parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('from') === 'quiz') {
+      setShowQuizBanner(true);
+      // Auto-hide after 5 seconds
+      setTimeout(() => setShowQuizBanner(false), 5000);
+    }
+  }, []);
 
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,
@@ -139,6 +151,17 @@ export default function Product() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
+      {/* Quiz Success Banner */}
+      {showQuizBanner && (
+        <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+          <div className="flex items-center justify-center">
+            <span className="text-green-600 text-lg mr-2">✓</span>
+            <span className="text-green-800 font-medium">
+              Perfect match! This purifier was recommended based on your quiz answers.
+            </span>
+          </div>
+        </div>
+      )}
       <div className="product-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         {/* Product Image - Left Column */}
         <div className="order-2 lg:order-1">

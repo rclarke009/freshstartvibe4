@@ -42,6 +42,101 @@
   outline-offset: 2px;
 }
 
+/* Quiz button styles */
+.quiz-button {
+  background-color: white;
+  color: #1e40af;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #1e40af;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  min-width: fit-content;
+  width: auto;
+}
+
+.quiz-button:hover {
+  background-color: #1e40af;
+  color: white;
+}
+
+.quiz-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #1e40af, 0 0 0 4px rgba(30, 64, 175, 0.1);
+}
+
+/* Spacing helpers for quiz */
+.quiz-prompt {
+  margin-bottom: 1rem; /* ensures space under the question text */
+}
+
+.quiz-group {
+  margin-top: 1rem; /* ensures space above the first button */
+}
+
+/* Ensure vertical spacing between stacked buttons irrespective of container gap */
+.quiz-button + .quiz-button {
+  margin-top: 0.75rem; /* ~12px */
+}
+
+/* Space between options and actions (e.g., Start Over) */
+.quiz-actions {
+  margin-top: 1.25rem; /* 20px */
+}
+
+/* Offset the step label toward the prompts */
+.quiz-step-offset {
+  margin-left: 4%;
+}
+@media (min-width: 768px) {
+  .quiz-step-offset {
+    margin-left: 6%;
+  }
+}
+@media (min-width: 1024px) {
+  .quiz-step-offset {
+    margin-left: 8%;
+  }
+}
+
+/* Persistent quiz frame (prevents hydration overrides) */
+.quiz-frame {
+  background: #fff;
+  border: 2px solid rgba(30, 64, 175, 0.4); /* #1e40af at 40% */
+  border-radius: 1rem; /* ~rounded-2xl */
+  padding: 1rem; /* p-4 */
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden; /* avoid margin-collapsing artifacts */
+  isolation: isolate;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .quiz-frame {
+    padding: 1.5rem; /* md:p-6 */
+  }
+}
+@media (min-width: 1024px) {
+  .quiz-frame {
+    width: 50vw; /* about half the screen */
+  }
+}
+
+/* Quiz button variants */
+.quiz-button--sm {
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem; /* ~text-sm */
+}
+
+.quiz-button--muted {
+  color: #334155; /* slate-700 */
+  border-color: #94a3b8; /* slate-300 */
+}
+
 button:focus,
 input:focus,
 select:focus,
