@@ -45,15 +45,16 @@ export default function FindYourFilterQuiz() {
   const calculateRecommendation = (answers: QuizAnswers): string => {
     const { concern, size, priority } = answers;
 
-    // Product handle mapping (matching existing QuickPicker handles)
+    // Product handle mapping to canonical Shopify slugs
     const productHandles = {
-      'healthmate': 'healthmate',
-      'healthmate-jr': 'healthmate-jr', 
-      'healthmate-plus': 'healthmate-plus',
-      'bedroom': 'bedroom',
-      'allergy': 'allergy',
-      'immunity': 'immunity',
-    };
+      'healthmate': 'austin-air-purifier-healthmate',
+      'healthmate-jr': 'austin-healthmate-junior-air-purifier',
+      'healthmate-plus': 'austin-healthmate-plus-air-purifier',
+      'bedroom': 'austin-bedroom-machine-air-purifier',
+      // Per instruction, map allergy to Bedroom Machine
+      'allergy': 'austin-bedroom-machine-air-purifier',
+      'immunity': 'austin-air-immunity-machine',
+    } as const;
 
     // Recommendation logic
     if (concern === 'chemicals') {
@@ -163,19 +164,19 @@ export default function FindYourFilterQuiz() {
               onClick={() => handleSelect('size', 'small')} 
               className="quiz-button"
             >
-              Bedroom / Office
+              Small Bedroom / Nursery
             </button>
             <button 
               onClick={() => handleSelect('size', 'medium')} 
               className="quiz-button"
             >
-              Apartment
+              Bedroom / Apartment
             </button>
             <button 
               onClick={() => handleSelect('size', 'large')} 
               className="quiz-button"
             >
-              Whole Home
+              Living Room / Open Space
             </button>
           </div>
         </>

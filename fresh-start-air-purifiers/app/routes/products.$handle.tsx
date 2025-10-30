@@ -55,6 +55,25 @@ async function loadCriticalData({
     throw new Error('Expected product handle to be defined');
   }
 
+  // Normalize common short handles to canonical slugs and redirect
+  const redirectMap: Record<string, string> = {
+    'healthmate': 'austin-air-purifier-healthmate',
+    'healthmate-plus': 'austin-healthmate-plus-air-purifier',
+    'healthmate-jr': 'austin-healthmate-junior-air-purifier',
+    'healthmate-jr-plus': 'austin-healthmate-junior-plus-air-purifier',
+    'bedroom': 'austin-bedroom-machine-air-purifier',
+    'allergy': 'austin-bedroom-machine-air-purifier',
+    'allergy-jr': 'austin-bedroom-machine-air-purifier',
+    'immunity': 'austin-air-immunity-machine',
+  };
+
+  const canonical = redirectMap[handle];
+  if (canonical && canonical !== handle) {
+    return redirect(`/products/${canonical}${new URL(request.url).search || ''}`, {
+      status: 301,
+    });
+  }
+
   const [{ product }] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
       variables: { handle, selectedOptions: getSelectedProductOptions(request) },
