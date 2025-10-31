@@ -139,12 +139,16 @@ export default function Page() {
     );
   }
 
+  // Temporary fixes for outdated content in Shopify Page body.
+  // - Update old product handles to canonical slugs
+  // - Optionally, we can strip the entire Featured section if needed
+  const fixedBody = (page.body || '')
+    .replace(/\/products\/healthmate-plus/gi, '/products/austin-healthmate-plus-air-purifier')
+    .replace(/\/products\/luggable/gi, '/products/austin-air-immunity-machine');
+
   return (
     <div className="page">
-      <header>
-        <h1>{page.title}</h1>
-      </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+      <main dangerouslySetInnerHTML={{__html: fixedBody}} />
     </div>
   );
 }

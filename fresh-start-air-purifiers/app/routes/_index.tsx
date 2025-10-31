@@ -94,10 +94,10 @@ function Hero() {
         </div>
         <div className="hero-cta">
           <Link
-            to="/collections"
+            to="/choose-your-purifier"
             className="add-to-cart-button"
           >
-            Shop All
+            Find Your Perfect Filter
           </Link>
         </div>
       </div>
@@ -141,11 +141,12 @@ function ProblemValidation() {
               </li>
             </ul>
             <p className="text-gray-700/90">
-              That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
+            For families dealing with fragrance sensitivity, HEPA alone isn't enough. Austin Air's HEPA + carbon filtration system is designed to create a space where breathing feels safe again.
             </p>
+            <br></br>
             <a
               href="/collections"
-              className="inline-block rounded-xl bg-white border-2 border-[#1e40af] px-5 py-3 font-semibold text-[#1e40af] shadow hover:bg-[#1e40af] hover:text-white transition-colors"
+              className="add-to-cart-button inline-block text-center"
             >
               Shop All
             </a>
@@ -335,14 +336,25 @@ function RecommendedProducts({
   return (
     <div className="recommended-products">
       <h2>Recommended Products</h2>
+      {/* Featured pick: Immunity Machine */}
+      <div className="mb-6">
+        <div className="bg-white p-6 rounded-xl shadow border max-w-xl mx-auto text-center">
+          <h3 className="text-xl font-semibold text-[#1e40af] mb-2">Featured: Immunity Machine</h3>
+          <p className="text-gray-700 mb-4">Medical-grade performance trusted by hospitals and sensitive homes.</p>
+          <a href="/products/austin-air-immunity-machine" className="add-to-cart-button inline-block">View Immunity Machine</a>
+        </div>
+      </div>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
             <div className="recommended-products-grid">
               {response
-                ? response.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
-                  ))
+                ? response.products.nodes
+                    // Filter out IT/luggable kit variants
+                    .filter((product) => !product.handle.startsWith('austin-it-'))
+                    .map((product) => (
+                      <ProductItem key={product.id} product={product} />
+                    ))
                 : null}
             </div>
           )}

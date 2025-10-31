@@ -22,37 +22,37 @@ const models = {
   HM: {
     name: 'HealthMate',
     description: 'Perfect for general air cleaning and allergen reduction',
-    handle: 'healthmate',
+    handle: 'austin-air-purifier-healthmate',
   },
   HMP: {
     name: 'HealthMate Plus',
     description: 'Advanced filtration for VOCs, smoke, and chemical odors',
-    handle: 'healthmate-plus',
+    handle: 'austin-healthmate-plus-air-purifier',
   },
   Bedroom: {
     name: 'Bedroom',
     description: 'Ultra-quiet operation perfect for bedrooms and virus protection',
-    handle: 'bedroom',
+    handle: 'austin-bedroom-machine-air-purifier',
   },
   Allergy: {
     name: 'Allergy',
     description: 'Specialized for pollen, dust, and allergen removal',
-    handle: 'allergy',
+    handle: 'austin-bedroom-machine-air-purifier',
   },
   Immunity: {
     name: 'Immunity',
     description: 'Medical-grade filtration for viruses and bacteria',
-    handle: 'immunity',
+    handle: 'austin-air-immunity-machine',
   },
   HMjr: {
     name: 'HealthMate Jr',
     description: 'Compact version perfect for small spaces',
-    handle: 'healthmate-jr',
+    handle: 'austin-healthmate-junior-air-purifier',
   },
   AllergyJr: {
     name: 'Allergy Jr',
     description: 'Compact allergen fighter for small rooms',
-    handle: 'allergy-jr',
+    handle: 'austin-healthmate-junior-plus-air-purifier',
   },
 };
 

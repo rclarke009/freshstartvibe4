@@ -161,12 +161,11 @@ export default function Product() {
 
   const { title, descriptionHtml } = product;
 
-  // Create array of product images for gallery
-  const productImages = [
-    selectedVariant?.image,
-    // Add more images here when available
-    // You can also fetch additional images from Sanity or Shopify
-  ].filter(Boolean);
+  // Choose a primary image with graceful fallbacks
+  const primaryImage = selectedVariant?.image || product?.featuredImage || null;
+
+  // Create array of product images for gallery (can be expanded later)
+  const productImages = [primaryImage].filter(Boolean);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -186,11 +185,18 @@ export default function Product() {
         <div className="order-2 lg:order-1">
           <div className="sticky top-8">
             <div className="product-image-container mx-auto lg:mx-0">
-              {/* Direct image render - no ProductImage component */}
-              {selectedVariant?.image && (
+              {/* Direct image render with fallback to product.featuredImage */}
+              {primaryImage ? (
                 <img
-                  src={selectedVariant.image.url}
-                  alt={selectedVariant.image.altText || title}
+                  src={primaryImage.url}
+                  alt={primaryImage.altText || title}
+                  className="w-full h-auto rounded-lg shadow-lg object-contain bg-white"
+                  loading="lazy"
+                />
+              ) : (
+                <img
+                  src="/fresh-start-air-purifiers-logo-no-bkgd.png"
+                  alt={title}
                   className="w-full h-auto rounded-lg shadow-lg object-contain bg-white"
                   loading="lazy"
                 />
@@ -488,6 +494,14 @@ const PRODUCT_FRAGMENT = `#graphql
     handle
     descriptionHtml
     description
+    featuredImage {
+      __typename
+      id
+      url
+      altText
+      width
+      height
+    }
     encodedVariantExistence
     encodedVariantAvailability
     options {
