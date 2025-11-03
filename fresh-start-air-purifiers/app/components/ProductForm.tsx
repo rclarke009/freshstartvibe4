@@ -1,4 +1,4 @@
-import {Link, useNavigate} from '@remix-run/react';
+import {Link, useLocation} from '@remix-run/react';
 import {type MappedProductOptions} from '@shopify/hydrogen';
 import type {
   Maybe,
@@ -32,7 +32,7 @@ export function ProductForm({
   productOptions: MappedProductOptions[];
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
 }) {
-  const navigate = useNavigate();
+  const location = useLocation();
   const {open} = useAside();
   return (
     <div className="product-form">
@@ -103,10 +103,15 @@ export function ProductForm({
                       aria-pressed={selected}
                       onClick={() => {
                         if (!selected) {
-                          navigate(`?${variantUriQuery}`, {
-                            replace: true,
-                            preventScrollReset: true,
+                          // Update URL params without visible navigation for SEO
+                          // Using replaceState to avoid URL bar changes that Google can crawl
+                          // The variant state is already handled by useOptimisticVariant hook
+                          const url = new URL(window.location.href);
+                          const params = new URLSearchParams(variantUriQuery);
+                          params.forEach((value, key) => {
+                            url.searchParams.set(key, value);
                           });
+                          window.history.replaceState(null, '', url.toString());
                         }
                       }}
                     >
