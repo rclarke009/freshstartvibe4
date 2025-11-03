@@ -5,7 +5,6 @@ import type {
   CollectionItemFragment,
   RecommendedProductFragment,
 } from 'storefrontapi.generated';
-import {useVariantUrl} from '~/lib/variants';
 
 export function ProductItem({
   product,
@@ -17,14 +16,13 @@ export function ProductItem({
     | RecommendedProductFragment;
   loading?: 'eager' | 'lazy';
 }) {
-  const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   return (
     <Link
       className="product-item"
       key={product.id}
       prefetch="intent"
-      to={variantUrl}
+      to={`/products/${product.handle}`}
     >
       {image && (
         <Image

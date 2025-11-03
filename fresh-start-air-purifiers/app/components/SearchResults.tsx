@@ -107,18 +107,12 @@ function SearchResultsProducts({
       <Pagination connection={products}>
         {({nodes, isLoading, NextLink, PreviousLink}) => {
           const ItemsMarkup = nodes.map((product) => {
-            const productUrl = urlWithTrackingParams({
-              baseUrl: `/products/${product.handle}`,
-              trackingParams: product.trackingParameters,
-              term,
-            });
-
             const price = product?.selectedOrFirstAvailableVariant?.price;
             const image = product?.selectedOrFirstAvailableVariant?.image;
 
             return (
               <div className="search-results-item" key={product.id}>
-                <Link prefetch="intent" to={productUrl}>
+                <Link prefetch="intent" to={`/products/${product.handle}`}>
                   {image && (
                     <Image data={image} alt={product.title} width={50} />
                   )}

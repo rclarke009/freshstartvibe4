@@ -207,17 +207,11 @@ function SearchResultsPredictiveProducts({
       <h5>Products</h5>
       <ul>
         {products.map((product) => {
-          const productUrl = urlWithTrackingParams({
-            baseUrl: `/products/${product.handle}`,
-            trackingParams: product.trackingParameters,
-            term: term.current,
-          });
-
           const price = product?.selectedOrFirstAvailableVariant?.price;
           const image = product?.selectedOrFirstAvailableVariant?.image;
           return (
             <li className="predictive-search-result-item" key={product.id}>
-              <Link to={productUrl} onClick={closeSearch}>
+              <Link to={`/products/${product.handle}`} onClick={closeSearch}>
                 {image && (
                   <Image
                     alt={image.altText ?? ''}
