@@ -7,7 +7,7 @@ type SelectedPolicies = keyof Pick<
   'privacyPolicy' | 'shippingPolicy' | 'termsOfService' | 'refundPolicy'
 >;
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   const policy = data?.policy;
   const title = policy?.title 
     ? `Fresh Start Air Purifiers | ${policy.title}`
@@ -20,6 +20,10 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
     { title },
     { name: 'description', content: description },
+    {
+      rel: 'canonical',
+      href: location.pathname,
+    },
   ];
 };
 

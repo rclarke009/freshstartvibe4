@@ -2,7 +2,7 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   const page = data?.page;
   const title = page?.title 
     ? `Fresh Start Air Purifiers | ${page.title}`
@@ -15,6 +15,10 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
     { title },
     { name: 'description', content: description },
+    {
+      rel: 'canonical',
+      href: `${location.pathname}`,
+    },
   ];
 };
 

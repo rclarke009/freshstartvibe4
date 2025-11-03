@@ -1,10 +1,14 @@
 import { MetaFunction } from '@remix-run/react';
 import FindYourFilterQuiz from '~/components/FindYourFilterQuiz';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({location}) => {
   return [
     { title: 'Choose Your Purifier | Fresh Start Air Purifiers' },
     { name: 'description', content: 'Find your perfect Austin Air purifier with our interactive tool. Get personalized recommendations for medical-grade HEPA + carbon filtration systems.' },
+    {
+      rel: 'canonical',
+      href: location.pathname,
+    },
   ];
 };
 

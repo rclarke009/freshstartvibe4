@@ -8,12 +8,16 @@ import type {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({location}) => {
   return [
     {title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'},
     {
       name: 'description',
       content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.',
+    },
+    {
+      rel: 'canonical',
+      href: location.pathname || '/',
     },
   ];
 };
