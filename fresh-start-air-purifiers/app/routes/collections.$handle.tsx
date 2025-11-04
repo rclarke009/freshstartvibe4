@@ -21,10 +21,10 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   ];
 };
 
-export function links({ data }: { data: Awaited<ReturnType<typeof loader>> | undefined }) {
-  if (!data) return [];
-  const collection = data.collection;
-  const origin = data.origin || 'https://freshstartairpurifiers.com';
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>> }) {
+  if (!args?.data) return [];
+  const collection = args.data.collection;
+  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
   return [
     {
       rel: 'canonical',

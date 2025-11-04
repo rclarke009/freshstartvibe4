@@ -61,10 +61,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export function links({ data }: { data: Awaited<ReturnType<typeof loader>> | undefined }) {
-  if (!data) return [];
-  const product = data.product;
-  const origin = data.origin || 'https://freshstartairpurifiers.com';
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>> }) {
+  if (!args?.data) return [];
+  const product = args.data.product;
+  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
   const canonicalUrl = product?.handle 
     ? `${origin}/products/${product.handle}`
     : origin;

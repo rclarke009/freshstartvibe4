@@ -9,13 +9,13 @@ export const meta: MetaFunction<typeof loader> = () => {
   ];
 };
 
-export function links({ data, location }: { data: Awaited<ReturnType<typeof loader>> | undefined, location?: { pathname: string } }) {
-  if (!data || !location) return [];
-  const origin = data.origin || 'https://freshstartairpurifiers.com';
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>>, location?: { pathname: string } }) {
+  if (!args?.data || !args?.location) return [];
+  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
   return [
     {
       rel: 'canonical',
-      href: `${origin}${location.pathname}`,
+      href: `${origin}${args.location.pathname}`,
     },
   ];
 }
