@@ -19,6 +19,7 @@ import { sanityClient } from '~/lib/sanityClient';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const product = data?.product;
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
   const title = product?.title 
     ? `Fresh Start Air Purifiers | ${product.title}`
     : 'Fresh Start Air Purifiers | Product';
@@ -27,15 +28,54 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     (product?.description ? product.description.replace(/<[^>]*>/g, '').substring(0, 150) : null) ||
     `Shop ${product?.title || 'premium air purifiers'} from Fresh Start Air Purifiers. Medical-grade HEPA + heavy carbon removes VOCs, fragrances, pollen, and mold.`;
   
+  const productUrl = product?.handle 
+    ? `${origin}/products/${product.handle}`
+    : origin;
+  
+  const productImage = product?.featuredImage?.url || 
+    product?.selectedOrFirstAvailableVariant?.image?.url ||
+    `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  
+  const price = product?.selectedOrFirstAvailableVariant?.price?.amount;
+  const currency = product?.selectedOrFirstAvailableVariant?.price?.currencyCode || 'USD';
+  
   return [
     { title },
     { name: 'description', content: description },
-    {
-      rel: 'canonical',
-      href: `/products/${product?.handle}`,
-    },
+    // Open Graph tags
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:image', content: productImage },
+    { property: 'og:url', content: productUrl },
+    { property: 'og:type', content: 'product' },
+    { property: 'og:site_name', content: 'Fresh Start Air Purifiers' },
+    ...(price ? [
+      { property: 'product:price:amount', content: price },
+      { property: 'product:price:currency', content: currency },
+    ] : []),
+    // Twitter Card tags
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: productImage },
   ];
 };
+
+export function links({ data }: { data: Awaited<ReturnType<typeof loader>> | undefined }) {
+  if (!data) return [];
+  const product = data.product;
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  const canonicalUrl = product?.handle 
+    ? `${origin}/products/${product.handle}`
+    : origin;
+  
+  return [
+    {
+      rel: 'canonical',
+      href: canonicalUrl,
+    },
+  ];
+}
 
 export async function loader(args: LoaderFunctionArgs) {
   const deferredData = loadDeferredData(args);
@@ -50,6 +90,7 @@ async function loadCriticalData({
 }: LoaderFunctionArgs) {
   const { handle } = params;
   const { storefront } = context;
+  const url = new URL(request.url);
 
   if (!handle) {
     throw new Error('Expected product handle to be defined');
@@ -69,7 +110,7 @@ async function loadCriticalData({
 
   const canonical = redirectMap[handle];
   if (canonical && canonical !== handle) {
-    return redirect(`/products/${canonical}${new URL(request.url).search || ''}`, {
+    return redirect(`/products/${canonical}${url.search || ''}`, {
       status: 301,
     });
   }
@@ -126,6 +167,7 @@ async function loadCriticalData({
   return {
     product,
     sanityData: sanityData || {},
+    origin: url.origin,
   };
 }
 
@@ -134,7 +176,7 @@ function loadDeferredData({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function Product() {
-  const { product, sanityData } = useLoaderData<typeof loader>();
+  const { product, sanityData, origin } = useLoaderData<typeof loader>();
   const [showQuizBanner, setShowQuizBanner] = useState(false);
 
   // Check for quiz query parameter
@@ -167,8 +209,77 @@ export default function Product() {
   // Create array of product images for gallery (can be expanded later)
   const productImages = [primaryImage].filter(Boolean);
 
+  // Build structured data for SEO
+  const productUrl = `${origin}/products/${product.handle}`;
+  const productImage = primaryImage?.url || `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  const price = selectedVariant?.price?.amount;
+  const currency = selectedVariant?.price?.currencyCode || 'USD';
+  const availability = selectedVariant?.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
+  const description = product.seo?.description || product.description?.replace(/<[^>]*>/g, '').substring(0, 300) || '';
+  
+  const productStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: title,
+    description: description,
+    image: productImage,
+    brand: {
+      '@type': 'Brand',
+      name: product.vendor || 'Austin Air',
+    },
+    sku: selectedVariant?.sku || '',
+    mpn: selectedVariant?.sku || '',
+    offers: {
+      '@type': 'Offer',
+      url: productUrl,
+      priceCurrency: currency,
+      price: price || '0',
+      availability: availability,
+      priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
+      seller: {
+        '@type': 'Organization',
+        name: 'Fresh Start Air Purifiers',
+      },
+    },
+  };
+
+  // BreadcrumbList structured data
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: origin,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Products',
+        item: `${origin}/collections`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: title,
+        item: productUrl,
+      },
+    ],
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
       {/* Quiz Success Banner */}
       {showQuizBanner && (
         <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
@@ -445,7 +556,8 @@ export default function Product() {
           ],
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }
 

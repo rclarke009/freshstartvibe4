@@ -8,25 +8,50 @@ import type {
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 
-export const meta: MetaFunction = ({location}) => {
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
+  const homepageUrl = `${origin}${location.pathname || '/'}`;
+  const homepageImage = `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  
   return [
     {title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'},
     {
       name: 'description',
       content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.',
     },
-    {
-      rel: 'canonical',
-      href: location.pathname || '/',
-    },
+    // Open Graph tags
+    { property: 'og:title', content: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors' },
+    { property: 'og:description', content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.' },
+    { property: 'og:image', content: homepageImage },
+    { property: 'og:url', content: homepageUrl },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'Fresh Start Air Purifiers' },
+    // Twitter Card tags
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors' },
+    { name: 'twitter:description', content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.' },
+    { name: 'twitter:image', content: homepageImage },
   ];
 };
 
-export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
+export function links({ data, location }: { data: Awaited<ReturnType<typeof loader>> | undefined, location?: { pathname: string } }) {
+  if (!data || !location) return [];
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${location.pathname || '/'}`,
+    },
+  ];
+}
 
-  return {...deferredData};
+export async function loader(args: LoaderFunctionArgs) {
+  const deferredData = loadDeferredData(args);
+  const url = new URL(args.request.url);
+  return {
+    ...deferredData,
+    origin: url.origin,
+  };
 }
 
 /**

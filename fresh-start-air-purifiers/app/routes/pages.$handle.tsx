@@ -4,6 +4,7 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   const page = data?.page;
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
   const title = page?.title 
     ? `Fresh Start Air Purifiers | ${page.title}`
     : 'Fresh Start Air Purifiers';
@@ -12,15 +13,37 @@ export const meta: MetaFunction<typeof loader> = ({data, location}) => {
     (page?.body ? page.body.replace(/<[^>]*>/g, '').substring(0, 150) : null) ||
     'Learn about air purification at Fresh Start Air Purifiers. Premium Austin Air systems with medical-grade HEPA + carbon filtration.';
   
+  const pageUrl = `${origin}${location.pathname}`;
+  const pageImage = `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  
   return [
     { title },
     { name: 'description', content: description },
-    {
-      rel: 'canonical',
-      href: `${location.pathname}`,
-    },
+    // Open Graph tags
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:image', content: pageImage },
+    { property: 'og:url', content: pageUrl },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'Fresh Start Air Purifiers' },
+    // Twitter Card tags
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: pageImage },
   ];
 };
+
+export function links({ data, location }: { data: Awaited<ReturnType<typeof loader>> | undefined, location?: { pathname: string } }) {
+  if (!data || !location) return [];
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${location.pathname}`,
+    },
+  ];
+}
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -45,6 +68,7 @@ async function loadCriticalData({
     throw new Error('Missing page handle');
   }
 
+  const url = new URL(request.url);
   const [{page}] = await Promise.all([
     context.storefront.query(PAGE_QUERY, {
       variables: {
@@ -62,6 +86,7 @@ async function loadCriticalData({
 
   return {
     page,
+    origin: url.origin,
   };
 }
 

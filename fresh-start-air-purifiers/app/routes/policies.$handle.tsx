@@ -7,7 +7,7 @@ type SelectedPolicies = keyof Pick<
   'privacyPolicy' | 'shippingPolicy' | 'termsOfService' | 'refundPolicy'
 >;
 
-export const meta: MetaFunction<typeof loader> = ({data, location}) => {
+export const meta: MetaFunction<typeof loader> = ({data}) => {
   const policy = data?.policy;
   const title = policy?.title 
     ? `Fresh Start Air Purifiers | ${policy.title}`
@@ -20,18 +20,26 @@ export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   return [
     { title },
     { name: 'description', content: description },
-    {
-      rel: 'canonical',
-      href: location.pathname,
-    },
   ];
 };
 
-export async function loader({params, context}: LoaderFunctionArgs) {
+export function links({ data, location }: { data: Awaited<ReturnType<typeof loader>> | undefined, location?: { pathname: string } }) {
+  if (!data || !location) return [];
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${location.pathname}`,
+    },
+  ];
+}
+
+export async function loader({params, context, request}: LoaderFunctionArgs) {
   if (!params.handle) {
     throw new Response('No handle was passed in', {status: 404});
   }
 
+  const url = new URL(request.url);
   const policyName = params.handle.replace(
     /-([a-z])/g,
     (_: unknown, m1: string) => m1.toUpperCase(),
@@ -54,7 +62,10 @@ export async function loader({params, context}: LoaderFunctionArgs) {
     throw new Response('Could not find the policy', {status: 404});
   }
 
-  return {policy};
+  return {
+    policy,
+    origin: url.origin,
+  };
 }
 
 export default function Policy() {

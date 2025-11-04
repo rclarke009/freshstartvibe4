@@ -21,6 +21,20 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   ];
 };
 
+export function links({ data }: { data: Awaited<ReturnType<typeof loader>> | undefined }) {
+  if (!data) return [];
+  const collection = data.collection;
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: collection?.handle 
+        ? `${origin}/collections/${collection.handle}`
+        : origin,
+    },
+  ];
+}
+
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
@@ -42,6 +56,7 @@ async function loadCriticalData({
 }: LoaderFunctionArgs) {
   const {handle} = params;
   const {storefront} = context;
+  const url = new URL(request.url);
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
@@ -68,6 +83,7 @@ async function loadCriticalData({
 
   return {
     collection,
+    origin: url.origin,
   };
 }
 
@@ -81,10 +97,36 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const {collection} = useLoaderData<typeof loader>();
+  const {collection, origin} = useLoaderData<typeof loader>();
+
+  // BreadcrumbList structured data
+  const collectionUrl = `${origin}/collections/${collection.handle}`;
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: origin,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: collection.title,
+        item: collectionUrl,
+      },
+    ],
+  };
 
   return (
-    <div className="collection">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="collection">
       <h1>{collection.title}</h1>
       <p className="collection-description">{collection.description}</p>
       <PaginatedResourceSection
@@ -107,7 +149,8 @@ export default function Collection() {
           },
         }}
       />
-    </div>
+      </div>
+    </>
   );
 }
 

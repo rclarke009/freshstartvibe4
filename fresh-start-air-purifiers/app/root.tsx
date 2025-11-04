@@ -179,6 +179,19 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
 
+  // Organization structured data
+  const organizationStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Fresh Start Air Purifiers',
+    url: 'https://freshstartairpurifiers.com',
+    logo: 'https://freshstartairpurifiers.com/fresh-start-air-purifiers-logo-no-bkgd.png',
+    description: 'Premium Austin Air purifiers with medical-grade HEPA + heavy carbon filtration for clean, healthy indoor air.',
+    sameAs: [
+      // Add social media profiles if available
+    ],
+  };
+
   return (
     <html lang="en">
       <head>
@@ -186,6 +199,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
+        />
         <Meta />
         <Links />
       </head>

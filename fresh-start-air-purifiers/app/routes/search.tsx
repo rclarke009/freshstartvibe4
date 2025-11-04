@@ -19,6 +19,10 @@ export const meta: MetaFunction = () => {
       name: 'description',
       content: 'Search premium Austin Air purifiers, filters, and accessories to find the perfect medical-grade HEPA + carbon system for your space.',
     },
+    {
+      name: 'robots',
+      content: 'noindex, nofollow',
+    },
   ];
 };
 

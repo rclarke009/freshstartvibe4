@@ -1,16 +1,31 @@
-import { MetaFunction } from '@remix-run/react';
+import { type LoaderFunctionArgs } from '@shopify/remix-oxygen';
+import { MetaFunction, useLoaderData } from '@remix-run/react';
 import FindYourFilterQuiz from '~/components/FindYourFilterQuiz';
 
-export const meta: MetaFunction = ({location}) => {
+export const meta: MetaFunction<typeof loader> = () => {
   return [
     { title: 'Choose Your Purifier | Fresh Start Air Purifiers' },
     { name: 'description', content: 'Find your perfect Austin Air purifier with our interactive tool. Get personalized recommendations for medical-grade HEPA + carbon filtration systems.' },
-    {
-      rel: 'canonical',
-      href: location.pathname,
-    },
   ];
 };
+
+export function links({ data, location }: { data: Awaited<ReturnType<typeof loader>> | undefined, location?: { pathname: string } }) {
+  if (!data || !location) return [];
+  const origin = data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${location.pathname}`,
+    },
+  ];
+}
+
+export async function loader({request}: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  return {
+    origin: url.origin,
+  };
+}
 
 export default function ChooseYourPurifier() {
   return (
