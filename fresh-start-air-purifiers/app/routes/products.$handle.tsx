@@ -1,6 +1,6 @@
 import { redirect, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
-import { useLoaderData, type MetaFunction } from '@remix-run/react';
-import { useState, useEffect } from 'react';
+import { useLoaderData, type MetaFunction, useLocation } from '@remix-run/react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -9,6 +9,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
+import type { SelectedOption } from '@shopify/hydrogen/storefront-api-types';
 import { ProductPrice } from '~/components/ProductPrice';
 import { ProductForm } from '~/components/ProductForm';
 import { SanityImage } from '~/components/SanityImage';
@@ -127,6 +128,14 @@ async function loadCriticalData({
 
   redirectIfHandleIsLocalized(request, { handle, data: product });
 
+  // Fetch policies from Shopify
+  const policiesData = await storefront.query(POLICIES_QUERY, {
+    variables: {
+      language: context.storefront.i18n?.language,
+      country: context.storefront.i18n?.country,
+    },
+  });
+
   // Fetch additional product data
   const sanityData = await sanityClient.fetch(
     `*[_type == "product" && slug.current == $handle][0]{
@@ -164,10 +173,18 @@ async function loadCriticalData({
     { handle }
   );
 
+  // Determine if product is purifier or accessory
+  const isAccessory = isProductAccessory(product);
+
   return {
     product,
     sanityData: sanityData || {},
     origin: url.origin,
+    policies: {
+      shipping: policiesData?.shop?.shippingPolicy || null,
+      refund: policiesData?.shop?.refundPolicy || null,
+    },
+    isAccessory,
   };
 }
 
@@ -176,8 +193,18 @@ function loadDeferredData({ context, params }: LoaderFunctionArgs) {
 }
 
 export default function Product() {
-  const { product, sanityData, origin } = useLoaderData<typeof loader>();
+  const { product, sanityData, origin, policies, isAccessory } = useLoaderData<typeof loader>();
   const [showQuizBanner, setShowQuizBanner] = useState(false);
+  const location = useLocation();
+  
+  // Track selected options in state to make variant selection reactive to button clicks
+  const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>(() => {
+    // Initialize from URL params
+    const urlParams = new URLSearchParams(location.search);
+    return Array.from(urlParams.entries())
+      .filter(([key]) => key !== 'from') // Exclude non-variant params
+      .map(([name, value]) => ({ name, value }));
+  });
 
   // Check for quiz query parameter
   useEffect(() => {
@@ -189,12 +216,48 @@ export default function Product() {
     }
   }, []);
 
+  // Update selected options when URL changes (e.g., from navigation)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const optionsFromUrl = Array.from(urlParams.entries())
+      .filter(([key]) => key !== 'from')
+      .map(([name, value]) => ({ name, value }));
+    
+    setSelectedOptions((prevOptions) => {
+      // Only update if different to avoid unnecessary re-renders
+      const optionsMatch = optionsFromUrl.length === prevOptions.length &&
+        optionsFromUrl.every((opt) =>
+          prevOptions.some(
+            (s) => s.name.toLowerCase() === opt.name.toLowerCase() && s.value === opt.value
+          )
+        );
+      
+      return optionsMatch ? prevOptions : optionsFromUrl;
+    });
+  }, [location.search]);
+
+  // Find the variant that matches the current selected options
+  const allVariants = getAdjacentAndFirstAvailableVariants(product);
+  const variantFromState = allVariants.find((variant) => {
+    if (!variant.selectedOptions || selectedOptions.length === 0) return false;
+    return selectedOptions.every(({ name, value }) =>
+      variant.selectedOptions.some(
+        (opt) => opt.name.toLowerCase() === name.toLowerCase() && opt.value === value
+      )
+    ) && variant.selectedOptions.length === selectedOptions.length;
+  });
+
   const selectedVariant = useOptimisticVariant(
-    product.selectedOrFirstAvailableVariant,
-    getAdjacentAndFirstAvailableVariants(product)
+    variantFromState || product.selectedOrFirstAvailableVariant,
+    allVariants
   );
 
   useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+
+  // Callback to update selected options when variant option is clicked
+  const handleVariantOptionChange = useCallback((newOptions: SelectedOption[]) => {
+    setSelectedOptions(newOptions);
+  }, []);
 
   const productOptions = getProductOptions({
     ...product,
@@ -239,6 +302,27 @@ export default function Product() {
       seller: {
         '@type': 'Organization',
         name: 'Fresh Start Air Purifiers',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: isAccessory ? '15' : '0',
+          currency: currency,
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'US',
+        },
+      },
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'US',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 30,
+        returnMethod: 'https://schema.org/ReturnByMail',
+        returnFees: 'https://schema.org/FreeReturn',
+        returnPolicyUrl: policies?.refund?.url || `${origin}/policies/refund-policy`,
       },
     },
   };
@@ -293,16 +377,19 @@ export default function Product() {
       )}
       <div className="product-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         {/* Product Image - Left Column */}
-        <div className="order-2 lg:order-1">
+        <div className="order-1 lg:order-1">
           <div className="sticky top-8">
             <div className="product-image-container mx-auto lg:mx-0">
               {/* Direct image render with fallback to product.featuredImage */}
               {primaryImage ? (
                 <img
+                  key={selectedVariant?.id || primaryImage.id || primaryImage.url}
                   src={primaryImage.url}
-                  alt={primaryImage.altText || title}
+                  alt={primaryImage.altText || `${title}${selectedVariant?.title && selectedVariant.title !== 'Default Title' ? ` - ${selectedVariant.title}` : ''}`}
                   className="w-full h-auto rounded-lg shadow-lg object-contain bg-white"
                   loading="lazy"
+                  width={primaryImage.width || undefined}
+                  height={primaryImage.height || undefined}
                 />
               ) : (
                 <img
@@ -351,19 +438,41 @@ export default function Product() {
         </div>
         
         {/* Product Content - Right Column */}
-        <div className="order-1 lg:order-2 product-content flex flex-col space-y-6">
+        <div className="order-2 lg:order-2 product-content flex flex-col space-y-6">
           <div>
             <h1 className="text-3xl font-bold mb-4 text-gray-900">{title}</h1>
+            
             <ProductPrice
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
               className="text-2xl text-green-600 font-semibold mb-6"
             />
-            
+            <br />
             <ProductForm
               productOptions={productOptions}
               selectedVariant={selectedVariant}
+              onVariantOptionChange={handleVariantOptionChange}
             />
+            
+            <br />
+
+            {/* Free Shipping - Only for Purifiers */}
+            {!isAccessory && (
+              <div className="inline-block mt-4 text-[15px] font-semibold text-neutral-900" style={{ 
+                borderRadius: '0.5rem', 
+                border: '1px solid #FFFBF0', 
+                backgroundColor: '#FFFBF0', 
+                outline: 'none',
+                boxShadow: 'none',
+                padding: '0.75rem 1.25rem'
+              }}>
+                Free Shipping on All Air Purifiers (Continental U.S.)
+              </div>
+            )}
+
+            <br  />
+            
+            <br />
             
             <div className="mt-8">
               <h2 className="text-xl font-semibold mb-3 text-gray-900">Description</h2>
@@ -373,6 +482,32 @@ export default function Product() {
                 }}
                 className="text-gray-700 leading-relaxed"
               />
+            </div>
+
+            <br />
+
+            {/* Returns Info */}
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold mb-3 text-gray-900">Returns</h2>
+              <p className="text-sm text-neutral-700">
+                30-day returns (except for manufacturing defects).{' '}
+                {policies?.refund?.url ? (
+                  <a 
+                    href={policies.refund.url} 
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    See our Return Policy
+                  </a>
+                ) : (
+                  <a 
+                    href="/policies/refund-policy" 
+                    className="text-blue-600 hover:text-blue-800 underline"
+                  >
+                    See our Return Policy
+                  </a>
+                )}{' '}
+                for details.
+              </p>
             </div>
 
             {/* Enhanced Sections from Sanity */}
@@ -606,6 +741,8 @@ const PRODUCT_FRAGMENT = `#graphql
     handle
     descriptionHtml
     description
+    productType
+    tags
     featuredImage {
       __typename
       id
@@ -660,3 +797,50 @@ const PRODUCT_QUERY = `#graphql
   }
   ${PRODUCT_FRAGMENT}
 ` as const;
+
+const POLICIES_QUERY = `#graphql
+  fragment PolicyItem on ShopPolicy {
+    id
+    title
+    handle
+    url
+  }
+  query Policies($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    shop {
+      shippingPolicy {
+        ...PolicyItem
+      }
+      refundPolicy {
+        ...PolicyItem
+      }
+    }
+  }
+` as const;
+
+// Helper function to determine if product is an accessory
+function isProductAccessory(product: any): boolean {
+  if (!product) return false;
+  
+  // Check product type
+  const productType = product.productType?.toLowerCase() || '';
+  if (productType.includes('filter') || productType.includes('accessory') || productType.includes('replacement')) {
+    return true;
+  }
+  
+  // Check tags
+  const tags = product.tags || [];
+  const tagString = tags.join(' ').toLowerCase();
+  if (tagString.includes('filter') || tagString.includes('accessory') || tagString.includes('replacement')) {
+    return true;
+  }
+  
+  // Check handle patterns
+  const handle = product.handle?.toLowerCase() || '';
+  if (handle.includes('filter') || handle.includes('replacement') || handle.includes('pre-filter')) {
+    return true;
+  }
+  
+  // Default to purifier if unclear
+  return false;
+}

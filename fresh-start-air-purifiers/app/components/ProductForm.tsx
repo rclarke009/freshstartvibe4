@@ -28,9 +28,11 @@ function isVariantAvailableForSale(variant: ProductFragment['selectedOrFirstAvai
 export function ProductForm({
   productOptions,
   selectedVariant,
+  onVariantOptionChange,
 }: {
   productOptions: MappedProductOptions[];
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
+  onVariantOptionChange?: (options: Array<{ name: string; value: string }>) => void;
 }) {
   const location = useLocation();
   const {open} = useAside();
@@ -105,13 +107,21 @@ export function ProductForm({
                         if (!selected) {
                           // Update URL params without visible navigation for SEO
                           // Using replaceState to avoid URL bar changes that Google can crawl
-                          // The variant state is already handled by useOptimisticVariant hook
                           const url = new URL(window.location.href);
                           const params = new URLSearchParams(variantUriQuery);
                           params.forEach((value, key) => {
                             url.searchParams.set(key, value);
                           });
                           window.history.replaceState(null, '', url.toString());
+                          
+                          // Update parent component state to trigger image update
+                          if (onVariantOptionChange) {
+                            const newOptions = Array.from(params.entries()).map(([name, value]) => ({
+                              name,
+                              value,
+                            }));
+                            onVariantOptionChange(newOptions);
+                          }
                         }
                       }}
                     >
