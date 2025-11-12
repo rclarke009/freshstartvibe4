@@ -688,7 +688,7 @@ const PRODUCT_QUERY = `#graphql
 ` as const;
 
 const POLICIES_QUERY = `#graphql
-  fragment PolicyItem on ShopPolicy {
+  fragment PolicyItemProduct on ShopPolicy {
     id
     title
     handle
@@ -698,10 +698,10 @@ const POLICIES_QUERY = `#graphql
     @inContext(country: $country, language: $language) {
     shop {
       shippingPolicy {
-        ...PolicyItem
+        ...PolicyItemProduct
       }
       refundPolicy {
-        ...PolicyItem
+        ...PolicyItemProduct
       }
     }
   }
