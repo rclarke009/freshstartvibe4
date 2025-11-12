@@ -694,7 +694,7 @@ const POLICIES_QUERY = `#graphql
     handle
     url
   }
-  query Policies($country: CountryCode, $language: LanguageCode)
+  query ProductPolicies($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
     shop {
       shippingPolicy {
