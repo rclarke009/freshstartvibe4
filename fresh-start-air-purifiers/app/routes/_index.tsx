@@ -214,7 +214,7 @@ function TrustAuthority() {
                   &ldquo;Serious filtration for homes, offices, hospitals and schools&rdquo;
                 </h2>
                 <br />
-                <ul className="problem-list space-y-4 text-gray-700/85">
+                <ul className="problem-list space-y-4 text-gray-900">
                   <li className="flex gap-3">
                     <span className="bullet" />
                     <p>
@@ -234,7 +234,7 @@ function TrustAuthority() {
                     </p>
                   </li>
                 </ul>
-                <p className="text-gray-700/90">
+                <p className="text-gray-900">
                   That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
                 </p>
                 
@@ -325,11 +325,11 @@ function SocialProof() {
         }
         
         .testimonial-card {
-          background: white;
+          background: var(--color-surface);
           padding: 1.5rem;
           border-radius: 1rem;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-          border: 1px solid #f3f4f6;
+          border: 1px solid var(--color-border);
           text-align: left;
           width: 100%;
           max-width: 300px;
@@ -348,6 +348,19 @@ function SocialProof() {
           .testimonial-card {
             width: 280px;
             max-width: none;
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          .testimonial-card {
+            background: var(--color-surface);
+            color: var(--color-text-primary);
+            box-shadow: 0 12px 28px -12px rgba(8, 14, 22, 0.8);
+            border: 1px solid var(--color-border);
+          }
+
+          .testimonial-card:hover {
+            box-shadow: 0 16px 32px -12px rgba(14, 22, 32, 0.85);
           }
         }
       `}</style>
@@ -370,9 +383,14 @@ function RecommendedProducts({
         <div className="bg-white p-6 rounded-xl shadow border max-w-xl mx-auto text-center">
           <h3 className="text-xl font-semibold text-[#1e40af] mb-2">Featured: Immunity Machine</h3>
           <p className="text-gray-700 mb-4">Medical-grade performance trusted by hospitals and sensitive homes.</p>
+          
+          <br></br>
           <a href="/products/austin-air-immunity-machine" className="add-to-cart-button inline-block">View Immunity Machine</a>
+          
+          <br></br>
         </div>
       </div>
+      <p>   </p>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (

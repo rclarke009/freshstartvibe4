@@ -35,7 +35,7 @@ export default function ChooseYourPurifier() {
           <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] mb-4">
             Choose Your Purifier
           </h1>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-4">
+          <p className="text-lg text-gray-900 max-w-2xl mx-auto mb-4">
             Answer 3 simple questions to find the perfect Austin Air purifier for your needs
           </p>
           <br></br>
