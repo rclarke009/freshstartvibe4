@@ -145,11 +145,11 @@ function ProblemValidation() {
        
         <div className="mt-8 two-column-layout">
           <div className="left-column space-y-6" style={{flex: '1', minWidth: '0', maxWidth: '100%'}}>
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af]">
+          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
             &ldquo;I already have a basic purifier… why am I still not feeling better?&rdquo;
           </h2>
           <br />
-            <ul className="problem-list space-y-4 text-gray-700/85">
+                <ul className="problem-list space-y-4 text-gray-900">
               <li className="flex gap-3">
                 <span className="bullet" />
                 <p>
@@ -377,6 +377,7 @@ function RecommendedProducts({
 }) {
   return (
     <div className="recommended-products">
+      <br></br>
       <h2>Recommended Products</h2>
       {/* Featured pick: Immunity Machine */}
       <div className="mb-6">

@@ -1143,7 +1143,7 @@ main {
   .problem-list,
   .problem-list li p,
   .problem-list li span {
-    color: var(--color-text-strong) !important;
+    color: #ffffff !important;
   }
 
   .text-gray-900 {
