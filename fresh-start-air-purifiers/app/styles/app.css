@@ -1896,3 +1896,50 @@ section#serious-filtration .right-column-wide {
     direction: ltr;
   }
 }
+
+/* Resource card styling with dark mode support */
+.resource-card {
+  background-color: #F0F8FF !important;
+  color: var(--color-text-primary);
+}
+
+/* Symptom item styling with dark mode support */
+.symptom-item {
+  background-color: #F0F8FF !important;
+  color: var(--color-text-primary);
+}
+
+/* Hero section with light blue background - dark mode support */
+.hero-bg-light-blue {
+  background-color: #F0F8FF !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .resource-card {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text-primary);
+  }
+  
+  .resource-card h3,
+  .resource-card a {
+    color: var(--color-primary) !important;
+  }
+  
+  .resource-card p {
+    color: var(--color-text-primary) !important;
+  }
+  
+  .symptom-item {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+  }
+  
+  .hero-bg-light-blue {
+    background-color: var(--color-surface) !important;
+  }
+  
+  .hero-bg-light-blue p,
+  .hero-bg-light-blue h1 {
+    color: var(--color-text-primary) !important;
+  }
+}

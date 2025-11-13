@@ -31,22 +31,11 @@ export async function action({request, context}: ActionFunctionArgs) {
     // Get environment variables
     // Access extended env properties (RESEND_API_KEY and CONTACT_EMAIL)
     // Note: RESEND_API_KEY should have "Sending access" permissions only for security
-    
-    // Debug: Log what's in context.env (this will help diagnose the issue)
-    console.log('=== DEBUG: Environment Variables ===');
-    console.log('Available env keys:', Object.keys(context.env || {}));
-    console.log('RESEND_API_KEY exists?', 'RESEND_API_KEY' in (context.env || {}));
-    console.log('RESEND_API_KEY value:', (context.env as any)?.RESEND_API_KEY ? `${((context.env as any).RESEND_API_KEY as string).substring(0, 5)}...` : 'NOT SET');
-    console.log('CONTACT_EMAIL:', (context.env as any)?.CONTACT_EMAIL || 'NOT SET (using default)');
-    console.log('===================================');
-    
     const resendApiKey = (context.env as {RESEND_API_KEY?: string}).RESEND_API_KEY;
     const contactEmail = (context.env as {CONTACT_EMAIL?: string}).CONTACT_EMAIL || 'contact@freshstartairpurifiers.com';
 
     if (!resendApiKey) {
       console.error('RESEND_API_KEY is not configured');
-      console.error('Full context.env keys:', JSON.stringify(Object.keys(context.env || {})));
-      console.error('context.env type:', typeof context.env);
       return data(
         {error: 'Email service is not configured. Please contact support.'},
         {status: 500},

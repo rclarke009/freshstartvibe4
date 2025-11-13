@@ -34,6 +34,7 @@ export default function Contact() {
             We&apos;re here to help you find the perfect air purifier for your home. 
             Get in touch with our team of experts.
           </p>
+          <br></br>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -53,6 +54,7 @@ export default function Contact() {
                     <a href="tel:+19044388325" className="text-[#1e40af] dark:text-blue-300 hover:underline">
                       <span className="phone-number">(904) 438-8325</span>
                     </a>
+                    <br></br>
                   </div>
                 </div>
                 
@@ -63,6 +65,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
+                  <br></br>
                     <p className="font-semibold text-gray-900 dark:text-gray-100">Email</p>
                     <a 
                       href="mailto:contact@freshstartairpurifiers.com" 
@@ -73,6 +76,7 @@ export default function Contact() {
                         info<span className="at-symbol">@</span>freshstartairpurifiers.com
                       </span>
                     </a>
+                    <br></br>
                   </div>
                 </div>
                 
@@ -83,7 +87,9 @@ export default function Contact() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
+                  <br></br>
                   <div>
+                  <br></br>
                     <p className="font-semibold text-gray-900 dark:text-gray-100">Location</p>
                     <p className="text-gray-600 dark:text-gray-300">Serving Florida and the continental US</p>
                   </div>
@@ -92,8 +98,8 @@ export default function Contact() {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-[#1e40af] dark:text-blue-300 mb-4">Business Hours</h3>
-              <div className="space-y-2 text-gray-600 dark:text-gray-300">
+              <h3 className="text-xl font-bold text-[#1e40af] dark:text-blue-300 mb-0">Business Hours</h3>
+              <div className="space-y-2 text-gray-600 dark:text-gray-300 -mt-1">
                 <p>Monday - Friday: 10:00 AM - 4:00 PM EST</p>
               
               </div>
@@ -102,6 +108,8 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div>
+            <br></br>
+            <br></br>
             <h2 className="text-2xl font-bold text-[#1e40af] dark:text-blue-300 mb-6">Send us a Message</h2>
             
             {/* Success Message */}
@@ -192,6 +200,7 @@ export default function Contact() {
               </div>
               
               <div>
+                <br></br>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Message
                 </label>
@@ -205,6 +214,8 @@ export default function Contact() {
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
+
+              <br></br>
               
               <button
                 type="submit"
@@ -218,6 +229,8 @@ export default function Contact() {
         </div>
 
         {/* FAQ Section */}
+        <br></br>
+        <br></br>
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-[#1e40af] dark:text-blue-300 text-center mb-12">
             Frequently Asked Questions

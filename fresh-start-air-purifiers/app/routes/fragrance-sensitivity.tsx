@@ -85,7 +85,7 @@ export default function FragranceSensitivityPage() {
             {SYMPTOMS.map((symptom) => (
               <li
                 key={symptom}
-                className="rounded-xl border border-slate-200 bg-[#F0F8FF] px-5 py-4 text-base text-gray-800 shadow-sm"
+                className="symptom-item rounded-xl px-5 py-4 text-base text-gray-800 shadow-sm"
               >
                 {symptom}
               </li>
@@ -191,11 +191,13 @@ export default function FragranceSensitivityPage() {
                 a home that finally smells like nothing at all. That’s the power of pairing science
                 with compassion.
               </p>
+              <br></br>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/choose-your-purifier" className="add-to-cart-button">
+                <br></br>
+                <Link to="/choose-your-purifier" className="add-to-cart-button inline-block">
                   Find Your Air Purifier
                 </Link>
-                <Link to="/collections" className="add-to-cart-button secondary">
+                <Link to="/collections" className="add-to-cart-button secondary inline-block">
                   Shop Austin Air Purifiers
                 </Link>
               </div>
@@ -225,7 +227,7 @@ export default function FragranceSensitivityPage() {
             {RESOURCE_LINKS.map((resource) => (
               <div
                 key={resource.label}
-                className="rounded-2xl border border-slate-200 bg-[#F0F8FF] p-6 shadow-sm"
+                className="resource-card rounded-2xl p-6 shadow-sm"
               >
                 <h3 className="text-xl font-semibold text-[#1e40af] mb-2">{resource.label}</h3>
                 <p className="text-sm text-gray-700 leading-relaxed mb-4">{resource.description}</p>
@@ -243,7 +245,7 @@ export default function FragranceSensitivityPage() {
 
 function HeroSection() {
   return (
-    <section className="hero-bleed bg-[#F0F8FF]" aria-labelledby="fragrance-hero-heading">
+    <section className="hero-bleed hero-bg-light-blue" aria-labelledby="fragrance-hero-heading">
       <div className="max-w-6xl mx-auto px-6 md:px-8 lg:px-12 py-20 text-center space-y-6">
         <p className="text-sm uppercase tracking-[0.3em] text-[#1e3a8a]">
           Learn About Fragrance Sensitivity
@@ -258,6 +260,7 @@ function HeroSection() {
           Understand why synthetic scents can trigger real physical symptoms — and how the right
           filtration can bring relief.
         </p>
+        <br></br>
         <div className="flex justify-center">
           <Link to="/choose-your-purifier" className="add-to-cart-button">
             Find Your Air Purifier
