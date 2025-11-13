@@ -1041,11 +1041,15 @@ main {
 }
 
 .article,
-.surface,
+.surface {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text-primary);
+}
+
 .card,
 .overlay[data-type="mobile"] aside,
 .bg-white {
-  background-color: var(--color-surface) !important;
+  background-color: #F0F8FF !important;
   color: var(--color-text-primary);
 }
 
@@ -1237,6 +1241,28 @@ main {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.add-to-cart-button.secondary {
+  background: transparent;
+  color: #1e40af;
+  border-color: rgba(30, 64, 175, 0.6);
+  box-shadow: none;
+}
+
+.add-to-cart-button.secondary:hover {
+  background: rgba(30, 64, 175, 0.12);
+  color: #1e40af;
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.18);
+}
+
+.add-to-cart-button.secondary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.15);
+}
+
+.add-to-cart-button.secondary:focus {
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.2);
 }
 
 .add-to-cart-button:hover {
@@ -1501,7 +1527,7 @@ main {
 
 /* Card enhancements */
 .home .bg-white {
-  background-color: white;
+  background-color: #F0F8FF;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 

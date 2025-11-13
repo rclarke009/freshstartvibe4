@@ -40,8 +40,25 @@ export function Footer({
                   </div>
                 </div>
 
-                {/* Second Row: Copyright */}
-                <div className="text-center">
+                {/* Second Row: Resources Section */}
+                <div className="grid grid-cols-12 gap-4 items-start pt-4 border-t border-slate-200">
+                  <div className="col-span-3" style={{ paddingLeft: '2rem' }}>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Resources</h4>
+                  </div>
+                  <div className="col-span-9" style={{ paddingRight: '2rem' }}>
+                    <nav className="flex flex-wrap items-center" style={{ gap: '1.5rem' }}>
+                      <NavLink to="/fragrance-sensitivity" className="text-sm font-medium text-gray-700 hover:text-[#1e40af] transition-colors duration-200 px-3 py-2 rounded hover:bg-gray-100">
+                        Fragrance Sensitivity
+                      </NavLink>
+                      <NavLink to="/pages/why-air-purifiers" className="text-sm font-medium text-gray-700 hover:text-[#1e40af] transition-colors duration-200 px-3 py-2 rounded hover:bg-gray-100">
+                        Why Air Purifiers?
+                      </NavLink>
+                    </nav>
+                  </div>
+                </div>
+
+                {/* Third Row: Copyright */}
+                <div className="text-center pt-4">
                   <div className="text-sm text-gray-500">
                     © 2025 Fresh Start Air Purifiers. All rights reserved.
                   </div>

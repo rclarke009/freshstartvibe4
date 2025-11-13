@@ -1,4 +1,5 @@
-import type {MetaFunction} from '@remix-run/react';
+import {useFetcher, type MetaFunction} from '@remix-run/react';
+import {useEffect, useRef} from 'react';
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,6 +9,20 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Contact() {
+  const fetcher = useFetcher<{success?: boolean; error?: string; message?: string}>();
+  const formRef = useRef<HTMLFormElement>(null);
+  const isSubmitting = fetcher.state === 'submitting';
+  const actionData = fetcher.data;
+
+  // Reset form on successful submission
+  useEffect(() => {
+    if (actionData?.success && formRef.current) {
+      formRef.current.reset();
+      // Scroll to top to show success message
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }, [actionData]);
+
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-6 py-16">
@@ -50,7 +65,7 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-gray-900">Email</p>
                     <a 
-                      href="mailto:info@freshstartairpurifiers.com" 
+                      href="mailto:contact@freshstartairpurifiers.com" 
                       className="text-[#1e40af] hover:underline"
                       data-obfuscated="true"
                     >
@@ -88,7 +103,28 @@ export default function Contact() {
           {/* Contact Form */}
           <div>
             <h2 className="text-2xl font-bold text-[#1e40af] mb-6">Send us a Message</h2>
-            <form className="space-y-6" aria-label="Contact form">
+            
+            {/* Success Message */}
+            {actionData?.success && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-medium">{actionData.message}</p>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {actionData?.error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 font-medium">{actionData.error}</p>
+              </div>
+            )}
+
+            <fetcher.Form
+              ref={formRef}
+              method="post"
+              action="/api/contact"
+              className="space-y-6"
+              aria-label="Contact form"
+            >
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -98,7 +134,8 @@ export default function Contact() {
                   id="name"
                   name="name"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="Your full name"
                   aria-describedby="name-error"
                 />
@@ -113,7 +150,8 @@ export default function Contact() {
                   id="email"
                   name="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -126,7 +164,8 @@ export default function Contact() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="(555) 123-4567"
                 />
               </div>
@@ -139,7 +178,8 @@ export default function Contact() {
                   id="subject"
                   name="subject"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                 >
                   <option value="">Select a topic</option>
                   <option value="general">General Inquiry</option>
@@ -159,18 +199,20 @@ export default function Contact() {
                   name="message"
                   rows={5}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
               
               <button
                 type="submit"
-                className="w-full bg-white border-2 border-[#1e40af] text-[#1e40af] py-3 px-6 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors duration-200"
+                disabled={isSubmitting}
+                className="w-full bg-white border-2 border-[#1e40af] text-[#1e40af] py-3 px-6 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-[#1e40af]"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
-            </form>
+            </fetcher.Form>
           </div>
         </div>
 

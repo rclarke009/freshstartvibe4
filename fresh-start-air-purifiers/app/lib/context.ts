@@ -39,5 +39,11 @@ export async function createAppLoadContext(
   return {
     ...hydrogenContext,
     // declare additional Remix loader context
+    // Extend env with email service configuration
+    env: {
+      ...hydrogenContext.env,
+      ...(env.RESEND_API_KEY && {RESEND_API_KEY: env.RESEND_API_KEY}),
+      CONTACT_EMAIL: env.CONTACT_EMAIL || 'contact@freshstartairpurifiers.com',
+    },
   };
 }

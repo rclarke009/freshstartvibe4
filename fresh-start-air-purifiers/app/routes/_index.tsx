@@ -14,23 +14,30 @@ export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   const homepageImage = `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
   
   return [
-    {title: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors'},
+    {title: 'Air Purifiers for Fragrance Sensitivity | Fresh Start Air'},
     {
       name: 'description',
-      content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.',
+      content:
+        'Medical-grade air purifiers for fragrance-sensitive families. Remove VOCs, fragrances, and allergens for safer indoor air. Trusted by parents.',
     },
-    // Open Graph tags
-    { property: 'og:title', content: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors' },
-    { property: 'og:description', content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.' },
-    { property: 'og:image', content: homepageImage },
-    { property: 'og:url', content: homepageUrl },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:site_name', content: 'Fresh Start Air Purifiers' },
-    // Twitter Card tags
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: 'Fresh Start Air Purifiers | Bring the Fresh Air Indoors' },
-    { name: 'twitter:description', content: 'Austin Air purifiers with medical-grade HEPA + heavy carbon to remove VOCs, fragrances, pollen, mold, and smoke for truly clean indoor air.' },
-    { name: 'twitter:image', content: homepageImage },
+    {property: 'og:title', content: 'Air Purifiers for Fragrance Sensitivity | Fresh Start Air'},
+    {
+      property: 'og:description',
+      content:
+        'Medical-grade air purifiers for fragrance-sensitive families. Remove VOCs, fragrances, and allergens for safer indoor air. Trusted by parents.',
+    },
+    {property: 'og:image', content: homepageImage},
+    {property: 'og:url', content: homepageUrl},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:site_name', content: 'Fresh Start Air Purifiers'},
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: 'Air Purifiers for Fragrance Sensitivity | Fresh Start Air'},
+    {
+      name: 'twitter:description',
+      content:
+        'Medical-grade air purifiers for fragrance-sensitive families. Remove VOCs, fragrances, and allergens for safer indoor air. Trusted by parents.',
+    },
+    {name: 'twitter:image', content: homepageImage},
   ];
 };
 
@@ -108,25 +115,25 @@ function Hero() {
         <div className="absolute inset-0 bg-black/10"></div>
       </div>
       
-      {/* Hero content - centered below the image */}
       <div className="hero-content">
         <div className="hero-text">
           <h1 className="text-3xl md:text-5xl font-bold text-[#1e40af] mb-4 md:mb-6">
-            Bring the fresh air indoors
+            Breathe Easier. Protect What Matters Most.
           </h1>
           <p className="text-xl md:text-2xl font-semibold text-[#1e40af] mb-4 md:mb-6 max-w-4xl mx-auto">
-            Air Purifiers provide fresh, natural air — without the pollen, mold, or chemicals.
+            Medical-grade air purifiers designed for families managing <strong>fragrance sensitivity</strong>, allergies, and chemical exposure.
           </p>
           <p className="text-base md:text-lg text-gray-600/70 mb-6 md:mb-8 max-w-2xl mx-auto">
-            Real protection from fragrance, VOCs, dust, and mold—trusted in hospitals and sensitive homes.
+            At Fresh Start Air Purifiers, we help parents create healthier homes for sensitive children and loved ones. Each Austin Air purifier uses proven, hospital-grade filtration to remove fragrances, VOCs, and microscopic irritants from your indoor air—so your family can breathe, sleep, and recover more comfortably.
           </p>
         </div>
-        <div className="hero-cta">
-          <Link
-            to="/choose-your-purifier"
-            className="add-to-cart-button"
-          >
-            Find Your Perfect Filter
+        <div className="hero-cta flex flex-col md:flex-row gap-4 justify-center">
+          <Link to="/collections" className="add-to-cart-button">
+            Shop Air Purifiers
+          </Link>
+          <br></br>
+          <Link to="/fragrance-sensitivity" className="add-to-cart-button secondary">
+            Learn About Fragrance Sensitivity
           </Link>
         </div>
       </div>
@@ -170,7 +177,7 @@ function ProblemValidation() {
               </li>
             </ul>
             <p className="text-gray-700/90">
-            For families dealing with fragrance sensitivity, HEPA alone isn't enough. Austin Air's HEPA + carbon filtration system is designed to create a space where breathing feels safe again.
+            For families dealing with fragrance sensitivity, HEPA alone isn&apos;t enough. Austin Air&apos;s HEPA + carbon filtration system is designed to create a space where breathing feels safe again.
             </p>
             <br></br>
             <a
@@ -284,14 +291,14 @@ function SocialProof() {
           What families like yours say
         </h2>
         <div className="testimonial-grid">
-          {TESTIMONIALS.map((t, idx) => (
+          {TESTIMONIALS.map((t) => (
             <figure
-              key={idx}
+              key={`${t.initial}-${t.name}`}
               className="testimonial-card"
             >
               <blockquote className="mb-4">
                 <p className="text-gray-700 text-sm leading-relaxed">
-                  "{t.quote}"
+                  &ldquo;{t.quote}&rdquo;
                 </p>
               </blockquote>
               <figcaption className="text-xs text-right">
@@ -308,7 +315,7 @@ function SocialProof() {
         </div>
       </div>
       
-      <style jsx>{`
+      <style>{`
         .testimonial-grid {
           display: flex;
           flex-direction: column;
@@ -325,7 +332,7 @@ function SocialProof() {
         }
         
         .testimonial-card {
-          background: var(--color-surface);
+          background: #F0F8FF;
           padding: 1.5rem;
           border-radius: 1rem;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -381,7 +388,7 @@ function RecommendedProducts({
       <h2>Recommended Products</h2>
       {/* Featured pick: Immunity Machine */}
       <div className="mb-6">
-        <div className="bg-white p-6 rounded-xl shadow border max-w-xl mx-auto text-center">
+        <div className="bg-[#F0F8FF] p-6 rounded-xl shadow border max-w-xl mx-auto text-center">
           <h3 className="text-xl font-semibold text-[#1e40af] mb-2">Featured: Immunity Machine</h3>
           <p className="text-gray-700 mb-4">Medical-grade performance trusted by hospitals and sensitive homes.</p>
           

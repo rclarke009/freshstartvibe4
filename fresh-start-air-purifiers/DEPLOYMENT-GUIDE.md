@@ -98,7 +98,73 @@ npm run build
 npm run preview
 ```
 
-## Step 6: Deploy to Oxygen 🚀
+## Step 6: Configure Environment Variables in Shopify Oxygen 🔐
+
+**IMPORTANT:** Environment variables must be set in the Shopify Partner Dashboard, not just in your local `.env` file.
+
+### Method 1: Using Shopify Partner Dashboard (Recommended)
+
+1. **Go to Shopify Partner Dashboard**
+   - Navigate to: https://partners.shopify.com
+   - Login with your Shopify Partner account
+
+2. **Select Your Store**
+   - Go to **Stores** → Select your store
+   - Or go directly to: https://partners.shopify.com/[your-partner-id]/stores
+
+3. **Navigate to Oxygen Deployment**
+   - Click on **Apps** or **Deployments** in the left sidebar
+   - Find your Hydrogen/Oxygen deployment
+   - Click on the deployment name
+
+4. **Add Environment Variables**
+   - Look for **Environment Variables** or **Settings** section
+   - Click **Add Environment Variable** or **Manage Variables**
+   - Add the following variables:
+     - **Variable Name:** `RESEND_API_KEY` (use this exact name - must match what the code expects)
+     - **Variable Value:** Your actual Resend API key string (the long string like `re_abc123...` from Resend)
+     - **Variable Name:** `CONTACT_EMAIL` (optional)
+     - **Variable Value:** `contact@freshstartairpurifiers.com` (or leave default)
+   - **Important:** 
+     - The variable NAME is `RESEND_API_KEY`, NOT the display name from Resend
+     - The Resend key name (e.g., "Fresh Start Contact Form") is just a label in Resend's dashboard
+     - The variable VALUE is the actual API key string you copied from Resend
+   - **Security Note:** When creating your Resend API key, select "Sending access" only, not "Full access"
+
+5. **Save Changes**
+   - Click **Save** or **Update**
+   - The deployment will automatically redeploy with the new variables
+
+### Method 2: Using Shopify CLI (Alternative)
+
+If you have access to the Shopify CLI with deployment permissions:
+
+```bash
+# Set environment variable
+shopify hydrogen env set RESEND_API_KEY=your_api_key_here
+
+# Set multiple variables
+shopify hydrogen env set RESEND_API_KEY=your_api_key_here CONTACT_EMAIL=contact@example.com
+```
+
+### Method 3: Using oxygen.json (If Supported)
+
+Some Shopify Oxygen deployments support an `oxygen.json` file in your project root:
+
+```json
+{
+  "version": 1,
+  "compatibility_date": "2025-01-01",
+  "vars": {
+    "RESEND_API_KEY": "your_api_key_here",
+    "CONTACT_EMAIL": "contact@freshstartairpurifiers.com"
+  }
+}
+```
+
+**Note:** This method may not be available in all Shopify Oxygen deployments. Check the Shopify Oxygen documentation for the latest method.
+
+## Step 7: Deploy to Oxygen 🚀
 
 ### Option A: Quick Deploy
 ```bash
@@ -118,7 +184,9 @@ This will:
 - ✅ Build the application
 - ✅ Deploy to Oxygen
 
-## Step 7: Configure Domain 🌐
+**Note:** Your local `.env` file is used for local development only. Environment variables for production must be set in the Shopify Partner Dashboard.
+
+## Step 8: Configure Domain 🌐
 
 1. **In Shopify Admin:**
    - Go to **Settings** → **Domains**
@@ -133,7 +201,7 @@ This will:
    - Shopify will automatically provision SSL certificates
    - This may take a few hours
 
-## Step 8: Post-Deployment Testing 🧪
+## Step 9: Post-Deployment Testing 🧪
 
 1. **Test all pages:**
    - Homepage
