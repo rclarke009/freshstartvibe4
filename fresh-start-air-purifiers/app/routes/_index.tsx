@@ -204,7 +204,7 @@ function ProblemValidation() {
 
 function TrustAuthority() {
   return (
-    <div className="section-bleed bg-[#F0F8FF]">
+    <div className="section-bleed bg-[#F0F8FF] dark:bg-black trust-authority-section">
       <section id="serious-filtration" className="mt-10 md:mt-14">
         <div className="p-6 md:p-8 lg:p-12">
           <div className="mt-8 two-column-layout">
@@ -217,11 +217,11 @@ function TrustAuthority() {
             </div>
             <div className="right-column" style={{width: '400px', flexShrink: '0', display: 'flex', justifyContent: 'center'}}>
               <div className="grid gap-4 pr-8">
-                <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af]">
+                <h2 className="text-2xl md:text-3xl font-semibold text-[#1e40af] dark:text-blue-300">
                   &ldquo;Serious filtration for homes, offices, hospitals and schools&rdquo;
                 </h2>
                 <br />
-                <ul className="problem-list space-y-4 text-gray-900">
+                <ul className="problem-list space-y-4 text-gray-900 dark:text-gray-300">
                   <li className="flex gap-3">
                     <span className="bullet" />
                     <p>
@@ -241,7 +241,7 @@ function TrustAuthority() {
                     </p>
                   </li>
                 </ul>
-                <p className="text-gray-900">
+                <p className="text-gray-900 dark:text-gray-300">
                   That&apos;s why <span className="font-semibold">Austin Air</span> goes beyond basic HEPA—combining medical-grade HEPA with heavy carbon to capture what others leave behind.
                 </p>
                 
@@ -387,18 +387,16 @@ function RecommendedProducts({
       <br></br>
       <h2>Recommended Products</h2>
       {/* Featured pick: Immunity Machine */}
-      <div className="mb-6">
-        <div className="bg-[#F0F8FF] p-6 rounded-xl shadow border max-w-xl mx-auto text-center">
-          <h3 className="text-xl font-semibold text-[#1e40af] mb-2">Featured: Immunity Machine</h3>
-          <p className="text-gray-700 mb-4">Medical-grade performance trusted by hospitals and sensitive homes.</p>
-          
+      <div className="mb-16">
+        <div className="bg-[#F0F8FF] dark:bg-black p-8 rounded-xl shadow border max-w-xl mx-auto text-center featured-immunity-section">
+          <h3 className="text-xl font-semibold text-[#1e40af] dark:text-blue-300 mb-2">Featured: NEW Immunity Machine</h3>
+          <p className="text-gray-700 dark:text-gray-300 mb-4">Medical-grade performance trusted by hospitals and sensitive homes.</p>
           <br></br>
           <a href="/products/austin-air-immunity-machine" className="add-to-cart-button inline-block">View Immunity Machine</a>
-          
-          <br></br>
         </div>
       </div>
-      <p>   </p>
+
+      <br />
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
@@ -415,7 +413,6 @@ function RecommendedProducts({
           )}
         </Await>
       </Suspense>
-      <br />
     </div>
   );
 }

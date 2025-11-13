@@ -1942,4 +1942,19 @@ section#serious-filtration .right-column-wide {
   .hero-bg-light-blue h1 {
     color: var(--color-text-primary) !important;
   }
+  
+  /* Dark mode for TrustAuthority section */
+  .trust-authority-section {
+    background-color: #000000 !important;
+  }
+  
+  /* Dark mode for Featured Immunity Machine section */
+  .featured-immunity-section {
+    background-color: #000000 !important;
+  }
+}
+
+/* Ensure padding is applied to featured section */
+.featured-immunity-section {
+  padding: 2rem !important;
 }

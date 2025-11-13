@@ -56,18 +56,18 @@ function ResourcesDropdown() {
       </span>
       
       {isOpen && (
-        <div className="absolute bottom-full left-0 mb-2 bg-white border border-slate-200 rounded-lg shadow-lg py-2 min-w-[200px] z-10">
+        <div className="absolute bottom-full left-0 mb-2 bg-white dark:!bg-gray-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg py-2 min-w-[200px] z-10">
           <NavLink
             to="/fragrance-sensitivity"
             onClick={() => setIsOpen(false)}
-            className="block text-sm font-medium text-gray-700 hover:text-[#1e40af] hover:bg-gray-100 transition-colors duration-200 px-4 py-2"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#1e40af] dark:hover:text-[#93c5fd] hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 px-4 py-2"
           >
             Fragrance Sensitivity
           </NavLink>
           <NavLink
             to="/pages/why-air-purifiers"
             onClick={() => setIsOpen(false)}
-            className="block text-sm font-medium text-gray-700 hover:text-[#1e40af] hover:bg-gray-100 transition-colors duration-200 px-4 py-2"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-[#1e40af] dark:hover:text-[#93c5fd] hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 px-4 py-2"
           >
             Why Air Purifiers?
           </NavLink>

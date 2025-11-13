@@ -63,6 +63,7 @@ export function ProductForm({
                   // When the variant is a combined listing child product
                   // that leads to a different url, we need to render it
                   // as an anchor tag
+                  // Using clean URL for better SEO; product page will default to first available variant
                   return (
                     <Link
                       className="product-options-item"
@@ -70,7 +71,7 @@ export function ProductForm({
                       prefetch="intent"
                       preventScrollReset
                       replace
-                      to={`/products/${handle}?${variantUriQuery}`}
+                      to={`/products/${handle}`}
                       style={{
                         border: selected
                           ? '1px solid black'
