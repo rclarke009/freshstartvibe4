@@ -37,19 +37,32 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     product?.selectedOrFirstAvailableVariant?.image?.url ||
     `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
   
+  const productImageObj = product?.featuredImage || 
+    product?.selectedOrFirstAvailableVariant?.image ||
+    null;
+  
+  const productImageWidth = productImageObj?.width?.toString() || '1200';
+  const productImageHeight = productImageObj?.height?.toString() || '630';
+  const productImageAlt = productImageObj?.altText || title;
+  
   const price = product?.selectedOrFirstAvailableVariant?.price?.amount;
   const currency = product?.selectedOrFirstAvailableVariant?.price?.currencyCode || 'USD';
   
   return [
     { title },
     { name: 'description', content: description },
+    { name: 'robots', content: 'index, follow' },
     // Open Graph tags
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:image', content: productImage },
+    { property: 'og:image:width', content: productImageWidth },
+    { property: 'og:image:height', content: productImageHeight },
+    { property: 'og:image:alt', content: productImageAlt },
     { property: 'og:url', content: productUrl },
     { property: 'og:type', content: 'product' },
     { property: 'og:site_name', content: 'Fresh Start Air Purifiers' },
+    { property: 'og:locale', content: 'en_US' },
     ...(price ? [
       { property: 'product:price:amount', content: price },
       { property: 'product:price:currency', content: currency },
@@ -59,6 +72,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: productImage },
+    { name: 'twitter:image:alt', content: productImageAlt },
   ];
 };
 
@@ -280,12 +294,21 @@ export default function Product() {
   const availability = selectedVariant?.availableForSale ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock';
   const description = product.seo?.description || product.description?.replace(/<[^>]*>/g, '').substring(0, 300) || '';
   
+  // Collect all product images for structured data
+  const allProductImages = [
+    primaryImage?.url,
+    product?.featuredImage?.url,
+    ...(product?.adjacentVariants || [])
+      .map((v: any) => v?.image?.url)
+      .filter(Boolean)
+  ].filter((url, index, self) => url && self.indexOf(url) === index); // Remove duplicates
+  
   const productStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: title,
-    description: description,
-    image: productImage,
+    description,
+    image: allProductImages.length > 0 ? allProductImages : productImage,
     brand: {
       '@type': 'Brand',
       name: product.vendor || 'Austin Air',
@@ -297,7 +320,7 @@ export default function Product() {
       url: productUrl,
       priceCurrency: currency,
       price: price || '0',
-      availability: availability,
+      availability,
       priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 1 year from now
       seller: {
         '@type': 'Organization',
@@ -308,7 +331,7 @@ export default function Product() {
         shippingRate: {
           '@type': 'MonetaryAmount',
           value: isAccessory ? '15' : '0',
-          currency: currency,
+          currency,
         },
         shippingDestination: {
           '@type': 'DefinedRegion',

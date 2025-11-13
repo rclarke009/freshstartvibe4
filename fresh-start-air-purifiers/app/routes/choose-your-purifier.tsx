@@ -29,9 +29,9 @@ export async function loader({request}: LoaderFunctionArgs) {
 
 export default function ChooseYourPurifier() {
   return (
-    <div className="min-h-screen bg-[#F0F8FF] py-8">
+    <div className="min-h-screen bg-[#F0F8FF] dark:bg-[#0d1117] py-8">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 dark:bg-[#1a1f26] dark:rounded-lg dark:p-6">
           <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] mb-4">
             Choose Your Purifier
           </h1>
@@ -46,7 +46,7 @@ export default function ChooseYourPurifier() {
         </div>
         <div className="h-8" />
         
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 dark:bg-[#1a1f26] dark:rounded-lg dark:p-6 dark:pb-12">
           <br></br>
           <p className="text-gray-600 mb-4">
             Or browse our full collection:

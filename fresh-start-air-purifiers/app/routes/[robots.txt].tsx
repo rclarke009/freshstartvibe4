@@ -38,6 +38,11 @@ ${shopId ? `Disallow: /${shopId}/orders` : ''}
 Disallow: /*?*oseid=*
 Disallow: /*preview_theme_id*
 Disallow: /*preview_script_id*
+Disallow: /services/
+Disallow: /cart
+Disallow: /account
+Disallow: /checkout
+
 
 User-agent: Googlebot-Image
 Allow: /$

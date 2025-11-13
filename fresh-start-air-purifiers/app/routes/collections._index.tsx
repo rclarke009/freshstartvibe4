@@ -4,15 +4,45 @@ import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
+  const pageUrl = `${origin}${location.pathname}`;
+  const pageImage = `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  const title = 'Fresh Start Air Purifiers | Collections';
+  const description =
+    'Explore Austin Air purifier collections with medical-grade HEPA + heavy carbon filtration for homes, offices, and sensitive environments.';
+
   return [
-    { title: 'Fresh Start Air Purifiers | Collections' },
-    {
-      name: 'description',
-      content: 'Explore Austin Air purifier collections with medical-grade HEPA + heavy carbon filtration for homes, offices, and sensitive environments.',
-    },
+    {title},
+    {name: 'description', content: description},
+    // Open Graph tags
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:image', content: pageImage},
+    {property: 'og:url', content: pageUrl},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:site_name', content: 'Fresh Start Air Purifiers'},
+    // Twitter Card tags
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description},
+    {name: 'twitter:image', content: pageImage},
   ];
 };
+
+export function links(args?: {
+  data?: Awaited<ReturnType<typeof loader>>;
+  location?: {pathname: string};
+}) {
+  if (!args?.data || !args?.location) return [];
+  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname}`,
+    },
+  ];
+}
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -21,7 +51,10 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  // Get origin URL for SEO
+  const url = new URL(args.request.url);
+
+  return {...deferredData, ...criticalData, origin: url.origin};
 }
 
 /**
@@ -53,10 +86,46 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collections() {
-  const {collections} = useLoaderData<typeof loader>();
+  const {collections, origin} = useLoaderData<typeof loader>();
+  const pageUrl = `${origin || 'https://freshstartairpurifiers.com'}/collections`;
+
+  // Structured data for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Collections',
+    description:
+      'Explore Austin Air purifier collections with medical-grade HEPA + heavy carbon filtration for homes, offices, and sensitive environments.',
+    url: pageUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Fresh Start Air Purifiers',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${origin || 'https://freshstartairpurifiers.com'}/fresh-start-air-purifiers-logo-no-bkgd.png`,
+      },
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: collections?.nodes?.map((collection: CollectionFragment, index: number) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Collection',
+          name: collection.title,
+          url: `${origin || 'https://freshstartairpurifiers.com'}/collections/${collection.handle}`,
+          image: collection.image?.url,
+        },
+      })) || [],
+    },
+  };
 
   return (
     <div className="collections">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
+      />
       <h1>Collections</h1>
       <PaginatedResourceSection
         connection={collections}

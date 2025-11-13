@@ -1171,6 +1171,26 @@ main {
   .bg-white {
     background-color: transparent !important;
   }
+
+  /* Dark mode backgrounds for quiz frame - override inline styles */
+  .quiz-frame {
+    background-color: var(--color-surface) !important;
+    border-color: rgba(147, 197, 253, 0.4) !important; /* Lighter border for dark mode */
+  }
+
+  /* Dark mode styles for quiz text containers */
+  .quiz-frame .bg-white {
+    background-color: var(--color-surface) !important;
+  }
+
+  /* Ensure text in quiz is readable in dark mode */
+  .quiz-prompt {
+    color: var(--color-text-primary) !important;
+  }
+
+  .quiz-step-offset {
+    color: var(--color-text-secondary) !important;
+  }
 }
 
 /* Mobile menu specific styles */

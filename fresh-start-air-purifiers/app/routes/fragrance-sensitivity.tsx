@@ -1,4 +1,5 @@
-import {Link, type MetaFunction} from '@remix-run/react';
+import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {Link, useLoaderData, type MetaFunction} from '@remix-run/react';
 
 const SYMPTOMS = [
   'Headaches or dizziness after exposure',
@@ -26,22 +27,99 @@ const RESOURCE_LINKS = [
   },
 ];
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
+  const pageUrl = `${origin}${location.pathname}`;
+  const pageImage = `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`;
+  const title = 'Learn About Fragrance Sensitivity | Fresh Start Air Purifiers';
+  const description =
+    'Learn why fragrance sensitivity causes real physical symptoms, how VOCs impact indoor air, and how medical-grade Austin Air purifiers provide relief.';
+
   return [
-    {
-      title: 'Learn About Fragrance Sensitivity | Fresh Start Air Purifiers',
-    },
-    {
-      name: 'description',
-      content:
-        'Learn why fragrance sensitivity causes real physical symptoms, how VOCs impact indoor air, and how medical-grade Austin Air purifiers provide relief.',
-    },
+    {title},
+    {name: 'description', content: description},
+    // Open Graph tags
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:image', content: pageImage},
+    {property: 'og:url', content: pageUrl},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:site_name', content: 'Fresh Start Air Purifiers'},
+    // Twitter Card tags
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description},
+    {name: 'twitter:image', content: pageImage},
   ];
 };
 
+export function links(args?: {
+  data?: Awaited<ReturnType<typeof loader>>;
+  location?: {pathname: string};
+}) {
+  if (!args?.data || !args?.location) return [];
+  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname}`,
+    },
+  ];
+}
+
+export async function loader({request}: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  return {
+    origin: url.origin,
+  };
+}
+
 export default function FragranceSensitivityPage() {
+  const data = useLoaderData<typeof loader>();
+  const origin = data?.origin || 'https://freshstartairpurifiers.com';
+  const pageUrl = `${origin}/fragrance-sensitivity`;
+
+  // Structured data for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: "Fragrance Sensitivity Isn't in Your Head — It's in the Air",
+    description:
+      'Learn why fragrance sensitivity causes real physical symptoms, how VOCs impact indoor air, and how medical-grade Austin Air purifiers provide relief.',
+    image: `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`,
+    author: {
+      '@type': 'Organization',
+      name: 'Fresh Start Air Purifiers',
+      url: origin,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Fresh Start Air Purifiers',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`,
+      },
+    },
+    datePublished: '2025-11-01',
+    dateModified: '2025-11-07',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+    },
+    about: {
+      '@type': 'Thing',
+      name: 'Fragrance Sensitivity',
+      description:
+        'A physiological reaction to chemicals in fragrances, perfumes, and scented products that can cause headaches, breathing difficulties, and other symptoms.',
+    },
+  };
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
+      />
       <HeroSection />
       <main className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12 py-16 space-y-20">
         <section aria-labelledby="what-is-fragrance-sensitivity" className="space-y-6">
@@ -207,7 +285,7 @@ export default function FragranceSensitivityPage() {
                 From One Sensitive Family to Another
               </h3>
               <p className="text-sm text-gray-700 leading-relaxed">
-                "Within two days my son said, 'I can smell again.' The difference was real."
+                &ldquo;Within two days my son said, &lsquo;I can smell again.&rsquo; The difference was real.&rdquo;
               </p>
               <p className="mt-2 text-sm font-medium text-gray-900">Rebecca — Fresh Air Mama</p>
             </aside>
