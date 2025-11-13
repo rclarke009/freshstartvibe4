@@ -31,11 +31,22 @@ export async function action({request, context}: ActionFunctionArgs) {
     // Get environment variables
     // Access extended env properties (RESEND_API_KEY and CONTACT_EMAIL)
     // Note: RESEND_API_KEY should have "Sending access" permissions only for security
+    
+    // Debug: Log what's in context.env (this will help diagnose the issue)
+    console.log('=== DEBUG: Environment Variables ===');
+    console.log('Available env keys:', Object.keys(context.env || {}));
+    console.log('RESEND_API_KEY exists?', 'RESEND_API_KEY' in (context.env || {}));
+    console.log('RESEND_API_KEY value:', (context.env as any)?.RESEND_API_KEY ? `${((context.env as any).RESEND_API_KEY as string).substring(0, 5)}...` : 'NOT SET');
+    console.log('CONTACT_EMAIL:', (context.env as any)?.CONTACT_EMAIL || 'NOT SET (using default)');
+    console.log('===================================');
+    
     const resendApiKey = (context.env as {RESEND_API_KEY?: string}).RESEND_API_KEY;
     const contactEmail = (context.env as {CONTACT_EMAIL?: string}).CONTACT_EMAIL || 'contact@freshstartairpurifiers.com';
 
     if (!resendApiKey) {
       console.error('RESEND_API_KEY is not configured');
+      console.error('Full context.env keys:', JSON.stringify(Object.keys(context.env || {})));
+      console.error('context.env type:', typeof context.env);
       return data(
         {error: 'Email service is not configured. Please contact support.'},
         {status: 500},
@@ -72,11 +83,12 @@ This message was sent from the Fresh Start Air Purifiers contact form.
     `.trim();
 
     // Send email
-    // Note: For production, you'll need to verify your domain in Resend
-    // For testing, onboarding@resend.dev works, but for production use your verified domain
-    // Example: 'Fresh Start Air Purifiers <contact@freshstartairpurifiers.com>'
+    // Use verified domain: contact@freshstartairpurifiers.com
+    // If domain verification isn't complete, you can temporarily use onboarding@resend.dev for testing
+    const fromEmail = 'Fresh Start Air Purifiers <contact@freshstartairpurifiers.com>';
+    
     const {data: emailData, error: emailError} = await resend.emails.send({
-      from: 'Fresh Start Air Purifiers <onboarding@resend.dev>',
+      from: fromEmail,
       to: contactEmail,
       replyTo: email,
       subject: emailSubject,
@@ -84,9 +96,21 @@ This message was sent from the Fresh Start Air Purifiers contact form.
     });
 
     if (emailError) {
-      console.error('Error sending email:', emailError);
+      // Log the full error for debugging
+      console.error('Resend API Error:', JSON.stringify(emailError, null, 2));
+      console.error('Error details:', {
+        message: emailError.message,
+        name: emailError.name,
+        statusCode: (emailError as any)?.statusCode,
+        response: (emailError as any)?.response,
+      });
+      
+      // Return a more helpful error message
+      const errorMessage = emailError.message || 'Failed to send email';
       return data(
-        {error: 'Failed to send email. Please try again later.'},
+        {
+          error: `Failed to send email: ${errorMessage}. Please check your Resend domain verification and API key configuration.`,
+        },
         {status: 500},
       );
     }
@@ -98,9 +122,18 @@ This message was sent from the Fresh Start Air Purifiers contact form.
       message: 'Thank you for your message! We will get back to you soon.',
     });
   } catch (error) {
+    // Log the full error for debugging
     console.error('Error processing contact form:', error);
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : String(error),
+      name: error instanceof Error ? error.name : 'Unknown',
+    });
+    
     return data(
-      {error: 'An unexpected error occurred. Please try again later.'},
+      {
+        error: `An unexpected error occurred: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again later.`,
+      },
       {status: 500},
     );
   }

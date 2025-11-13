@@ -36,12 +36,21 @@ export async function createAppLoadContext(
     },
   });
 
+  // Debug: Log environment variables in context.ts
+  console.log('=== DEBUG: Context.ts Environment Variables ===');
+  console.log('env.RESEND_API_KEY exists?', !!env.RESEND_API_KEY);
+  console.log('env.RESEND_API_KEY value:', env.RESEND_API_KEY ? `${env.RESEND_API_KEY.substring(0, 5)}...` : 'NOT SET');
+  console.log('env.CONTACT_EMAIL:', env.CONTACT_EMAIL || 'NOT SET');
+  console.log('Available env keys in Env:', Object.keys(env || {}));
+  console.log('==============================================');
+
   return {
     ...hydrogenContext,
     // declare additional Remix loader context
     // Extend env with email service configuration
     env: {
       ...hydrogenContext.env,
+      // Explicitly pass through RESEND_API_KEY if it exists in the original env
       ...(env.RESEND_API_KEY && {RESEND_API_KEY: env.RESEND_API_KEY}),
       CONTACT_EMAIL: env.CONTACT_EMAIL || 'contact@freshstartairpurifiers.com',
     },

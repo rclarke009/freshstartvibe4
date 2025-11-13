@@ -24,13 +24,13 @@ export default function Contact() {
   }, [actionData]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       <div className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#1e40af] dark:text-blue-300 mb-6">
             Contact Us
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             We&apos;re here to help you find the perfect air purifier for your home. 
             Get in touch with our team of experts.
           </p>
@@ -40,7 +40,7 @@ export default function Contact() {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold text-[#1e40af] mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-[#1e40af] dark:text-blue-300 mb-6">Get in Touch</h2>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-[#1e40af] rounded-full flex items-center justify-center">
@@ -49,8 +49,8 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Phone</p>
-                    <a href="tel:+19044388325" className="text-[#1e40af] hover:underline">
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">Phone</p>
+                    <a href="tel:+19044388325" className="text-[#1e40af] dark:text-blue-300 hover:underline">
                       <span className="phone-number">(904) 438-8325</span>
                     </a>
                   </div>
@@ -63,10 +63,10 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Email</p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">Email</p>
                     <a 
                       href="mailto:contact@freshstartairpurifiers.com" 
-                      className="text-[#1e40af] hover:underline"
+                      className="text-[#1e40af] dark:text-blue-300 hover:underline"
                       data-obfuscated="true"
                     >
                       <span className="email-address" data-user="info" data-domain="freshstartairpurifiers.com">
@@ -84,16 +84,16 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">Serving Florida and the continental US</p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100">Location</p>
+                    <p className="text-gray-600 dark:text-gray-300">Serving Florida and the continental US</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-[#1e40af] mb-4">Business Hours</h3>
-              <div className="space-y-2 text-gray-600">
+              <h3 className="text-xl font-bold text-[#1e40af] dark:text-blue-300 mb-4">Business Hours</h3>
+              <div className="space-y-2 text-gray-600 dark:text-gray-300">
                 <p>Monday - Friday: 10:00 AM - 4:00 PM EST</p>
               
               </div>
@@ -102,19 +102,19 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div>
-            <h2 className="text-2xl font-bold text-[#1e40af] mb-6">Send us a Message</h2>
+            <h2 className="text-2xl font-bold text-[#1e40af] dark:text-blue-300 mb-6">Send us a Message</h2>
             
             {/* Success Message */}
             {actionData?.success && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-green-800 font-medium">{actionData.message}</p>
+              <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-lg">
+                <p className="text-green-800 dark:text-green-200 font-medium">{actionData.message}</p>
               </div>
             )}
 
             {/* Error Message */}
             {actionData?.error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-800 font-medium">{actionData.error}</p>
+              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-lg">
+                <p className="text-red-800 dark:text-red-200 font-medium">{actionData.error}</p>
               </div>
             )}
 
@@ -126,7 +126,7 @@ export default function Contact() {
               aria-label="Contact form"
             >
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Full Name
                 </label>
                 <input
@@ -135,14 +135,14 @@ export default function Contact() {
                   name="name"
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e40af] dark:focus:ring-blue-400 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   placeholder="Your full name"
                   aria-describedby="name-error"
                 />
               </div>
               
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -151,13 +151,13 @@ export default function Contact() {
                   name="email"
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e40af] dark:focus:ring-blue-400 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   placeholder="your.email@example.com"
                 />
               </div>
               
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Phone Number
                 </label>
                 <input
@@ -165,13 +165,13 @@ export default function Contact() {
                   id="phone"
                   name="phone"
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e40af] dark:focus:ring-blue-400 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   placeholder="(555) 123-4567"
                 />
               </div>
               
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Subject
                 </label>
                 <select
@@ -179,9 +179,10 @@ export default function Contact() {
                   name="subject"
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e40af] dark:focus:ring-blue-400 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 >
                   <option value="">Select a topic</option>
+                  
                   <option value="general">General Inquiry</option>
                   <option value="product">Product Information</option>
                   <option value="support">Technical Support</option>
@@ -191,7 +192,7 @@ export default function Contact() {
               </div>
               
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Message
                 </label>
                 <textarea
@@ -200,7 +201,7 @@ export default function Contact() {
                   rows={5}
                   required
                   disabled={isSubmitting}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1e40af] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e40af] dark:focus:ring-blue-400 focus:border-transparent disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:cursor-not-allowed bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                   placeholder="Tell us how we can help you..."
                 ></textarea>
               </div>
@@ -208,7 +209,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-white border-2 border-[#1e40af] text-[#1e40af] py-3 px-6 rounded-lg font-semibold hover:bg-[#1e40af] hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-[#1e40af]"
+                className="w-full bg-white dark:bg-gray-800 border-2 border-[#1e40af] dark:border-blue-400 text-[#1e40af] dark:text-blue-300 py-3 px-6 rounded-lg font-semibold hover:bg-[#1e40af] dark:hover:bg-blue-500 hover:text-white transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white dark:disabled:hover:bg-gray-800 disabled:hover:text-[#1e40af] dark:disabled:hover:text-blue-300"
               >
                 {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
@@ -218,16 +219,16 @@ export default function Contact() {
 
         {/* FAQ Section */}
         <div className="mt-16">
-          <h2 className="text-3xl font-bold text-[#1e40af] text-center mb-12">
+          <h2 className="text-3xl font-bold text-[#1e40af] dark:text-blue-300 text-center mb-12">
             Frequently Asked Questions
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   What&apos;s the difference between your air purifiers?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Our air purifiers are designed for different needs: HealthMate for general use, 
                   HealthMate Plus for chemical reduction, Allergy Machine for allergy relief, 
                   and Bedroom Machine for sensitive sleepers.
@@ -235,10 +236,10 @@ export default function Contact() {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   How often should I replace the filters?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Filter replacement depends on usage and air quality. Generally, pre-filters 
                   should be replaced every 3-6 months, and HEPA filters every 12-18 months.
                 </p>
@@ -247,20 +248,20 @@ export default function Contact() {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   Do you offer installation services?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Yes! We provide professional installation and setup services to ensure 
                   your air purifier is working optimally for your space.
                 </p>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                   What&apos;s your return policy?
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   We offer a 30-day satisfaction guarantee. If you&apos;re not completely 
                   satisfied with your air purifier, we&apos;ll work with you to make it right.
                 </p>
