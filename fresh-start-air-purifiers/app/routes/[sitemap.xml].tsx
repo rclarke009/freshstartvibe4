@@ -19,11 +19,9 @@ export async function loader({
   const sitemapIndexCloseIndex = sitemapIndexText.lastIndexOf('</sitemapindex>');
   
   if (sitemapIndexCloseIndex !== -1) {
-    const customSitemapEntry = `  <sitemap>
-    <loc>${baseUrl}/sitemap/custom/1.xml</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-  </sitemap>
-`;
+    // Match Hydrogen's single-line formatting style
+    const today = new Date().toISOString().split('T')[0];
+    const customSitemapEntry = `\n  <sitemap><loc>${baseUrl}/sitemap/custom/1.xml</loc><lastmod>${today}</lastmod></sitemap>\n`;
     
     const updatedIndex = 
       sitemapIndexText.slice(0, sitemapIndexCloseIndex) + 
