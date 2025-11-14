@@ -36,21 +36,6 @@ export async function createAppLoadContext(
     },
   });
 
-  // DEBUG: Log environment variable access in context
-  // Check if RESEND_API_KEY exists in raw env (the source of truth)
-  const rawHasResendKey = env.RESEND_API_KEY !== undefined && env.RESEND_API_KEY !== null && env.RESEND_API_KEY !== '';
-  const rawResendKeyValue = env.RESEND_API_KEY;
-  
-  console.log('[CONTEXT DEBUG] ===== Environment Variable Debug =====');
-  console.log('[CONTEXT DEBUG] Raw env.RESEND_API_KEY exists:', 'RESEND_API_KEY' in env);
-  console.log('[CONTEXT DEBUG] Raw env.RESEND_API_KEY type:', typeof rawResendKeyValue);
-  console.log('[CONTEXT DEBUG] Raw env.RESEND_API_KEY value:', rawResendKeyValue ? `[SET, length: ${rawResendKeyValue.length}]` : '[NOT SET]');
-  console.log('[CONTEXT DEBUG] Raw env.RESEND_API_KEY is truthy:', !!rawResendKeyValue);
-  console.log('[CONTEXT DEBUG] Raw env.RESEND_API_KEY is non-empty:', rawHasResendKey);
-  console.log('[CONTEXT DEBUG] hydrogenContext.env type:', typeof hydrogenContext.env);
-  console.log('[CONTEXT DEBUG] hydrogenContext.env keys:', Object.keys(hydrogenContext.env || {}));
-  console.log('[CONTEXT DEBUG] hydrogenContext.env has RESEND_API_KEY:', 'RESEND_API_KEY' in (hydrogenContext.env || {}));
-  
   // Build extended env object
   // Start with hydrogenContext.env (which has Hydrogen's processed env vars)
   // Then explicitly add our custom env vars from the raw env object
@@ -62,19 +47,10 @@ export async function createAppLoadContext(
   
   // Explicitly add RESEND_API_KEY from raw env if it exists and has a value
   // This ensures we preserve it even if Hydrogen filters it out
-  if (rawHasResendKey && rawResendKeyValue) {
-    (extendedEnv as any).RESEND_API_KEY = rawResendKeyValue;
-    console.log('[CONTEXT DEBUG] ✅ Added RESEND_API_KEY to extendedEnv (length:', rawResendKeyValue.length, ')');
-  } else {
-    console.log('[CONTEXT DEBUG] ❌ RESEND_API_KEY NOT added - missing or empty in raw env');
-    console.log('[CONTEXT DEBUG] Raw env keys:', Object.keys(env));
+  const rawHasResendKey = env.RESEND_API_KEY !== undefined && env.RESEND_API_KEY !== null && env.RESEND_API_KEY !== '';
+  if (rawHasResendKey && env.RESEND_API_KEY) {
+    (extendedEnv as any).RESEND_API_KEY = env.RESEND_API_KEY;
   }
-  
-  // Final verification
-  console.log('[CONTEXT DEBUG] Extended env.RESEND_API_KEY exists:', 'RESEND_API_KEY' in extendedEnv);
-  console.log('[CONTEXT DEBUG] Extended env.RESEND_API_KEY value:', (extendedEnv as any).RESEND_API_KEY ? `[SET, length: ${(extendedEnv as any).RESEND_API_KEY.length}]` : '[NOT SET]');
-  console.log('[CONTEXT DEBUG] Extended env keys:', Object.keys(extendedEnv));
-  console.log('[CONTEXT DEBUG] ========================================');
 
   return {
     ...hydrogenContext,
