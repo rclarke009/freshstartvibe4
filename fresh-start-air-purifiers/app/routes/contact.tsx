@@ -1,5 +1,5 @@
 import {useFetcher, type MetaFunction} from '@remix-run/react';
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,6 +13,7 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const isSubmitting = fetcher.state === 'submitting';
   const actionData = fetcher.data;
+  const [formLoadTime] = useState(Date.now());
 
   // Reset form on successful submission
   useEffect(() => {
@@ -133,6 +134,25 @@ export default function Contact() {
               className="space-y-6"
               aria-label="Contact form"
             >
+              {/* Honeypot field - hidden from users but visible to bots */}
+              <div style={{position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden'}} aria-hidden="true">
+                <label htmlFor="website">Website (leave blank)</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+              
+              {/* Timestamp field for time-based validation */}
+              <input
+                type="hidden"
+                name="formLoadTime"
+                value={formLoadTime}
+              />
+
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Full Name

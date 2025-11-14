@@ -337,6 +337,21 @@ export default function Product() {
           '@type': 'DefinedRegion',
           addressCountry: 'US',
         },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 3,
+            unitCode: 'd',
+          },
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 4,
+            maxValue: 7,
+            unitCode: 'd',
+          },
+        },
       },
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
@@ -492,6 +507,11 @@ export default function Product() {
                 Free Shipping on All Air Purifiers (Continental U.S.)
               </div>
             )}
+
+            {/* Delivery Time Information */}
+            <div className="mt-3 text-sm text-neutral-700">
+              Orders are fulfilled and shipped directly by Austin Air. Typical delivery is 7–10 business days.
+            </div>
 
             <br  />
             
