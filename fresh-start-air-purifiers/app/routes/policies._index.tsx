@@ -1,13 +1,11 @@
 import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, Link} from '@remix-run/react';
 
-export function links(args?: { location?: { pathname: string } }) {
-  if (!args?.location) return [];
-  const origin = 'https://freshstartairpurifiers.com';
+export function links() {
   return [
     {
       rel: 'canonical',
-      href: `${origin}${args.location.pathname}`,
+      href: 'https://freshstartairpurifiers.com/policies',
     },
   ];
 }

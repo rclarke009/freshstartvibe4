@@ -34,13 +34,15 @@ export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   ];
 };
 
-export function links(args?: { data?: Awaited<ReturnType<typeof loader>>, location?: { pathname: string } }) {
-  if (!args?.data || !args?.location) return [];
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>> }) {
+  if (!args?.data) return [];
   const origin = args.data.origin || 'https://freshstartairpurifiers.com';
+  const handle = (args.data as any)?.page?.handle;
+  if (!handle) return [];
   return [
     {
       rel: 'canonical',
-      href: `${origin}${args.location.pathname}`,
+      href: `${origin}/pages/${handle}`,
     },
   ];
 }

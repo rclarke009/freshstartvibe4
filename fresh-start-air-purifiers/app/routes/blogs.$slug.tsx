@@ -87,13 +87,15 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   return metadata;
 };
 
-export function links(args?: { data?: Awaited<ReturnType<typeof loader>>, location?: { pathname: string } }) {
-  if (!args?.location) return [];
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>> }) {
   const origin = 'https://freshstartairpurifiers.com';
+  const slug =
+    (args?.data as any)?.blog?.slug?.current ?? (args?.data as any)?.blog?.slug;
+  if (!slug) return [];
   return [
     {
       rel: 'canonical',
-      href: `${origin}${args.location.pathname || '/'}`,
+      href: `${origin}/blogs/${encodeURIComponent(slug)}`,
     },
   ];
 }

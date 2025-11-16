@@ -14,13 +14,11 @@ export const meta: MetaFunction<typeof loader> = () => {
   ];
 };
 
-export function links(args?: { location?: { pathname: string } }) {
-  if (!args?.location) return [];
-  const origin = 'https://freshstartairpurifiers.com';
+export function links() {
   return [
     {
       rel: 'canonical',
-      href: `${origin}${args.location.pathname}`,
+      href: 'https://freshstartairpurifiers.com/collections/all',
     },
   ];
 }

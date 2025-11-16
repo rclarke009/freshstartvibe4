@@ -30,16 +30,11 @@ export const meta: MetaFunction<typeof loader> = ({data, location}) => {
   ];
 };
 
-export function links(args?: {
-  data?: Awaited<ReturnType<typeof loader>>;
-  location?: {pathname: string};
-}) {
-  if (!args?.data || !args?.location) return [];
-  const origin = args.data.origin || 'https://freshstartairpurifiers.com';
+export function links() {
   return [
     {
       rel: 'canonical',
-      href: `${origin}${args.location.pathname}`,
+      href: 'https://freshstartairpurifiers.com/collections',
     },
   ];
 }
