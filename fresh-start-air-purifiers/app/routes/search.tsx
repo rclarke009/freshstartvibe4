@@ -26,6 +26,17 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export function links(args?: { location?: { pathname: string } }) {
+  if (!args?.location) return [];
+  const origin = 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname}`,
+    },
+  ];
+}
+
 export async function loader({request, context}: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const isPredictive = url.searchParams.has('predictive');

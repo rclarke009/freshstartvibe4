@@ -87,6 +87,17 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
   return metadata;
 };
 
+export function links(args?: { data?: Awaited<ReturnType<typeof loader>>, location?: { pathname: string } }) {
+  if (!args?.location) return [];
+  const origin = 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname || '/'}`,
+    },
+  ];
+}
+
 export async function loader({params}: LoaderFunctionArgs) {
   if (!params.slug) {
     throw new Response('Blog post not found', {status: 404});

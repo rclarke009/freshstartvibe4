@@ -8,6 +8,17 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export function links(args?: { location?: { pathname: string } }) {
+  if (!args?.location) return [];
+  const origin = 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname}`,
+    },
+  ];
+}
+
 export default function Contact() {
   const fetcher = useFetcher<{success?: boolean; error?: string; message?: string}>();
   const formRef = useRef<HTMLFormElement>(null);

@@ -14,6 +14,17 @@ export const meta: MetaFunction<typeof loader> = () => {
   ];
 };
 
+export function links(args?: { location?: { pathname: string } }) {
+  if (!args?.location) return [];
+  const origin = 'https://freshstartairpurifiers.com';
+  return [
+    {
+      rel: 'canonical',
+      href: `${origin}${args.location.pathname}`,
+    },
+  ];
+}
+
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
