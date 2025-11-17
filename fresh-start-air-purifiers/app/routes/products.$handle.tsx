@@ -325,6 +325,10 @@ export default function Product() {
       seller: {
         '@type': 'Organization',
         name: 'Fresh Start Air Purifiers',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${origin}/fresh-start-air-purifiers-logo-no-bkgd.png`,
+        },
       },
       shippingDetails: {
         '@type': 'OfferShippingDetails',

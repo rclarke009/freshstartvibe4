@@ -185,7 +185,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
     '@type': 'Organization',
     name: 'Fresh Start Air Purifiers',
     url: 'https://freshstartairpurifiers.com',
-    logo: 'https://freshstartairpurifiers.com/fresh-start-air-purifiers-logo-no-bkgd.png',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://freshstartairpurifiers.com/fresh-start-air-purifiers-logo-no-bkgd.png',
+    },
     description: 'Premium Austin Air purifiers with medical-grade HEPA + heavy carbon filtration for clean, healthy indoor air.',
     sameAs: [
       // Add social media profiles if available
