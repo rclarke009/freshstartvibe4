@@ -1978,3 +1978,450 @@ section#serious-filtration .right-column-wide {
 .featured-immunity-section {
   padding: 2rem !important;
 }
+
+/*
+* --------------------------------------------------
+* Black Friday Banner (Homepage)
+* --------------------------------------------------
+*/
+.black-friday-banner {
+  background: #000;
+  color: #fff;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.black-friday-banner-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.black-friday-banner-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.black-friday-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.black-friday-banner-text {
+  text-transform: uppercase;
+}
+
+.black-friday-banner-arrow {
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.black-friday-banner-link:hover .black-friday-banner-arrow {
+  transform: translateX(4px);
+}
+
+@media (min-width: 768px) {
+  .black-friday-banner-content {
+    font-size: 1.125rem;
+  }
+}
+
+/*
+* --------------------------------------------------
+* Black Friday Page
+* --------------------------------------------------
+*/
+.black-friday-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.black-friday-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.black-friday-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.black-friday-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .black-friday-subtitle {
+    color: #fff;
+  }
+}
+
+.black-friday-description {
+  font-size: 1.125rem;
+  color: #475569;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .black-friday-header h1 {
+    font-size: 3.5rem;
+  }
+  
+  .black-friday-subtitle {
+    font-size: 2rem;
+  }
+}
+
+/*
+* --------------------------------------------------
+* Black Friday Product Grid
+* --------------------------------------------------
+*/
+.black-friday-products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  .black-friday-products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .black-friday-products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .black-friday-products-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/*
+* --------------------------------------------------
+* Black Friday Product Item
+* --------------------------------------------------
+*/
+.black-friday-product-item {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.black-friday-product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.black-friday-product-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.black-friday-product-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.black-friday-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.black-friday-product-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 1rem 1rem 0.5rem;
+  line-height: 1.4;
+  min-height: 2.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.black-friday-product-price {
+  margin: 0 1rem 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.black-friday-product-price .product-price-on-sale {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.black-friday-product-price .product-price-on-sale s {
+  font-size: 0.875rem;
+  color: #64748b;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+.black-friday-product-actions {
+  padding: 0 1rem 1rem;
+  margin-top: auto;
+}
+
+.black-friday-product-actions .add-to-cart-button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  min-width: auto;
+}
+
+@media (min-width: 768px) {
+  .black-friday-product-title {
+    font-size: 1.125rem;
+  }
+  
+  .black-friday-product-price {
+    font-size: 1.375rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .black-friday-product-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+  
+  .black-friday-product-title {
+    color: var(--color-text-primary);
+  }
+  
+  .black-friday-product-price {
+    color: var(--color-primary);
+  }
+  
+  .black-friday-product-image {
+    background: var(--color-bg);
+  }
+}
+
+/*
+* --------------------------------------------------
+* Page Content - Table Styling for Dark Mode
+* --------------------------------------------------
+*/
+@media (prefers-color-scheme: dark) {
+  /* Force all table headers to be readable */
+  .page table th,
+  .page thead th,
+  .page table thead th {
+    color: var(--color-text-primary) !important;
+    background-color: var(--color-surface) !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Force all table cells to be readable */
+  .page table td {
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Make table rows with white backgrounds match header styling - force dark background */
+  .page table tr td[style*="background-color: white"],
+  .page table tr td[style*="background-color:#fff"],
+  .page table tr td[style*="background-color: #fff"],
+  .page table tr td[style*="background-color:#ffffff"],
+  .page table tr td[style*="background-color: #ffffff"],
+  .page table tr td[style*="background: white"],
+  .page table tr td[style*="background:#fff"],
+  .page table tr td[style*="background: #fff"],
+  .page table tr td[style*="background:#ffffff"],
+  .page table tr td[style*="background: #ffffff"],
+  /* Target any td with white background regardless of how it's specified */
+  .page table td[style*="white"],
+  .page table td[style*="#fff"],
+  /* More aggressive targeting for white backgrounds */
+  .page table td[style*="background-color:white"],
+  .page table td[style*="background-color:#ffffff"],
+  .page table td[style*="background:white"] {
+    color: var(--color-text-primary) !important;
+    font-weight: 600 !important;
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Force font-weight and dark background on all cells in rows that contain white background cells */
+  .page table tr:has(td[style*="white"]) td,
+  .page table tr:has(td[style*="#fff"]) td {
+    font-weight: 600 !important;
+    color: var(--color-text-primary) !important;
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Force dark background on entire rows that contain white background cells */
+  .page table tr:has(td[style*="white"]),
+  .page table tr:has(td[style*="#fff"]),
+  .page table tr:has(td[style*="#ffffff"]),
+  .page table tr:has(td[style*="background-color: white"]),
+  .page table tr:has(td[style*="background-color:#fff"]),
+  .page table tr:has(td[style*="background-color: #fff"]),
+  .page table tr:has(td[style*="background: white"]),
+  .page table tr:has(td[style*="background:#fff"]) {
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Also target by nth-child if the Fragrances row is consistently the 2nd row */
+  .page table tbody tr:nth-child(2) td {
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Additional targeting for rows with white background cells - more specific */
+  .page table tbody tr td[style*="white"],
+  .page table tbody tr td[style*="#fff"] {
+    font-weight: 600 !important;
+    color: var(--color-text-primary) !important;
+    background-color: var(--color-surface) !important;
+  }
+  
+  /* Target all cells in the same row as a white background cell - force dark background */
+  .page table tr td[style*="white"] ~ td,
+  .page table tr td[style*="#fff"] ~ td,
+  .page table tr:has(td[style*="white"]) td,
+  .page table tr:has(td[style*="#fff"]) td {
+    font-weight: 600 !important;
+    color: var(--color-text-primary) !important;
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Override any white or light backgrounds in table cells - most aggressive */
+  .page table td[style*="background"],
+  .page table th[style*="background"] {
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Force dark background on any cell that might have white background */
+  .page table td[style*="white"],
+  .page table td[style*="#fff"],
+  .page table td[style*="#ffffff"] {
+    background-color: var(--color-surface) !important;
+    background: var(--color-surface) !important;
+  }
+  
+  /* Specifically target white backgrounds and change to dark */
+  .page table td[style*="background-color: white"],
+  .page table td[style*="background-color:#fff"],
+  .page table td[style*="background-color: #fff"],
+  .page table td[style*="background-color:#ffffff"],
+  .page table td[style*="background-color: #ffffff"],
+  .page table td[style*="background: white"],
+  .page table td[style*="background:#fff"],
+  .page table td[style*="background: #fff"],
+  .page table td[style*="background:#ffffff"],
+  .page table td[style*="background: #ffffff"],
+  .page table th[style*="background-color: white"],
+  .page table th[style*="background-color:#fff"],
+  .page table th[style*="background-color: #fff"],
+  .page table th[style*="background-color:#ffffff"],
+  .page table th[style*="background-color: #ffffff"],
+  .page table th[style*="background: white"],
+  .page table th[style*="background:#fff"],
+  .page table th[style*="background: #fff"],
+  .page table th[style*="background:#ffffff"],
+  .page table th[style*="background: #ffffff"] {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Force all text in tables to be light colored - most aggressive selector */
+  .page table,
+  .page table *,
+  .page table td *,
+  .page table th *,
+  .page table p,
+  .page table span,
+  .page table div {
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Specifically target nested elements in cells with white backgrounds */
+  .page table td[style*="white"] *,
+  .page table td[style*="#fff"] *,
+  .page table td[style*="white"] p,
+  .page table td[style*="#fff"] p,
+  .page table td[style*="white"] span,
+  .page table td[style*="#fff"] span,
+  .page table td[style*="white"] div,
+  .page table td[style*="#fff"] div {
+    color: var(--color-text-primary) !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Override inline styles on nested elements */
+  .page table td[style*="white"] *[style*="color"],
+  .page table td[style*="#fff"] *[style*="color"] {
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Override any inline color styles - target all possible patterns */
+  .page table td[style*="color"],
+  .page table th[style*="color"],
+  .page table td[style*="color:"],
+  .page table th[style*="color:"] {
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Specific overrides for common inline style patterns */
+  .page table td[style*="rgb"],
+  .page table th[style*="rgb"],
+  .page table td[style*="#"],
+  .page table th[style*="#"] {
+    color: var(--color-text-primary) !important;
+  }
+  
+  /* Override light gray colors specifically */
+  .page table td[style*="gray"],
+  .page table th[style*="gray"],
+  .page table td[style*="grey"],
+  .page table th[style*="grey"] {
+    color: var(--color-text-primary) !important;
+  }
+}

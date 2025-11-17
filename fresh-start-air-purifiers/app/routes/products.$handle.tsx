@@ -508,8 +508,23 @@ export default function Product() {
               </div>
             )}
 
+            {/* Free Shipping - For Replacement Filters */}
+            {isReplacementFilter(product) && (
+              <div className="inline-block mt-4 text-[15px] font-semibold text-neutral-900" style={{ 
+                borderRadius: '0.5rem', 
+                border: '1px solid #FFFBF0', 
+                backgroundColor: '#FFFBF0', 
+                outline: 'none',
+                boxShadow: 'none',
+                padding: '0.75rem 1.25rem'
+              }}>
+                Free Shipping on Replacement Filters (Continental U.S.)
+              </div>
+            )}
+
             {/* Delivery Time Information */}
             <div className="mt-3 text-sm text-neutral-700">
+              <br></br>
               Orders are fulfilled and shipped directly by Austin Air. Typical delivery is 7–10 business days.
             </div>
 
@@ -775,4 +790,23 @@ function isProductAccessory(product: any): boolean {
   
   // Default to purifier if unclear
   return false;
+}
+
+// Helper function to determine if product is a replacement filter (not pre-filter)
+function isReplacementFilter(product: any): boolean {
+  if (!product) return false;
+  
+  const handle = product.handle?.toLowerCase() || '';
+  const productType = product.productType?.toLowerCase() || '';
+  const tags = (product.tags || []).join(' ').toLowerCase();
+  
+  // Must contain "replacement" but NOT "pre-filter"
+  const hasReplacement = handle.includes('replacement-filter') || 
+                         productType.includes('replacement') ||
+                         tags.includes('replacement');
+  const isPreFilter = handle.includes('pre-filter') || 
+                      productType.includes('pre-filter') ||
+                      tags.includes('pre-filter');
+  
+  return hasReplacement && !isPreFilter;
 }

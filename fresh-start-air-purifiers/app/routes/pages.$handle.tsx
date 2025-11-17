@@ -173,9 +173,97 @@ export default function Page() {
   // Temporary fixes for outdated content in Shopify Page body.
   // - Update old product handles to canonical slugs
   // - Optionally, we can strip the entire Featured section if needed
-  const fixedBody = (page.body || '')
+  let fixedBody = (page.body || '')
     .replace(/\/products\/healthmate-plus/gi, '/products/austin-healthmate-plus-air-purifier')
     .replace(/\/products\/luggable/gi, '/products/austin-air-immunity-machine');
+  
+  // Fix table styling for dark mode - remove problematic inline color and font styles from table cells
+  // This ensures our CSS can properly style tables in dark mode
+  fixedBody = fixedBody.replace(
+    /<t[dh][^>]*style="([^"]*)"[^>]*>/gi,
+    (match, styleAttr) => {
+      // Check if this cell has a white background
+      const hasWhiteBackground = styleAttr.includes('background') && 
+                                 (styleAttr.includes('white') || styleAttr.includes('#fff'));
+      
+      // Remove color-related styles but keep other styles
+      let cleanedStyle = styleAttr
+        .replace(/color\s*:\s*[^;]+;?/gi, '')
+        .replace(/;\s*;/g, ';')
+        .replace(/^\s*;\s*|\s*;\s*$/g, '');
+      
+      // Also remove white background colors to allow dark mode styling - be very aggressive
+      cleanedStyle = cleanedStyle
+        .replace(/background-color\s*:\s*white\s*;?/gi, '')
+        .replace(/background-color\s*:\s*#fff\s*;?/gi, '')
+        .replace(/background-color\s*:\s*#ffffff\s*;?/gi, '')
+        .replace(/background-color\s*:\s*#FFF\s*;?/gi, '')
+        .replace(/background-color\s*:\s*#FFFFFF\s*;?/gi, '')
+        .replace(/background-color\s*:\s*rgb\s*\(\s*255\s*,\s*255\s*,\s*255\s*\)\s*;?/gi, '')
+        .replace(/background-color\s*:\s*rgba\s*\(\s*255\s*,\s*255\s*,\s*255\s*[^)]*\)\s*;?/gi, '')
+        .replace(/background\s*:\s*white\s*;?/gi, '')
+        .replace(/background\s*:\s*#fff\s*;?/gi, '')
+        .replace(/background\s*:\s*#ffffff\s*;?/gi, '')
+        .replace(/background\s*:\s*#FFF\s*;?/gi, '')
+        .replace(/background\s*:\s*#FFFFFF\s*;?/gi, '')
+        .replace(/background\s*:\s*rgb\s*\(\s*255\s*,\s*255\s*,\s*255\s*\)\s*;?/gi, '')
+        .replace(/background\s*:\s*rgba\s*\(\s*255\s*,\s*255\s*,\s*255\s*[^)]*\)\s*;?/gi, '')
+        // Also catch any variations with spaces
+        .replace(/background-color\s*:\s*white\s*;?/gi, '')
+        .replace(/background\s*:\s*white\s*;?/gi, '')
+        .replace(/;\s*;/g, ';')
+        .replace(/^\s*;\s*|\s*;\s*$/g, '');
+      
+      // Remove font-weight and color styles from cells with white backgrounds so they can match header styling
+      // This allows the Fragrances row to have the same font-weight and color as the header row
+      if (hasWhiteBackground) {
+        cleanedStyle = cleanedStyle
+          .replace(/font-weight\s*:\s*[^;]+;?/gi, '')
+          .replace(/font-style\s*:\s*[^;]+;?/gi, '')
+          .replace(/;\s*;/g, ';')
+          .replace(/^\s*;\s*|\s*;\s*$/g, '');
+      }
+      
+      return match.replace(styleAttr, cleanedStyle || '');
+    }
+  );
+  
+  // Also process table rows that might have white backgrounds
+  fixedBody = fixedBody.replace(
+    /<tr[^>]*style="([^"]*)"[^>]*>/gi,
+    (match, styleAttr) => {
+      if (styleAttr.includes('background') && (styleAttr.includes('white') || styleAttr.includes('#fff'))) {
+        let cleanedStyle = styleAttr
+          .replace(/background-color\s*:\s*white\s*;?/gi, '')
+          .replace(/background-color\s*:\s*#fff\s*;?/gi, '')
+          .replace(/background-color\s*:\s*#ffffff\s*;?/gi, '')
+          .replace(/background\s*:\s*white\s*;?/gi, '')
+          .replace(/background\s*:\s*#fff\s*;?/gi, '')
+          .replace(/background\s*:\s*#ffffff\s*;?/gi, '')
+          .replace(/;\s*;/g, ';')
+          .replace(/^\s*;\s*|\s*;\s*$/g, '');
+        return match.replace(styleAttr, cleanedStyle || '');
+      }
+      return match;
+    }
+  );
+  
+  // Process nested elements (span, p, div, strong, etc.) inside table cells to remove color and font styles
+  // This ensures text in the Fragrances row matches the header styling
+  fixedBody = fixedBody.replace(
+    /<(span|p|div|strong|b|em|i)[^>]*style="([^"]*)"[^>]*>/gi,
+    (match, tag, styleAttr) => {
+      // Only process if this element is likely inside a table (check context)
+      // We'll process all inline styled elements and let CSS handle the specificity
+      let cleanedStyle = styleAttr
+        .replace(/color\s*:\s*[^;]+;?/gi, '')
+        .replace(/font-weight\s*:\s*[^;]+;?/gi, '')
+        .replace(/font-style\s*:\s*[^;]+;?/gi, '')
+        .replace(/;\s*;/g, ';')
+        .replace(/^\s*;\s*|\s*;\s*$/g, '');
+      return match.replace(styleAttr, cleanedStyle || '');
+    }
+  );
 
   return (
     <div className="page">

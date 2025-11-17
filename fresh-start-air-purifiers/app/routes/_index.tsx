@@ -85,6 +85,8 @@ export default function Homepage() {
   return (
     <div className="home">
       <main id="main-content">
+      {/* Black Friday Banner */}
+      <BlackFridayBanner />
       {/* Hero section - Only on homepage */}
       <Hero />
       {/* Content sections */}
@@ -95,6 +97,22 @@ export default function Homepage() {
         <RecommendedProducts products={data.recommendedProducts} />
       </div>
       </main>
+    </div>
+  );
+}
+
+// Black Friday Banner component
+function BlackFridayBanner() {
+  return (
+    <div className="black-friday-banner">
+      <Link to="/black-friday" className="black-friday-banner-link">
+        <div className="black-friday-banner-content">
+          <span className="black-friday-banner-text">
+            Breathe Better Blitz — Nov 28 to Dec 1 ONLY
+          </span>
+          <span className="black-friday-banner-arrow">→</span>
+        </div>
+      </Link>
     </div>
   );
 }
