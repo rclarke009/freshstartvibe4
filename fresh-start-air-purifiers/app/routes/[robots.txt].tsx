@@ -112,9 +112,9 @@ Disallow: /*/*?*ls%3d*%3fls%3d*
 Disallow: /search
 Allow: /search/
 Disallow: /search/?*
-Disallow: /*?*variant=*
-Disallow: /*?*color=*
-Disallow: /*?*Color=*
+// Disallow: /*?*variant=*
+// Disallow: /*?*color=*
+// Disallow: /*?*Color=*
 Disallow: /apple-app-site-association
 Disallow: /.well-known/shopify/monorail`;
 }
