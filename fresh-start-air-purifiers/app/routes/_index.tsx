@@ -105,11 +105,14 @@ export default function Homepage() {
 function BlackFridayBanner() {
   return (
     <div className="black-friday-banner">
-      <div className="black-friday-banner-content">
-        <span className="black-friday-banner-text">
-          Give the Gift of Fresh Air this Holiday
-        </span>
-      </div>
+      <Link to="/holiday" className="black-friday-banner-link">
+        <div className="black-friday-banner-content">
+          <span className="black-friday-banner-text">
+            Give the Gift of Fresh Air this Holiday
+          </span>
+          <span className="black-friday-banner-arrow">→</span>
+        </div>
+      </Link>
     </div>
   );
 }
