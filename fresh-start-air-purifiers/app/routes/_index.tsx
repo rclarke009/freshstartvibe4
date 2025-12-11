@@ -101,18 +101,15 @@ export default function Homepage() {
   );
 }
 
-// Black Friday Banner component
+// Holiday Banner component
 function BlackFridayBanner() {
   return (
     <div className="black-friday-banner">
-      <Link to="/black-friday" className="black-friday-banner-link">
-        <div className="black-friday-banner-content">
-          <span className="black-friday-banner-text">
-            Breathe Better Blitz — Nov 28 to Dec 1 ONLY
-          </span>
-          <span className="black-friday-banner-arrow">→</span>
-        </div>
-      </Link>
+      <div className="black-friday-banner-content">
+        <span className="black-friday-banner-text">
+          Give the Gift of Fresh Air this Holiday
+        </span>
+      </div>
     </div>
   );
 }

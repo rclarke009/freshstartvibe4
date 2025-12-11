@@ -4,10 +4,10 @@ import {BlackFridayProductItem} from '~/components/BlackFridayProductItem';
 
 export const meta: MetaFunction<typeof loader> = () => {
   return [
-    { title: `Black Friday Sale | Fresh Start Air Purifiers` },
+    { title: `Holiday Gifts | Fresh Start Air Purifiers` },
     {
       name: 'description',
-      content: 'Breathe Better Blitz — Nov 28 to Dec 1 ONLY. Shop our Black Friday sale on Austin Air purifiers with special pricing.',
+      content: 'Give the gift of fresh air this holiday season. Discover curated Austin Air purifiers perfect for gift-giving.',
     },
   ];
 };
@@ -16,14 +16,14 @@ export function links() {
   return [
     {
       rel: 'canonical',
-      href: 'https://freshstartairpurifiers.com/black-friday',
+      href: 'https://freshstartairpurifiers.com/holiday',
     },
   ];
 }
 
-// Product handles for Black Friday sale items
+// Product handles for holiday gift items
 // These should match the exact handles in Shopify
-const BLACK_FRIDAY_PRODUCT_HANDLES = [
+const HOLIDAY_PRODUCT_HANDLES = [
   'austin-air-immunity-machine', // ALL NEW Austin Immunity Machine
   'austin-bedroom-machine-air-purifier', // The Austin Air Bedroom Machine
   'austin-healthmate-junior-air-purifier', // The Austin Air HealthMate Plus Jr
@@ -35,7 +35,7 @@ export async function loader({context}: LoaderFunctionArgs) {
   const {storefront} = context;
 
   // Query each product by handle in parallel
-  const productQueries = BLACK_FRIDAY_PRODUCT_HANDLES.map((handle) =>
+  const productQueries = HOLIDAY_PRODUCT_HANDLES.map((handle) =>
     storefront.query(PRODUCT_QUERY, {
       variables: {handle},
     }).catch((error) => {
@@ -61,16 +61,15 @@ export async function loader({context}: LoaderFunctionArgs) {
   return {products};
 }
 
-export default function BlackFriday() {
+export default function Holiday() {
   const {products} = useLoaderData<typeof loader>();
 
   return (
     <div className="black-friday-page">
       <div className="black-friday-header">
-        <h1>Breathe Better Blitz</h1>
-        <p className="black-friday-subtitle">Nov 28 to Dec 1 ONLY</p>
+        <h1>Give the Gift of Fresh Air</h1>
         <p className="black-friday-description">
-          Shop our Black Friday sale on select Austin Air purifiers with special pricing.
+          This holiday season, give your loved ones the gift of cleaner, healthier air. Our curated selection of Austin Air purifiers makes perfect gifts for anyone who values fresh, breathable air in their home.
         </p>
       </div>
       <div className="black-friday-products-grid">
